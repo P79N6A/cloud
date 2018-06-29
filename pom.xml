@@ -14,6 +14,7 @@
     <modules>
         <module>cloud-admin</module>
         <module>cloud-eureka</module>
+        <module>cloud-gateway</module>
     </modules>
 
 </project>
