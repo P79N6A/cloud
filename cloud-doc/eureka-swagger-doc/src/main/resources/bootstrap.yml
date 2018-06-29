@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: cloud-swagger-doc
+  redis:
+    host: localhost
+    port: 6379
+    password:
+
+ribbon:
+  Httpclient:
+    enable: false
+  OkHttp:
+    enable: true
+  MaxAutoRetries: 3 #同一个Server重试的次数(除去首次)
+  MaxAutoRetriesNextServer: 0 #切换相同Server的次数
+  ReadTimeout: 30000
+  ConnectTimeout: 30000
+  eager-load:
+        enabled: true
+
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enable: true
+  httpclient:
+    enable: false
+  client:
+    config:
+      feignName:
+        connectTimeout: 30000
+        readTimeout: 30000
+
+hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix:
+  threadpool:
+    default:
+      coreSize: 500
+      maxQueueSize: 1000
+      queueSizeRejectionThreshold: 800
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+logging:
+  config: classpath:logback.xml
+#  profiles:
+#    active: dev
+eureka:
+  instance:
+    health-check-url-path: /actuator/health
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 20
+  client:
+    serviceUrl:
+      defaultZone: http://admin:admin@127.0.0.1:10000/eureka/
+
+server:
+  port: 20030
+  tomcat:
+    max-threads: 500 # Maximum amount of worker threads.
+    min-spare-threads: 50 # Minimum amount of worker threads

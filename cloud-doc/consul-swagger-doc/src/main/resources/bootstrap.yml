@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: cloud-swagger-doc
+  profiles:
+    active: dev
+  cloud:
+    config:
+      fail-fast: true
+      discovery:
+        service-id: cloud-config-server
+        enabled: true
+      profile: ${spring.profiles.active}
+#      label: ${spring.profiles.active}
+---
+spring:
+  profiles: dev
+  cloud:
+    consul:
+      port: 8500
+      host: localhost
+
+---
+spring:
+  profiles: prd
+  cloud:
+    consul:
+      port: 8500
+      host:localhost
