@@ -47,8 +47,6 @@ hystrix:
 
 logging:
   config: classpath:logback.xml
-#  profiles:
-#    active: dev
 eureka:
   instance:
     health-check-url-path: /actuator/health
