@@ -16,6 +16,7 @@
         <module>cloud-eureka</module>
         <module>cloud-gateway</module>
         <module>cloud-doc</module>
+        <module>cloud-demo</module>
     </modules>
 
 </project>

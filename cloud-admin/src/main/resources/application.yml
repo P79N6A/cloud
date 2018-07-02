@@ -1,0 +1,40 @@
+---
+server:
+  port: 20000
+  tomcat:
+    max-threads: 500 # Maximum amount of worker threads.
+    min-spare-threads: 50 # Minimum amount of worker threads
+
+# 注册服务
+eureka:
+  instance:
+    health-check-url-path: /actuator/health
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 20
+  client:
+    serviceUrl:
+      defaultZone: http://admin:admin@127.0.0.1:10000/eureka/
+
+spring:
+  security:
+    user:
+      password: admin
+      name: admin
+#  mail: ##邮件通知
+#    host: smtp.qq.com
+#    username: 578440089@qq.com
+  boot:
+    admin:
+#      turbine:             ##配置Turbine服务器和集群
+#        location: turbine
+#        enabled: true
+#        clusters: [default]
+#      notify:  ##admin邮件通知
+#        mail:
+#          to: 578440089@qq.com
+      probed-endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream,activiti
+management:
+  endpoint:
+    health:
+      show-details: always

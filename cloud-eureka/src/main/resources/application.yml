@@ -1,0 +1,25 @@
+---
+server:
+  port: 10000
+spring:
+  security:
+    user:
+      password: admin
+      name: admin
+  application:
+    name: cloud-eureka
+
+eureka:
+  server:
+    batch-replication: true
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 5000
+  instance:
+    ip-address: 127.0.0.1
+    appname: cloud-eureka
+    prefer-ip-address: true
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://127.0.0.1:10000/eureka/
