@@ -2,7 +2,6 @@ package com.springframework.gateway.web;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.boot.actuate.endpoint.web.annotation.RestControllerEndpoint;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -35,17 +34,17 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
 
     private RouteDefinitionLocator routeDefinitionLocator;
     private List<GlobalFilter> globalFilters;
-    private List<GatewayFilterFactory> GatewayFilters;
+    private List<GatewayFilterFactory> gatewayFilters;
     private RouteDefinitionWriter routeDefinitionWriter;
     private RouteLocator routeLocator;
     private ApplicationEventPublisher publisher;
 
     public GatewayRouteController(RouteDefinitionLocator routeDefinitionLocator, List<GlobalFilter> globalFilters,
-                                     List<GatewayFilterFactory> GatewayFilters, RouteDefinitionWriter routeDefinitionWriter,
+                                     List<GatewayFilterFactory> gatewayFilters, RouteDefinitionWriter routeDefinitionWriter,
                                      RouteLocator routeLocator) {
         this.routeDefinitionLocator = routeDefinitionLocator;
         this.globalFilters = globalFilters;
-        this.GatewayFilters = GatewayFilters;
+        this.gatewayFilters = gatewayFilters;
         this.routeDefinitionWriter = routeDefinitionWriter;
         this.routeLocator = routeLocator;
     }
@@ -70,7 +69,7 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
 
     @GetMapping("/routefilters")
     public Mono<HashMap<String, Object>> routefilers() {
-        return getNamesToOrders(this.GatewayFilters);
+        return getNamesToOrders(this.gatewayFilters);
     }
 
     private <T> Mono<HashMap<String, Object>> getNamesToOrders(List<T> list) {
