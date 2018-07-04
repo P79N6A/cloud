@@ -1,4 +1,4 @@
-package com.springframework.gateway.domian.routeconfig.entity;
+package com.springframework.gateway.domain.routeconfig.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -32,6 +32,9 @@ public class RouteConfig implements Serializable {
     private List<FilterDefinition> filterList = Lists.newArrayList();
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+
+    @TableField("route_id")
+    private String routeId;
 
     /**
      * @return 获取路由
@@ -86,11 +89,17 @@ public class RouteConfig implements Serializable {
     private Integer order;
 
     /**
-     * 路由匹配法则，多个用逗号隔开（ps:如果为空，默认以service_id匹配）
+     * ${name}=${args[0]},${args[1]}...${args[n]}
+     *多个用 - 分隔
+     * ps: RouteDefinition
+     * ${id}=${uri},${predicates[0]},${predicates[1]}...${predicates[n]}
+     *      *  eq:route001=http://127.0.0.1,Host=**.addrequestparameter.org,Path=/get
+     *      *  ps:单个 PredicateDefinition 的 args[i] 存在逗号( , ) ，会被错误的分隔，例如说，"Query=foo,bz"
      */
     private String predicates;
     /**
-     * 多个用逗号隔开
+     * 多个用 - 分隔
+     * ${name}=${args[0]},${args[1]}...${args[n]}
      */
     private String filters;
 

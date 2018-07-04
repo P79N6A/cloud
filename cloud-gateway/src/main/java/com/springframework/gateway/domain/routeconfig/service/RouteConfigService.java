@@ -1,6 +1,6 @@
-package com.springframework.gateway.domian.routeconfig.service;
+package com.springframework.gateway.domain.routeconfig.service;
 
-import com.springframework.gateway.domian.routeconfig.entity.RouteConfig;
+import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -23,4 +23,6 @@ public interface RouteConfigService {
      * @return
      */
     Flux<RouteConfig> findAll();
+
+
 }

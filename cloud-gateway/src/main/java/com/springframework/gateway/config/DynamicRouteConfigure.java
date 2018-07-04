@@ -1,13 +1,14 @@
 package com.springframework.gateway.config;
 
-import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.cloud.gateway.config.GatewayProperties;
-import org.springframework.cloud.gateway.route.RouteLocator;
-import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.cloud.gateway.discovery.DiscoveryLocatorProperties;
+import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
+import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
 
 /**
@@ -16,25 +17,31 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 @Configuration
 public class DynamicRouteConfigure {
-    private DiscoveryClient discoveryClient;
-    private String routeIdPrefix;
-    private Registration registration;
-    private ServerProperties server;
     private RedisTemplate redisTemplate;
     private GatewayProperties properties;
-    private RouteLocatorBuilder builder;
+    private DiscoveryClient discoveryClient;
+    private DiscoveryLocatorProperties enable;
 
-    public DynamicRouteConfigure(RouteLocatorBuilder builder, GatewayProperties properties, DiscoveryClient discoveryClient, String routeIdPrefix, Registration registration, ServerProperties server, RedisTemplate redisTemplate) {
-        this.discoveryClient = discoveryClient;
+    public DynamicRouteConfigure(DiscoveryLocatorProperties enable, DiscoveryClient discoveryClient, GatewayProperties properties, RedisTemplate redisTemplate) {
         this.properties = properties;
-        this.routeIdPrefix = routeIdPrefix;
-        this.registration = registration;
-        this.server = server;
         this.redisTemplate = redisTemplate;
+        this.discoveryClient = discoveryClient;
+        this.enable = enable;
     }
 
     @Bean
-    public RouteLocator dynamicRouteLocator(RouteLocatorBuilder builder) {
-        return builder.routes().build();
+    @ConditionalOnMissingBean(RouteDefinitionRepository.class)
+    public DynamicRouteDefinitionLocator dynamicRouteLocator(RedisTemplate redisTemplate) {
+        return new DynamicRouteDefinitionLocator(redisTemplate);
     }
+
+//    @Bean
+//    public MySQLRouteDefinitionRepository mySQLRouteDefinitionRepository(RedisTemplate redisTemplate) {
+//        return new MySQLRouteDefinitionRepository(redisTemplate);
+//    }
+//
+//    @Bean
+//    public RouteDefinitionLocator discoveryClientRouteDefinitionLocator(DiscoveryClient discoveryClient, DiscoveryLocatorProperties enable) {
+//        return new DiscoveryClientRouteDefinitionLocator(discoveryClient, enable);
+//    }
 }

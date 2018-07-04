@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
  * 2018/7/2
  */
 @RestController
-@RequestMapping("/routeConfig")
+@RequestMapping("/demo")
 @Api("路由配置")
 public class RouteConfigController {
     private final RouteConfigService routeConfigService;
@@ -35,7 +35,8 @@ public class RouteConfigController {
 
     @GetMapping("")
     @ApiOperation(value = "查询路由配置", notes = "查询路由配置信息")
-    public Flux<RouteConfig> findAll() {
-        return this.routeConfigService.findAll();
+    public Flux<String> findAll() {
+
+        return Flux.just("成功");
     }
 }

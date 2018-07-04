@@ -1,8 +1,8 @@
-package com.springframework.gateway.domian.routeconfig.mapper;
+package com.springframework.gateway.domain.routeconfig.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.springframework.gateway.domian.routeconfig.entity.RouteConfig;
-import org.springframework.stereotype.Repository;
+import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * @author summer
  * @since 2018-07-03
  */
-@Repository
+@Mapper
 public interface RouteConfigMapper extends BaseMapper<RouteConfig> {
 
 }
