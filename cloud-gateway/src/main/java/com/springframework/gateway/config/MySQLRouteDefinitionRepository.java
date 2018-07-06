@@ -2,6 +2,7 @@ package com.springframework.gateway.config;
 
 import com.google.common.collect.Lists;
 import com.springframework.gateway.constant.CommonConstant;
+import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
@@ -23,10 +24,11 @@ import static java.util.Collections.synchronizedMap;
 public class MySQLRouteDefinitionRepository implements RouteDefinitionRepository {
     private RedisTemplate redis;
     private final Map<String, RouteDefinition> routes = synchronizedMap(new LinkedHashMap<String, RouteDefinition>());
+    private RouteConfigService routeConfigService;
 
-
-    MySQLRouteDefinitionRepository(RedisTemplate redisTemplate) {
-        this.redis = redisTemplate;
+    public MySQLRouteDefinitionRepository(RedisTemplate redis, RouteConfigService routeConfigService) {
+        this.redis = redis;
+        this.routeConfigService = routeConfigService;
     }
 
     @Override

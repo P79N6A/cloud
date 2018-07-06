@@ -2,6 +2,7 @@ package com.springframework.gateway.domain.routeconfig.service.impl;
 
 import com.google.common.collect.Lists;
 import com.springframework.gateway.constant.CommonConstant;
+import com.springframework.gateway.domain.routeconfig.repository.impl.RouteConfigDaoImpl;
 import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;
 import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author summer
@@ -21,19 +23,19 @@ import java.util.List;
 @Service
 public class RouteConfigServiceImpl implements RouteConfigService {
     private RedisTemplate redisTemplate;
-
+    private RouteConfigDaoImpl routeConfigDao;
     @Autowired
     public RouteConfigServiceImpl(@Qualifier("redisTemplate") RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
     @Override
-    public Mono<RouteConfig> save(RouteConfig routeConfig) {
-        return null;
+    public Mono<Integer> save(RouteConfig routeConfig) {
+        Integer result = routeConfigDao.save(routeConfig);
+        return Mono.justOrEmpty(result);
     }
 
-    @Override
-    public Flux<RouteConfig> findAll() {
+    public Flux<RouteConfig> findAllFromCache() {
         List<RouteDefinition> routeDefinitionList = (List<RouteDefinition>) redisTemplate.opsForHash().entries(CommonConstant.ROUTE_KEY).values();
         List<RouteConfig> result = Lists.newArrayList();
 
@@ -42,5 +44,16 @@ public class RouteConfigServiceImpl implements RouteConfigService {
             result.add(routeConfig);
         });
         return Flux.fromIterable(result);
+    }
+    @Override
+    public Flux<List<RouteDefinition>> findAll() {
+        List<RouteDefinition> routeDefinitionList =routeConfigDao.findAll();
+        return Flux.just(routeDefinitionList);
+    }
+
+    @Override
+    public Mono<RouteConfig> findRouteConfig(String serviceId) {
+        RouteConfig result= routeConfigDao.findRouteConfig(serviceId);
+        return Mono.justOrEmpty(result);
     }
 }

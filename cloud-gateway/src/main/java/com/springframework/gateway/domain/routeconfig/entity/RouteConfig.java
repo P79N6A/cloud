@@ -41,7 +41,7 @@ public class RouteConfig implements Serializable {
      */
     public List<PredicateDefinition> getPredicateList() {
         if (StringUtils.isNotBlank(getPredicates())) {
-            final String[] predicateArr = StringUtils.split(getPredicates(), ",");
+            final String[] predicateArr = StringUtils.split(StringUtils.trim(getPredicates()), "-");
             Arrays.stream(predicateArr).forEach(s -> {
                 PredicateDefinition predicateDefinition = new PredicateDefinition(s);
                 predicateList.add(predicateDefinition);
@@ -55,7 +55,7 @@ public class RouteConfig implements Serializable {
      */
     public List<FilterDefinition> getFilterList() {
         if (StringUtils.isNotBlank(getFilters())) {
-            final String[] filterArr = StringUtils.split(getFilters(), ",");
+            final String[] filterArr = StringUtils.split(getFilters(), "-");
             Arrays.stream(filterArr).forEach(s -> {
                 FilterDefinition filterDefinition = new FilterDefinition(s);
                 filterList.add(filterDefinition);

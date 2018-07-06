@@ -1,5 +1,6 @@
 package com.springframework.gateway.config;
 
+import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.gateway.config.GatewayProperties;
@@ -21,27 +22,29 @@ public class DynamicRouteConfigure {
     private GatewayProperties properties;
     private DiscoveryClient discoveryClient;
     private DiscoveryLocatorProperties enable;
+    private RouteConfigService routeConfigService;
 
-    public DynamicRouteConfigure(DiscoveryLocatorProperties enable, DiscoveryClient discoveryClient, GatewayProperties properties, RedisTemplate redisTemplate) {
-        this.properties = properties;
+    public DynamicRouteConfigure(RedisTemplate redisTemplate, GatewayProperties properties, DiscoveryClient discoveryClient, DiscoveryLocatorProperties enable, RouteConfigService routeConfigService) {
         this.redisTemplate = redisTemplate;
+        this.properties = properties;
         this.discoveryClient = discoveryClient;
         this.enable = enable;
+        this.routeConfigService = routeConfigService;
     }
 
     @Bean
-    @ConditionalOnMissingBean(RouteDefinitionRepository.class)
     public DynamicRouteDefinitionLocator dynamicRouteLocator(RedisTemplate redisTemplate) {
         return new DynamicRouteDefinitionLocator(redisTemplate);
     }
 
-//    @Bean
-//    public MySQLRouteDefinitionRepository mySQLRouteDefinitionRepository(RedisTemplate redisTemplate) {
-//        return new MySQLRouteDefinitionRepository(redisTemplate);
-//    }
-//
-//    @Bean
-//    public RouteDefinitionLocator discoveryClientRouteDefinitionLocator(DiscoveryClient discoveryClient, DiscoveryLocatorProperties enable) {
-//        return new DiscoveryClientRouteDefinitionLocator(discoveryClient, enable);
-//    }
+    @Bean
+    @ConditionalOnMissingBean(RouteDefinitionRepository.class)
+    public MySQLRouteDefinitionRepository mySQLRouteDefinitionRepository(RedisTemplate redisTemplate, RouteConfigService routeConfigService) {
+        return new MySQLRouteDefinitionRepository(redisTemplate, routeConfigService);
+    }
+
+    @Bean
+    public RouteDefinitionLocator discoveryClientRouteDefinitionLocator(RouteConfigService routeConfigService,DiscoveryClient discoveryClient, DiscoveryLocatorProperties enable) {
+        return new DiscoveryClientRouteDefinitionLocator(routeConfigService,discoveryClient, enable);
+    }
 }

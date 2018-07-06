@@ -1,5 +1,8 @@
 package com.springframework.gateway.config;
 
+import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
+import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;
+import jdk.nashorn.internal.runtime.options.Option;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -14,9 +17,15 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.SimpleEvaluationContext;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.time.Instant;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 
 /**
  * @author summer 基于eureka 服务发现 动态路由
@@ -28,10 +37,12 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLoc
     private final DiscoveryClient discoveryClient;
     private final DiscoveryLocatorProperties properties;
     private final String routeIdPrefix;
+    private final RouteConfigService routeConfigService;
 
-    public DiscoveryClientRouteDefinitionLocator(DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties) {
+    DiscoveryClientRouteDefinitionLocator(RouteConfigService routeConfigService, DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties) {
         this.discoveryClient = discoveryClient;
         this.properties = properties;
+        this.routeConfigService = routeConfigService;
         if (StringUtils.hasText(properties.getRouteIdPrefix())) {
             this.routeIdPrefix = properties.getRouteIdPrefix();
         } else {
@@ -52,47 +63,96 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLoc
 
         return Flux.fromIterable(discoveryClient.getServices())
                 .map(discoveryClient::getInstances)
-                .filter(instances -> !instances.isEmpty())
+                .filter(instances -> {
+                    return !instances.isEmpty();
+                })
                 .map(instances -> instances.get(0))
                 .filter(instance -> {
                     Boolean include = includeExpr.getValue(evalCtxt, instance, Boolean.class);
                     if (include == null) {
                         return false;
                     }
+                    String serviceId = instance.getServiceId();
+                    Mono<RouteConfig> data = routeConfigService.findRouteConfig(serviceId);
+                    RouteConfig routeConfig = data.block();
+                    //状态有效
+                    if (Optional.ofNullable(routeConfig).isPresent() && !routeConfig.getStatus()) {
+                        return false;
+                    }
                     return include;
                 })
                 .map(instance -> {
                     String serviceId = instance.getServiceId();
-
                     RouteDefinition routeDefinition = new RouteDefinition();
-                    routeDefinition.setId(this.routeIdPrefix + serviceId);
-                    String uri = urlExpr.getValue(evalCtxt, instance, String.class);
-                    routeDefinition.setUri(URI.create(uri));
+                    Mono<RouteConfig> data = routeConfigService.findRouteConfig(serviceId);
+                    RouteConfig routeConfig = data.block();
+                    //状态有效
+                    if (Optional.ofNullable(routeConfig).isPresent() && routeConfig.getStatus()) {
+                        routeDefinition.setId(routeConfig.getRouteId());
+                        routeDefinition.setOrder(routeConfig.getOrder());
+                        routeDefinition.setUri(URI.create(routeConfig.getUri()));
+                        routeDefinition.setPredicates(routeConfig.getPredicateList());
+                        routeDefinition.setFilters(routeConfig.getFilterList());
+                    } else {
+                        routeDefinition.setId(this.routeIdPrefix + serviceId);
+                        String uri = urlExpr.getValue(evalCtxt, instance, String.class);
+                        routeDefinition.setUri(URI.create(uri));
 
-                    final ServiceInstance instanceForEval = new DiscoveryClientRouteDefinitionLocator.DelegatingServiceInstance(instance, properties);
+                        final ServiceInstance instanceForEval = new DiscoveryClientRouteDefinitionLocator.DelegatingServiceInstance(instance, properties);
 
-                    for (PredicateDefinition original : this.properties.getPredicates()) {
-                        PredicateDefinition predicate = new PredicateDefinition();
-                        predicate.setName(original.getName());
-                        for (Map.Entry<String, String> entry : original.getArgs().entrySet()) {
-                            String value = getValueFromExpr(evalCtxt, parser, instanceForEval, entry);
-                            predicate.addArg(entry.getKey(), value);
+                        for (PredicateDefinition original : this.properties.getPredicates()) {
+                            PredicateDefinition predicate = new PredicateDefinition();
+                            predicate.setName(original.getName());
+                            for (Map.Entry<String, String> entry : original.getArgs().entrySet()) {
+                                String value = getValueFromExpr(evalCtxt, parser, instanceForEval, entry);
+                                predicate.addArg(entry.getKey(), value);
+                            }
+                            routeDefinition.getPredicates().add(predicate);
                         }
-                        routeDefinition.getPredicates().add(predicate);
-                    }
 
-                    for (FilterDefinition original : this.properties.getFilters()) {
-                        FilterDefinition filter = new FilterDefinition();
-                        filter.setName(original.getName());
-                        for (Map.Entry<String, String> entry : original.getArgs().entrySet()) {
-                            String value = getValueFromExpr(evalCtxt, parser, instanceForEval, entry);
-                            filter.addArg(entry.getKey(), value);
+                        for (FilterDefinition original : this.properties.getFilters()) {
+                            FilterDefinition filter = new FilterDefinition();
+                            filter.setName(original.getName());
+                            for (Map.Entry<String, String> entry : original.getArgs().entrySet()) {
+                                String value = getValueFromExpr(evalCtxt, parser, instanceForEval, entry);
+                                filter.addArg(entry.getKey(), value);
+                            }
+                            routeDefinition.getFilters().add(filter);
                         }
-                        routeDefinition.getFilters().add(filter);
+                        final Mono<Integer> saveRouteConfig = saveOrUpdateRouteConfig(routeDefinition, serviceId);
                     }
-
                     return routeDefinition;
                 });
+    }
+
+    private Mono<Integer> saveOrUpdateRouteConfig(RouteDefinition routeDefinition, String serviceId) {
+        RouteConfig routeConfig = new RouteConfig();
+        Date curr = new Date(Instant.now().getEpochSecond());
+        StringBuilder filtersSts = new StringBuilder();
+        StringBuilder predicateListStr = new StringBuilder();
+        List<FilterDefinition> filters = null;
+        List<PredicateDefinition> predicateList = null;
+        filters = routeDefinition.getFilters();
+        filters.forEach(e -> {
+            filtersSts.append(e.toString()).append("-");
+        });
+        predicateList = routeDefinition.getPredicates();
+        predicateList.forEach(e -> {
+            predicateListStr.append(e.toString()).append("-");
+        });
+        routeConfig.setRouteId(routeDefinition.getId());
+        routeConfig.setCreateTime(curr);
+        routeConfig.setUpdateTime(curr);
+        routeConfig.setFilters(filtersSts.toString());
+        routeConfig.setPredicates(predicateListStr.toString());
+        routeConfig.setStatus(true);
+        routeConfig.setServiceId(serviceId);
+
+        Mono<Integer> result = routeConfigService.save(routeConfig);
+        if (result.blockOptional().isPresent()) {
+            return result;
+        }
+        return Mono.justOrEmpty(0);
     }
 
     String getValueFromExpr(SimpleEvaluationContext evalCtxt, SpelExpressionParser parser, ServiceInstance instance, Map.Entry<String, String> entry) {
