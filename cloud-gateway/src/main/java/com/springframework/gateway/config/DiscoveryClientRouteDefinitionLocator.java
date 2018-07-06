@@ -22,6 +22,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -75,8 +76,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                         return false;
                     }
                     String serviceId = instance.getServiceId();
-                    Mono<RouteConfig> data = routeConfigService.findRouteConfig(serviceId);
-                    RouteConfig routeConfig = data.block();
+                    RouteConfig routeConfig = routeConfigService.findRouteConfig(serviceId);
                     //状态有效
                     if (Optional.ofNullable(routeConfig).isPresent() && !routeConfig.getStatus()) {
                         return false;
@@ -86,8 +86,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                 .map(instance -> {
                     String serviceId = instance.getServiceId();
                     RouteDefinition routeDefinition = new RouteDefinition();
-                    Mono<RouteConfig> data = routeConfigService.findRouteConfig(serviceId);
-                    RouteConfig routeConfig = data.block();
+                    RouteConfig routeConfig = routeConfigService.findRouteConfig(serviceId);
                     //状态有效
                     if (Optional.ofNullable(routeConfig).isPresent() && routeConfig.getStatus()) {
                         routeDefinition.setId(routeConfig.getRouteId());
@@ -121,13 +120,13 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                             }
                             routeDefinition.getFilters().add(filter);
                         }
-                        final Mono<Integer> saveRouteConfig = saveOrUpdateRouteConfig(routeDefinition, serviceId);
+                        final Integer saveRouteConfig = saveRouteConfig(routeDefinition, serviceId);
                     }
                     return routeDefinition;
                 });
     }
 
-    private Mono<Integer> saveOrUpdateRouteConfig(RouteDefinition routeDefinition, String serviceId) {
+    private Integer saveRouteConfig(RouteDefinition routeDefinition, String serviceId) {
         RouteConfig routeConfig = new RouteConfig();
         Date curr = new Date(Instant.now().getEpochSecond());
         StringBuilder filtersSts = new StringBuilder();
@@ -150,11 +149,11 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
         routeConfig.setStatus(true);
         routeConfig.setServiceId(serviceId);
 
-        Mono<Integer> result = routeConfigService.save(routeConfig);
-        if (result.blockOptional().isPresent()) {
+        Integer result = routeConfigService.save(routeConfig);
+        if (Optional.ofNullable(result).isPresent()) {
             return result;
         }
-        return Mono.justOrEmpty(0);
+        return 0;
     }
 
     String getValueFromExpr(SimpleEvaluationContext evalCtxt, SpelExpressionParser parser, ServiceInstance instance, Map.Entry<String, String> entry) {

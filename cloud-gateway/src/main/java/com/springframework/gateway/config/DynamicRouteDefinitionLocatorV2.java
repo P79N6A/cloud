@@ -75,12 +75,7 @@ public class DynamicRouteDefinitionLocatorV2 implements RouteDefinitionRepositor
                         return false;
                     }
                     String serviceId = instance.getServiceId();
-                    Mono<RouteConfig> data = routeConfigService.findRouteConfig(serviceId);
-                    RouteConfig routeConfig=null;
-                    if(data.blockOptional().isPresent()){
-                     routeConfig = data.block();
-                    }
-                    //状态有效
+                    RouteConfig routeConfig = routeConfigService.findRouteConfig(serviceId);
                     if (Optional.ofNullable(routeConfig).isPresent() && !routeConfig.getStatus()) {
                         return false;
                     }
@@ -89,8 +84,7 @@ public class DynamicRouteDefinitionLocatorV2 implements RouteDefinitionRepositor
                 .map(instance -> {
                     String serviceId = instance.getServiceId();
                     RouteDefinition routeDefinition = new RouteDefinition();
-                    Mono<RouteConfig> data = routeConfigService.findRouteConfig(serviceId);
-                    RouteConfig routeConfig = data.block();
+                    RouteConfig routeConfig = routeConfigService.findRouteConfig(serviceId);
                     //状态有效
                     if (Optional.ofNullable(routeConfig).isPresent() && routeConfig.getStatus()) {
                         routeDefinition.setId(routeConfig.getRouteId());
@@ -124,13 +118,13 @@ public class DynamicRouteDefinitionLocatorV2 implements RouteDefinitionRepositor
                             }
                             routeDefinition.getFilters().add(filter);
                         }
-                        final Mono<Integer> saveRouteConfig = saveOrUpdateRouteConfig(routeDefinition, serviceId);
+                        final Integer saveRouteConfig = saveOrUpdateRouteConfig(routeDefinition, serviceId);
                     }
                     return routeDefinition;
                 });
     }
 
-    private Mono<Integer> saveOrUpdateRouteConfig(RouteDefinition routeDefinition, String serviceId) {
+    private Integer saveOrUpdateRouteConfig(RouteDefinition routeDefinition, String serviceId) {
         RouteConfig routeConfig = new RouteConfig();
         Date curr = new Date(Instant.now().getEpochSecond());
         StringBuilder filtersSts = new StringBuilder();
@@ -153,11 +147,11 @@ public class DynamicRouteDefinitionLocatorV2 implements RouteDefinitionRepositor
         routeConfig.setStatus(true);
         routeConfig.setServiceId(serviceId);
 
-        Mono<Integer> result = routeConfigService.save(routeConfig);
-        if (result.blockOptional().isPresent()) {
+        Integer result = routeConfigService.save(routeConfig);
+        if (Optional.ofNullable(result).isPresent()) {
             return result;
         }
-        return Mono.justOrEmpty(0);
+        return 0;
     }
 
     String getValueFromExpr(SimpleEvaluationContext evalCtxt, SpelExpressionParser parser, ServiceInstance instance, Map.Entry<String, String> entry) {

@@ -33,31 +33,21 @@ public class RouteConfigServiceImpl implements RouteConfigService {
 
 
     @Override
-    public Mono<Integer> save(RouteConfig routeConfig) {
+    public Integer save(RouteConfig routeConfig) {
         Integer result = routeConfigDao.save(routeConfig);
-        return Mono.justOrEmpty(result);
+        return result;
     }
 
-    public Flux<RouteConfig> findAllFromCache() {
-        List<RouteDefinition> routeDefinitionList = (List<RouteDefinition>) redisTemplate.opsForHash().entries(CommonConstant.ROUTE_KEY).values();
-        List<RouteConfig> result = Lists.newArrayList();
-
-        routeDefinitionList.forEach(e -> {
-            RouteConfig routeConfig = new RouteConfig();
-            result.add(routeConfig);
-        });
-        return Flux.fromIterable(result);
-    }
 
     @Override
-    public Flux<List<RouteDefinition>> findAll() {
+    public List<RouteDefinition> findAll() {
         List<RouteDefinition> routeDefinitionList = routeConfigDao.findAll();
-        return Flux.just(routeDefinitionList);
+        return routeDefinitionList;
     }
 
     @Override
-    public Mono<RouteConfig> findRouteConfig(String serviceId) {
+    public RouteConfig findRouteConfig(String serviceId) {
         RouteConfig result = routeConfigDao.findRouteConfig(serviceId);
-        return Mono.justOrEmpty(result);
+        return result;
     }
 }

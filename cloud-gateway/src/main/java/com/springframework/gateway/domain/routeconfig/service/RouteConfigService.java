@@ -18,19 +18,19 @@ public interface RouteConfigService {
      * @param routeConfig
      * @return
      */
-    Mono<Integer> save(RouteConfig routeConfig);
+    Integer save(RouteConfig routeConfig);
 
     /**
      * 查询所有路由配置
      *
      * @return
      */
-    Flux<List<RouteDefinition>> findAll();
+    List<RouteDefinition> findAll();
 
 
     /**查询路由
      * @param serviceId 服务id
      * @return
      */
-    Mono<RouteConfig> findRouteConfig(String serviceId);
+    RouteConfig findRouteConfig(String serviceId);
 }
