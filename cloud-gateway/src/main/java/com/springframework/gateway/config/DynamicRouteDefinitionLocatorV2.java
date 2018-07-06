@@ -1,8 +1,9 @@
 package com.springframework.gateway.config;
 
+import com.google.common.collect.Lists;
+import com.springframework.gateway.constant.CommonConstant;
 import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
 import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;
-import jdk.nashorn.internal.runtime.options.Option;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -10,10 +11,10 @@ import org.springframework.cloud.gateway.discovery.DiscoveryLocatorProperties;
 import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
-import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.core.style.ToStringCreator;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.SimpleEvaluationContext;
@@ -23,25 +24,22 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.time.Instant;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
+import static java.util.Collections.synchronizedMap;
 
 /**
- * @author summer 基于eureka 服务发现 动态路由
- * 2018/7/4
+ * @author summer  基于redis方式做动态路由
+ * 2018/7/3
  */
 @Slf4j
-public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRepository {
-
-    private final DiscoveryClient discoveryClient;
-    private final DiscoveryLocatorProperties properties;
-    private final String routeIdPrefix;
-    private final RouteConfigService routeConfigService;
-
-    public DiscoveryClientRouteDefinitionLocator(RouteConfigService routeConfigService, DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties) {
+public class DynamicRouteDefinitionLocatorV2 implements RouteDefinitionRepository {
+    private  DiscoveryClient discoveryClient;
+    private  DiscoveryLocatorProperties properties;
+    private  String routeIdPrefix;
+    private  RouteConfigService routeConfigService;
+    private final Map<String, RouteDefinition> routes = synchronizedMap(new LinkedHashMap<String, RouteDefinition>());
+    public DynamicRouteDefinitionLocatorV2(DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties, RouteConfigService routeConfigService) {
         this.discoveryClient = discoveryClient;
         this.properties = properties;
         this.routeConfigService = routeConfigService;
@@ -51,6 +49,8 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
             this.routeIdPrefix = this.discoveryClient.getClass().getSimpleName() + "_";
         }
     }
+
+
 
     @Override
     public Flux<RouteDefinition> getRouteDefinitions() {
@@ -76,7 +76,10 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                     }
                     String serviceId = instance.getServiceId();
                     Mono<RouteConfig> data = routeConfigService.findRouteConfig(serviceId);
-                    RouteConfig routeConfig = data.block();
+                    RouteConfig routeConfig=null;
+                    if(data.blockOptional().isPresent()){
+                     routeConfig = data.block();
+                    }
                     //状态有效
                     if (Optional.ofNullable(routeConfig).isPresent() && !routeConfig.getStatus()) {
                         return false;
@@ -100,7 +103,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                         String uri = urlExpr.getValue(evalCtxt, instance, String.class);
                         routeDefinition.setUri(URI.create(uri));
 
-                        final ServiceInstance instanceForEval = new DiscoveryClientRouteDefinitionLocator.DelegatingServiceInstance(instance, properties);
+                        final ServiceInstance instanceForEval = new DynamicRouteDefinitionLocatorV2.DelegatingServiceInstance(instance, properties);
 
                         for (PredicateDefinition original : this.properties.getPredicates()) {
                             PredicateDefinition predicate = new PredicateDefinition();

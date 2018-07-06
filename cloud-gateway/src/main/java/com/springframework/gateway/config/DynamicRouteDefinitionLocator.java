@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.springframework.gateway.constant.CommonConstant;
 import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
@@ -14,7 +13,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
 import java.time.Instant;
 import java.util.*;
 
@@ -77,17 +75,17 @@ public class DynamicRouteDefinitionLocator implements RouteDefinitionRepository 
     @Override
     @SuppressWarnings("unchecked")
     public Flux<RouteDefinition> getRouteDefinitions() {
-        List<RouteConfig> routeConfigs = (List<RouteConfig>) redis.opsForHash().entries(CommonConstant.ROUTE_KEY).values();
+//        Map<String,RouteConfig> routeConfigs = (Map<String, RouteConfig>) redis.opsForHash().entries(CommonConstant.ROUTE_KEY).values();
         List<RouteDefinition> routeDefinitionList = Lists.newArrayList();
-        routeConfigs.forEach(e -> {
-            RouteDefinition routeDefinition = new RouteDefinition();
-            routeDefinitionList.add(routeDefinition);
-            routeDefinition.setId(e.getRouteId());
-            routeDefinition.setUri(URI.create(e.getUri()));
-            routeDefinition.setFilters(e.getFilterList());
-            routeDefinition.setOrder(e.getOrder());
-            routeDefinition.setPredicates(e.getPredicateList());
-        });
+//        routeConfigs.forEach((k,v) -> {
+//            RouteDefinition routeDefinition = new RouteDefinition();
+//            routeDefinitionList.add(routeDefinition);
+//            routeDefinition.setId(v.getRouteId());
+//            routeDefinition.setUri(URI.create(v.getUri()));
+//            routeDefinition.setFilters(v.getFilterList());
+//            routeDefinition.setOrder(v.getOrder());
+//            routeDefinition.setPredicates(v.getPredicateList());
+//        });
         return Flux.fromIterable(routeDefinitionList);
     }
 }

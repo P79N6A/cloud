@@ -41,11 +41,12 @@ public class RouteConfigDaoImpl implements RouteConfigDao {
     public RouteConfig findRouteConfig(String serviceId) {
         EntityWrapper<RouteConfig> wrapper = new EntityWrapper<>();
         wrapper.eq(RouteConfig.SERVICE_ID, serviceId);
-        final List<RouteConfig> list = routeConfigMapper.selectList(wrapper);
-        if (CollectionUtils.isEmpty(list)) {
+
+//        final List<RouteConfig> list = routeConfigMapper.selectList(wrapper);
+//        if (CollectionUtils.isEmpty(list)) {
             return null;
-        }
-        return list.get(0);
+//        }
+//        return list.get(0);
     }
     @Override
     public RouteConfig findRouteConfig(String serviceId,Boolean status) {

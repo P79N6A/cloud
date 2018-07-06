@@ -24,10 +24,13 @@ import java.util.Optional;
 public class RouteConfigServiceImpl implements RouteConfigService {
     private RedisTemplate redisTemplate;
     private RouteConfigDaoImpl routeConfigDao;
+
     @Autowired
-    public RouteConfigServiceImpl(@Qualifier("redisTemplate") RedisTemplate redisTemplate) {
+    public RouteConfigServiceImpl(RedisTemplate redisTemplate, RouteConfigDaoImpl routeConfigDao) {
         this.redisTemplate = redisTemplate;
+        this.routeConfigDao = routeConfigDao;
     }
+
 
     @Override
     public Mono<Integer> save(RouteConfig routeConfig) {
@@ -45,15 +48,16 @@ public class RouteConfigServiceImpl implements RouteConfigService {
         });
         return Flux.fromIterable(result);
     }
+
     @Override
     public Flux<List<RouteDefinition>> findAll() {
-        List<RouteDefinition> routeDefinitionList =routeConfigDao.findAll();
+        List<RouteDefinition> routeDefinitionList = routeConfigDao.findAll();
         return Flux.just(routeDefinitionList);
     }
 
     @Override
     public Mono<RouteConfig> findRouteConfig(String serviceId) {
-        RouteConfig result= routeConfigDao.findRouteConfig(serviceId);
+        RouteConfig result = routeConfigDao.findRouteConfig(serviceId);
         return Mono.justOrEmpty(result);
     }
 }
