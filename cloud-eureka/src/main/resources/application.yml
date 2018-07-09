@@ -8,7 +8,12 @@ spring:
       name: admin
   application:
     name: cloud-eureka
-
+  boot:
+      admin:
+        client:
+          instance:
+            name: cloud-eureka
+          enabled: true
 eureka:
   server:
     batch-replication: true
