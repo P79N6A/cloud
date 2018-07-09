@@ -1,0 +1,8 @@
+package com.springframework.sms.common.constant;
+
+/** @author summer*/
+public class MqQueueConstant {
+    public static final String MOBILE_CODE_QUEUE = "";
+    public static final String MOBILE_SERVICE_STATUS_CHANGE = "";
+    public static final String DINGTALK_SERVICE_STATUS_CHANGE = "";
+}
