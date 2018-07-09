@@ -27,21 +27,19 @@ import java.util.Map;
  * 2018/7/4
  */
 @RestController
-@RequestMapping("/gatewayroute")
+@RequestMapping("/gateway")
 @Slf4j
 public class GatewayRouteController  implements ApplicationEventPublisherAware {
 
     private RouteDefinitionLocator routeDefinitionLocator;
-    private GatewayControllerEndpoint gatewayControllerEndpoint;
     private List<GlobalFilter> globalFilters;
     private List<GatewayFilterFactory> gatewayFilters;
     private RouteDefinitionWriter routeDefinitionWriter;
     private RouteLocator routeLocator;
     private ApplicationEventPublisher publisher;
 
-    public GatewayRouteController(RouteDefinitionLocator routeDefinitionLocator, GatewayControllerEndpoint gatewayControllerEndpoint, List<GlobalFilter> globalFilters, List<GatewayFilterFactory> gatewayFilters, RouteDefinitionWriter routeDefinitionWriter, RouteLocator routeLocator, ApplicationEventPublisher publisher) {
+    public GatewayRouteController(RouteDefinitionLocator routeDefinitionLocator, List<GlobalFilter> globalFilters, List<GatewayFilterFactory> gatewayFilters, RouteDefinitionWriter routeDefinitionWriter, RouteLocator routeLocator, ApplicationEventPublisher publisher) {
         this.routeDefinitionLocator = routeDefinitionLocator;
-        this.gatewayControllerEndpoint = gatewayControllerEndpoint;
         this.globalFilters = globalFilters;
         this.gatewayFilters = gatewayFilters;
         this.routeDefinitionWriter = routeDefinitionWriter;
@@ -58,7 +56,7 @@ public class GatewayRouteController  implements ApplicationEventPublisherAware {
 
     @PostMapping("/refresh")
     public Mono<Void> refresh() {
-        this.publisher.publishEvent(new RefreshRoutesEvent(gatewayControllerEndpoint));
+        this.publisher.publishEvent(new RefreshRoutesEvent(this));
         return Mono.empty();
     }
     @GetMapping("/globalfilters")

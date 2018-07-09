@@ -1,7 +1,6 @@
 package com.springframework.gateway.config;
 
 import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.gateway.discovery.DiscoveryLocatorProperties;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +12,6 @@ import org.springframework.data.redis.core.RedisTemplate;
  * 2018/7/3
  */
 @Configuration
-@ConditionalOnProperty(name = "spring.cloud.gateway.enabled", matchIfMissing = true)
 public class DynamicRouteConfigure {
     private RedisTemplate redisTemplate;
     private DiscoveryClient discoveryClient;

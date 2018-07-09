@@ -7,7 +7,7 @@ spring:
       discovery:
         locator:
           lower-case-service-id: true
-          enabled: true
+          enabled: false
 #      routes:
 #      - id: admin-server
 #        uri: lb://ADMIN-SERVER
