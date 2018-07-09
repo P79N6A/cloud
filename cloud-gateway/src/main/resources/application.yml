@@ -52,8 +52,8 @@ spring:
     maxOpenPreparedStatements: 20
 
 mybatis-plus:
-  mapper-locations: classpath*:mapper/*.xml
-  typeAliasesPackage: com.springframework.gateway.domain.*.entity.*
+  mapper-locations: classpath:mapper/*.xml
+  typeAliasesPackage: com.springframework.gateway.domain.*.entity
   configuration:
     map-underscore-to-camel-case: true  #使用驼峰法映射属性
     defaultStatementTimeout: 25000
@@ -72,7 +72,7 @@ mybatis-plus:
     #刷新mapper 调试神器
     refresh-mapper: true
     #数据库大写下划线转换
-    #capital-mode: true
+    capital-mode: true
     #序列接口实现类配置
     #key-generator: com.baomidou.springboot.xxx
     #逻辑删除配置

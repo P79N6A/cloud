@@ -1,5 +1,6 @@
 package com.springframework.gateway.domain.routeconfig.entity;
 
+import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -21,48 +22,18 @@ import java.util.List;
  * @author summer
  * 2018/7/2
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("route_config")
-public class RouteConfig implements Serializable {
+public class RouteConfig extends Model<RouteConfig> {
 
-    private static final long serialVersionUID = 1L;
-    private List<PredicateDefinition> predicateList = Lists.newArrayList();
-    private List<FilterDefinition> filterList = Lists.newArrayList();
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     @TableField("route_id")
     private String routeId;
-
-    /**
-     * @return 获取路由
-     */
-    public List<PredicateDefinition> getPredicateList() {
-        if (StringUtils.isNotBlank(getPredicates())) {
-            final String[] predicateArr = StringUtils.split(StringUtils.trim(getPredicates()), "-");
-            Arrays.stream(predicateArr).forEach(s -> {
-                PredicateDefinition predicateDefinition = new PredicateDefinition(s);
-                predicateList.add(predicateDefinition);
-            });
-        }
-        return predicateList;
-    }
-
-    /**
-     * @return 过滤器
-     */
-    public List<FilterDefinition> getFilterList() {
-        if (StringUtils.isNotBlank(getFilters())) {
-            final String[] filterArr = StringUtils.split(getFilters(), "-");
-            Arrays.stream(filterArr).forEach(s -> {
-                FilterDefinition filterDefinition = new FilterDefinition(s);
-                filterList.add(filterDefinition);
-            });
-        }
-        return filterList;
-    }
 
     /**
      * 服务id
@@ -103,14 +74,6 @@ public class RouteConfig implements Serializable {
      */
     private String filters;
 
-    /**
-     * 获取路由规则
-     *
-     * @return 默认如果规则为空，按照serviceId去匹配
-     */
-    public String getPredicates() {
-        return StringUtils.isBlank(predicates) ? PATH + this.getServiceId() : predicates;
-    }
 
     /**
      * 创建时间
@@ -149,4 +112,8 @@ public class RouteConfig implements Serializable {
 
     public static final String OPERATOR = "operator";
 
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 }

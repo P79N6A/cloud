@@ -2,6 +2,7 @@ package com.springframework.gateway.domain.routeconfig.service.impl;
 
 import com.google.common.collect.Lists;
 import com.springframework.gateway.constant.CommonConstant;
+import com.springframework.gateway.domain.routeconfig.dto.RouteConfigDTO;
 import com.springframework.gateway.domain.routeconfig.repository.impl.RouteConfigDaoImpl;
 import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;
 import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
@@ -34,20 +35,17 @@ public class RouteConfigServiceImpl implements RouteConfigService {
 
     @Override
     public Integer save(RouteConfig routeConfig) {
-        Integer result = routeConfigDao.save(routeConfig);
-        return result;
+        return routeConfigDao.save(routeConfig);
     }
 
 
     @Override
     public List<RouteDefinition> findAll() {
-        List<RouteDefinition> routeDefinitionList = routeConfigDao.findAll();
-        return routeDefinitionList;
+        return routeConfigDao.findAll();
     }
 
     @Override
-    public RouteConfig findRouteConfig(String serviceId) {
-        RouteConfig result = routeConfigDao.findRouteConfig(serviceId);
-        return result;
+    public RouteConfigDTO findRouteConfig(String serviceId) {
+        return routeConfigDao.findRouteConfig(serviceId);
     }
 }

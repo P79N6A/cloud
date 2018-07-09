@@ -1,5 +1,6 @@
 package com.springframework.gateway.domain.routeconfig.service;
 
+import com.springframework.gateway.domain.routeconfig.dto.RouteConfigDTO;
 import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import reactor.core.publisher.Flux;
@@ -32,5 +33,5 @@ public interface RouteConfigService {
      * @param serviceId 服务id
      * @return
      */
-    RouteConfig findRouteConfig(String serviceId);
+    RouteConfigDTO findRouteConfig(String serviceId);
 }

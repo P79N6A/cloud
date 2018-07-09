@@ -1,6 +1,6 @@
 package com.springframework.demo.web;
 
-import com.springframework.demo.config.RouteConfig;
+import com.springframework.demo.domain.routeconfig.entity.RouteConfig;
 import com.springframework.demo.domain.routeconfig.service.RouteConfigService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author summer
@@ -29,14 +31,26 @@ public class RouteConfigController {
 
     @PostMapping("")
     @ApiOperation(value = "保存路由配置", notes = "保存路由配置信息")
-    public Mono<RouteConfig> save(RouteConfig routeConfig) {
+    public Mono<RouteConfig> save() {
+        RouteConfig routeConfig = new RouteConfig();
+        routeConfig.setId(null);
+        routeConfig.setCreateTime(new Date());
+        routeConfig.setFilters(" ");
+        routeConfig.setOperator("");
+        routeConfig.setPredicates(" ");
+        routeConfig.setOrder(1);
+        routeConfig.setRouteId("uid");
+        routeConfig.setServiceId("demo");
+        routeConfig.setStatus(false);
+        routeConfig.setUpdateTime(new Date());
+        routeConfig.setUri("");
         return this.routeConfigService.save(routeConfig);
     }
 
     @GetMapping("")
     @ApiOperation(value = "查询路由配置", notes = "查询路由配置信息")
-    public Flux<String> findAll() {
-
-        return Flux.just("成功");
+    public Mono<String> findAll() {
+        List<RouteConfig> data =  routeConfigService.findRouteConfigList();
+        return Mono.just("成功");
     }
 }

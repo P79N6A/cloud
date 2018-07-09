@@ -1,8 +1,10 @@
 package com.springframework.gateway.config;
 
+import com.alibaba.druid.support.json.JSONUtils;
+import com.springframework.common.utils.JsonUtils;
+import com.springframework.gateway.domain.routeconfig.dto.RouteConfigDTO;
 import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
 import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;
-import jdk.nashorn.internal.runtime.options.Option;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -10,9 +12,7 @@ import org.springframework.cloud.gateway.discovery.DiscoveryLocatorProperties;
 import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
-import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -22,27 +22,23 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
-import java.time.Duration;
 import java.time.Instant;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
+import static java.util.Collections.synchronizedMap;
 
 /**
- * @author summer 基于eureka 服务发现 动态路由
- * 2018/7/4
+ * @author summer  基于redis方式做动态路由
+ * 2018/7/3
  */
 @Slf4j
 public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRepository {
-
-    private final DiscoveryClient discoveryClient;
-    private final DiscoveryLocatorProperties properties;
-    private final String routeIdPrefix;
-    private final RouteConfigService routeConfigService;
-
-    public DiscoveryClientRouteDefinitionLocator(RouteConfigService routeConfigService, DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties) {
+    private  DiscoveryClient discoveryClient;
+    private  DiscoveryLocatorProperties properties;
+    private  String routeIdPrefix;
+    private  RouteConfigService routeConfigService;
+    private final Map<String, RouteDefinition> routes = synchronizedMap(new LinkedHashMap<String, RouteDefinition>());
+    public DiscoveryClientRouteDefinitionLocator(DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties, RouteConfigService routeConfigService) {
         this.discoveryClient = discoveryClient;
         this.properties = properties;
         this.routeConfigService = routeConfigService;
@@ -52,6 +48,8 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
             this.routeIdPrefix = this.discoveryClient.getClass().getSimpleName() + "_";
         }
     }
+
+
 
     @Override
     public Flux<RouteDefinition> getRouteDefinitions() {
@@ -76,8 +74,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                         return false;
                     }
                     String serviceId = instance.getServiceId();
-                    RouteConfig routeConfig = routeConfigService.findRouteConfig(serviceId);
-                    //状态有效
+                    RouteConfigDTO routeConfig = routeConfigService.findRouteConfig(serviceId);
                     if (Optional.ofNullable(routeConfig).isPresent() && !routeConfig.getStatus()) {
                         return false;
                     }
@@ -86,7 +83,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                 .map(instance -> {
                     String serviceId = instance.getServiceId();
                     RouteDefinition routeDefinition = new RouteDefinition();
-                    RouteConfig routeConfig = routeConfigService.findRouteConfig(serviceId);
+                    RouteConfigDTO routeConfig = routeConfigService.findRouteConfig(serviceId);
                     //状态有效
                     if (Optional.ofNullable(routeConfig).isPresent() && routeConfig.getStatus()) {
                         routeDefinition.setId(routeConfig.getRouteId());
@@ -120,40 +117,31 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                             }
                             routeDefinition.getFilters().add(filter);
                         }
-                        final Integer saveRouteConfig = saveRouteConfig(routeDefinition, serviceId);
+                        final Integer saveRouteConfig = saveOrUpdateRouteConfig(routeDefinition, serviceId);
+                        if(saveRouteConfig==0){
+                            log.warn("保存路由配置数量为{},参数{}，服务id{}",saveRouteConfig,routeDefinition,serviceId);
+                        }
                     }
                     return routeDefinition;
                 });
     }
 
-    private Integer saveRouteConfig(RouteDefinition routeDefinition, String serviceId) {
+    private Integer saveOrUpdateRouteConfig(RouteDefinition routeDefinition, String serviceId) {
         RouteConfig routeConfig = new RouteConfig();
         Date curr = new Date(Instant.now().getEpochSecond());
-        StringBuilder filtersSts = new StringBuilder();
-        StringBuilder predicateListStr = new StringBuilder();
-        List<FilterDefinition> filters = null;
-        List<PredicateDefinition> predicateList = null;
-        filters = routeDefinition.getFilters();
-        filters.forEach(e -> {
-            filtersSts.append(e.toString()).append("-");
-        });
-        predicateList = routeDefinition.getPredicates();
-        predicateList.forEach(e -> {
-            predicateListStr.append(e.toString()).append("-");
-        });
+        routeConfig.setId(null);
         routeConfig.setRouteId(routeDefinition.getId());
         routeConfig.setCreateTime(curr);
         routeConfig.setUpdateTime(curr);
-        routeConfig.setFilters(filtersSts.toString());
-        routeConfig.setPredicates(predicateListStr.toString());
+        routeConfig.setFilters(JsonUtils.writeObjectToJson(routeDefinition.getFilters()));
+        routeConfig.setPredicates(JsonUtils.writeObjectToJson(routeDefinition.getPredicates()));
         routeConfig.setStatus(true);
         routeConfig.setServiceId(serviceId);
-
+        routeConfig.setServiceName(serviceId);
+        routeConfig.setUri(routeDefinition.getUri()+"");
+        routeConfig.setOperator(DiscoveryClientRouteDefinitionLocator.class.getSimpleName());
         Integer result = routeConfigService.save(routeConfig);
-        if (Optional.ofNullable(result).isPresent()) {
-            return result;
-        }
-        return 0;
+        return Optional.ofNullable(result).isPresent()?result:0;
     }
 
     String getValueFromExpr(SimpleEvaluationContext evalCtxt, SpelExpressionParser parser, ServiceInstance instance, Map.Entry<String, String> entry) {

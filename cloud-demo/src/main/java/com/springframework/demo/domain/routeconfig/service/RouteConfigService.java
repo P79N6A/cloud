@@ -1,8 +1,10 @@
 package com.springframework.demo.domain.routeconfig.service;
 
-import com.springframework.demo.config.RouteConfig;
+import com.springframework.demo.domain.routeconfig.entity.RouteConfig;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 /**
  * @author summer
@@ -23,4 +25,9 @@ public interface RouteConfigService {
      * @return
      */
     Flux<RouteConfig> findAll();
+
+    /**
+     * @return
+     */
+    List<RouteConfig> findRouteConfigList();
 }

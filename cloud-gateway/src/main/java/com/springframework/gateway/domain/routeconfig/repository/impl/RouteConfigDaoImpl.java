@@ -2,6 +2,7 @@ package com.springframework.gateway.domain.routeconfig.repository.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.springframework.gateway.domain.routeconfig.dto.RouteConfigDTO;
 import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
 import com.springframework.gateway.domain.routeconfig.mapper.RouteConfigMapper;
 import com.springframework.gateway.domain.routeconfig.repository.RouteConfigDao;
@@ -38,25 +39,16 @@ public class RouteConfigDaoImpl implements RouteConfigDao {
     }
 
     @Override
-    public RouteConfig findRouteConfig(String serviceId) {
-        EntityWrapper<RouteConfig> wrapper = new EntityWrapper<>();
-        wrapper.eq(RouteConfig.SERVICE_ID, serviceId);
-
-//        final List<RouteConfig> list = routeConfigMapper.selectList(wrapper);
-//        if (CollectionUtils.isEmpty(list)) {
-            return null;
-//        }
-//        return list.get(0);
+    public RouteConfigDTO findRouteConfig(String serviceId) {
+        final List<RouteConfigDTO> list = routeConfigMapper.selecRouteConfigtList(serviceId);
+        return CollectionUtils.isEmpty(list)?null:list.get(0);
     }
     @Override
-    public RouteConfig findRouteConfig(String serviceId,Boolean status) {
+    public RouteConfigDTO findRouteConfig(String serviceId,Boolean status) {
         EntityWrapper<RouteConfig> wrapper = new EntityWrapper<>();
         wrapper.eq(RouteConfig.SERVICE_ID, serviceId);
         wrapper.eq(RouteConfig.STATUS, status);
         final List<RouteConfig> list = routeConfigMapper.selectList(wrapper);
-        if (CollectionUtils.isEmpty(list)) {
-            return null;
-        }
-        return list.get(0);
+        return null;
     }
 }

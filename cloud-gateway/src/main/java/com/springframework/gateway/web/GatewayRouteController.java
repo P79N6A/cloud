@@ -1,7 +1,7 @@
 package com.springframework.gateway.web;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.gateway.actuate.GatewayControllerEndpoint;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -27,26 +27,26 @@ import java.util.Map;
  * 2018/7/4
  */
 @RestController
-@RequestMapping("/gateway")
-public class GatewayRouteController implements ApplicationEventPublisherAware {
-
-    private static final Log log = LogFactory.getLog(org.springframework.cloud.gateway.actuate.GatewayControllerEndpoint.class);
+@RequestMapping("/gatewayroute")
+@Slf4j
+public class GatewayRouteController  implements ApplicationEventPublisherAware {
 
     private RouteDefinitionLocator routeDefinitionLocator;
+    private GatewayControllerEndpoint gatewayControllerEndpoint;
     private List<GlobalFilter> globalFilters;
     private List<GatewayFilterFactory> gatewayFilters;
     private RouteDefinitionWriter routeDefinitionWriter;
     private RouteLocator routeLocator;
     private ApplicationEventPublisher publisher;
 
-    public GatewayRouteController(RouteDefinitionLocator routeDefinitionLocator, List<GlobalFilter> globalFilters,
-                                     List<GatewayFilterFactory> gatewayFilters, RouteDefinitionWriter routeDefinitionWriter,
-                                     RouteLocator routeLocator) {
+    public GatewayRouteController(RouteDefinitionLocator routeDefinitionLocator, GatewayControllerEndpoint gatewayControllerEndpoint, List<GlobalFilter> globalFilters, List<GatewayFilterFactory> gatewayFilters, RouteDefinitionWriter routeDefinitionWriter, RouteLocator routeLocator, ApplicationEventPublisher publisher) {
         this.routeDefinitionLocator = routeDefinitionLocator;
+        this.gatewayControllerEndpoint = gatewayControllerEndpoint;
         this.globalFilters = globalFilters;
         this.gatewayFilters = gatewayFilters;
         this.routeDefinitionWriter = routeDefinitionWriter;
         this.routeLocator = routeLocator;
+        this.publisher = publisher;
     }
 
     @Override
@@ -58,15 +58,13 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
 
     @PostMapping("/refresh")
     public Mono<Void> refresh() {
-        this.publisher.publishEvent(new RefreshRoutesEvent(this));
+        this.publisher.publishEvent(new RefreshRoutesEvent(gatewayControllerEndpoint));
         return Mono.empty();
     }
-
     @GetMapping("/globalfilters")
     public Mono<HashMap<String, Object>> globalfilters() {
         return getNamesToOrders(this.globalFilters);
     }
-
     @GetMapping("/routefilters")
     public Mono<HashMap<String, Object>> routefilers() {
         return getNamesToOrders(this.gatewayFilters);
@@ -79,13 +77,12 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
     private HashMap<String, Object> putItem(HashMap<String, Object> map, Object o) {
         Integer order = null;
         if (o instanceof Ordered) {
-            order = ((Ordered)o).getOrder();
+            order = ((Ordered) o).getOrder();
         }
         //filters.put(o.getClass().getName(), order);
         map.put(o.toString(), order);
         return map;
     }
-
     // TODO: Flush out routes without a definition
     @GetMapping("/routes")
     public Mono<List<Map<String, Object>>> routes() {
@@ -135,12 +132,12 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
     @PostMapping("/routes/{id}")
     @SuppressWarnings("unchecked")
     public Mono<ResponseEntity<Void>> save(@PathVariable String id, @RequestBody Mono<RouteDefinition> route) {
-        return this.routeDefinitionWriter.save(route.map(r ->  {
+        return this.routeDefinitionWriter.save(route.map(r -> {
             r.setId(id);
             log.debug("Saving route: " + route);
             return r;
         })).then(Mono.defer(() ->
-                Mono.just(ResponseEntity.created(URI.create("/routes/"+id)).build())
+                Mono.just(ResponseEntity.created(URI.create("/routes/" + id)).build())
         ));
     }
 
