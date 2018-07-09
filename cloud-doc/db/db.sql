@@ -1,5 +1,6 @@
 CREATE TABLE `route_config` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `route_id` varchar(255) NOT NULL DEFAULT '' COMMENT '路由id',
   `service_id` varchar(255) NOT NULL DEFAULT '' COMMENT '服务id',
   `service_name` varchar(255) NOT NULL DEFAULT '' COMMENT '服务名称',
   `status` bit(1) NOT NULL COMMENT '是否有效（0无效，1有效）',
