@@ -6,7 +6,7 @@
     <groupId>com.springframework</groupId>
     <artifactId>cloud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>cloud</name>
     <description>Cloud project for Spring Boot 2.0</description>
@@ -17,6 +17,7 @@
         <module>cloud-gateway</module>
         <module>cloud-doc</module>
         <module>cloud-demo</module>
+        <module>cloud-config</module>
     </modules>
 
 </project>
