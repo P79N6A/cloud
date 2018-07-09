@@ -1,6 +1,7 @@
 package com.springframework.gateway.web;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.actuate.GatewayControllerEndpoint;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -38,7 +39,7 @@ public class GatewayRouteController  implements ApplicationEventPublisherAware {
     private RouteLocator routeLocator;
     private ApplicationEventPublisher publisher;
 
-    public GatewayRouteController(RouteDefinitionLocator routeDefinitionLocator, List<GlobalFilter> globalFilters, List<GatewayFilterFactory> gatewayFilters, RouteDefinitionWriter routeDefinitionWriter, RouteLocator routeLocator, ApplicationEventPublisher publisher) {
+    public GatewayRouteController(RouteDefinitionLocator routeDefinitionLocator, List<GlobalFilter> globalFilters,@Autowired(required = false)  List<GatewayFilterFactory> gatewayFilters, RouteDefinitionWriter routeDefinitionWriter, RouteLocator routeLocator, ApplicationEventPublisher publisher) {
         this.routeDefinitionLocator = routeDefinitionLocator;
         this.globalFilters = globalFilters;
         this.gatewayFilters = gatewayFilters;
@@ -55,9 +56,9 @@ public class GatewayRouteController  implements ApplicationEventPublisherAware {
     // TODO: Add uncommited or new but not active routes endpoint
 
     @PostMapping("/refresh")
-    public Mono<Void> refresh() {
+    public Mono<String> refresh() {
         this.publisher.publishEvent(new RefreshRoutesEvent(this));
-        return Mono.empty();
+        return Mono.just("刷新成功");
     }
     @GetMapping("/globalfilters")
     public Mono<HashMap<String, Object>> globalfilters() {
