@@ -18,7 +18,7 @@
 package com.springframework.sms.handler;
 
 
-import com.springframework.sms.common.MobileMsgTemplate;
+import com.springframework.sms.domain.dto.MobileMsgTemplateDTO;
 
 /**
  * @author summer
@@ -30,38 +30,38 @@ public abstract class AbstractMessageHandler implements SmsMessageHandler {
     /**
      * 执行入口
      *
-     * @param mobileMsgTemplate 信息
+     * @param mobileMsgTemplateDTO 信息
      */
     @Override
-    public void execute(MobileMsgTemplate mobileMsgTemplate) {
-        check(mobileMsgTemplate);
-        if (!process(mobileMsgTemplate)) {
-            fail(mobileMsgTemplate);
+    public void execute(MobileMsgTemplateDTO mobileMsgTemplateDTO) {
+        check(mobileMsgTemplateDTO);
+        if (!process(mobileMsgTemplateDTO)) {
+            fail(mobileMsgTemplateDTO);
         }
     }
 
     /**
      * 数据校验
      *
-     * @param mobileMsgTemplate 信息
+     * @param mobileMsgTemplateDTO 信息
      */
     @Override
-    public abstract void check(MobileMsgTemplate mobileMsgTemplate);
+    public abstract void check(MobileMsgTemplateDTO mobileMsgTemplateDTO);
 
     /**
      * 业务处理
      *
-     * @param mobileMsgTemplate 信息
+     * @param mobileMsgTemplateDTO 信息
      * @return boolean
      */
     @Override
-    public abstract boolean process(MobileMsgTemplate mobileMsgTemplate);
+    public abstract boolean process(MobileMsgTemplateDTO mobileMsgTemplateDTO);
 
     /**
      * 失败处理
      *
-     * @param mobileMsgTemplate 信息
+     * @param mobileMsgTemplateDTO 信息
      */
     @Override
-    public abstract void fail(MobileMsgTemplate mobileMsgTemplate);
+    public abstract void fail(MobileMsgTemplateDTO mobileMsgTemplateDTO);
 }

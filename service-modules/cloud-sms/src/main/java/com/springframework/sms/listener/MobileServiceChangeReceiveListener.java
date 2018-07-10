@@ -17,7 +17,7 @@
 
 package com.springframework.sms.listener;
 
-import com.springframework.sms.common.MobileMsgTemplate;
+import com.springframework.sms.domain.dto.MobileMsgTemplateDTO;
 import com.springframework.sms.common.constant.MqQueueConstant;
 import com.springframework.sms.handler.SmsMessageHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -42,18 +42,18 @@ public class MobileServiceChangeReceiveListener {
 
 
     @RabbitHandler
-    public void receive(MobileMsgTemplate mobileMsgTemplate) {
+    public void receive(MobileMsgTemplateDTO mobileMsgTemplateDTO) {
         long startTime = System.currentTimeMillis();
-        log.info("消息中心接收到短信发送请求-> 手机号：{} -> 信息体：{} ", mobileMsgTemplate.getMobile(), mobileMsgTemplate.getContext());
-        String channel = mobileMsgTemplate.getChannel();
+        log.info("消息中心接收到短信发送请求-> 手机号：{} -> 信息体：{} ", mobileMsgTemplateDTO.getMobile(), mobileMsgTemplateDTO.getContext());
+        String channel = mobileMsgTemplateDTO.getChannel();
         SmsMessageHandler messageHandler = messageHandlerMap.get(channel);
         if (messageHandler == null) {
             log.error("没有找到指定的路由通道，不进行发送处理完毕！");
             return;
         }
 
-        messageHandler.execute(mobileMsgTemplate);
+        messageHandler.execute(mobileMsgTemplateDTO);
         long useTime = System.currentTimeMillis() - startTime;
-        log.info("调用 {} 短信网关处理完毕，耗时 {}毫秒", mobileMsgTemplate.getType(), useTime);
+        log.info("调用 {} 短信网关处理完毕，耗时 {}毫秒", mobileMsgTemplateDTO.getType(), useTime);
     }
 }

@@ -15,55 +15,29 @@
  * Author: summer (wangiegie@gmail.com)
  */
 
-package com.springframework.sms.common;
+package com.springframework.sms.domain.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
-import java.io.Serializable;
 
 /**
  * @author summer
  * @date 2018/1/15
  * 钉钉消息模板
  * msgtype : text
- * text : {"content":"服务: pig-upms-service 状态：UP"}
+ * text : {"content":"服务: serviceId 状态：UP"}
  */
+@EqualsAndHashCode()
 @Data
 @ToString
-public class DingTalkMsgTemplate implements Serializable {
+public class DingTalkMsgTemplateDTO {
     private String msgtype;
     private TextBean text;
 
-    public String getMsgtype() {
-        return msgtype;
-    }
-
-    public void setMsgtype(String msgtype) {
-        this.msgtype = msgtype;
-    }
-
-    public TextBean getText() {
-        return text;
-    }
-
-    public void setText(TextBean text) {
-        this.text = text;
-    }
-
+    @Data
     public static class TextBean {
-        /**
-         * content : 服务: pig-upms-service 状态：UP
-         */
-
         private String content;
 
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
     }
 }

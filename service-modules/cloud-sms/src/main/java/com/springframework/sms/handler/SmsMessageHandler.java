@@ -18,7 +18,7 @@
 package com.springframework.sms.handler;
 
 
-import com.springframework.sms.common.MobileMsgTemplate;
+import com.springframework.sms.domain.dto.MobileMsgTemplateDTO;
 
 /**
  * @author summer
@@ -28,29 +28,29 @@ public interface SmsMessageHandler {
     /**
      * 执行入口
      *
-     * @param mobileMsgTemplate 信息
+     * @param mobileMsgTemplateDTO 信息
      */
-    void execute(MobileMsgTemplate mobileMsgTemplate);
+    void execute(MobileMsgTemplateDTO mobileMsgTemplateDTO);
 
     /**
      * 数据校验
      *
-     * @param mobileMsgTemplate 信息
+     * @param mobileMsgTemplateDTO 信息
      */
-    void check(MobileMsgTemplate mobileMsgTemplate);
+    void check(MobileMsgTemplateDTO mobileMsgTemplateDTO);
 
     /**
      * 业务处理
      *
-     * @param mobileMsgTemplate 信息
+     * @param mobileMsgTemplateDTO 信息
      * @return boolean
      */
-    boolean process(MobileMsgTemplate mobileMsgTemplate);
+    boolean process(MobileMsgTemplateDTO mobileMsgTemplateDTO);
 
     /**
      * 失败处理
      *
-     * @param mobileMsgTemplate 信息
+     * @param mobileMsgTemplateDTO 信息
      */
-    void fail(MobileMsgTemplate mobileMsgTemplate);
+    void fail(MobileMsgTemplateDTO mobileMsgTemplateDTO);
 }

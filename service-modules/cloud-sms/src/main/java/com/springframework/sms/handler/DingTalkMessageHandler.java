@@ -17,12 +17,10 @@
 
 package com.springframework.sms.handler;
 
-import com.springframework.sms.common.DingTalkMsgTemplate;
+import com.springframework.sms.domain.dto.DingTalkMsgTemplateDTO;
 import com.springframework.sms.config.DingTalkPropertiesConfig;
-import com.sun.deploy.net.HttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -53,12 +51,12 @@ public class DingTalkMessageHandler {
             return false;
         }
 
-        DingTalkMsgTemplate dingTalkMsgTemplate = new DingTalkMsgTemplate();
-        dingTalkMsgTemplate.setMsgtype("text");
-        DingTalkMsgTemplate.TextBean textBean = new DingTalkMsgTemplate.TextBean();
+        DingTalkMsgTemplateDTO dingTalkMsgTemplateDTO = new DingTalkMsgTemplateDTO();
+        dingTalkMsgTemplateDTO.setMsgtype("text");
+        DingTalkMsgTemplateDTO.TextBean textBean = new DingTalkMsgTemplateDTO.TextBean();
         textBean.setContent(text);
-        dingTalkMsgTemplate.setText(textBean);
-        final String result = restTemplate.postForObject(URI.create(webhook), dingTalkMsgTemplate, String.class);
+        dingTalkMsgTemplateDTO.setText(textBean);
+        final String result = restTemplate.postForObject(URI.create(webhook), dingTalkMsgTemplateDTO, String.class);
         log.info("钉钉提醒成功,报文响应:{}", result);
         return true;
     }

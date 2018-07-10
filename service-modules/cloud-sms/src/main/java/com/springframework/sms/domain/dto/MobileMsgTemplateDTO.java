@@ -15,7 +15,7 @@
  * Author: summer (wangiegie@gmail.com)
  */
 
-package com.springframework.sms.common;
+package com.springframework.sms.domain.dto;
 
 import lombok.Data;
 
@@ -27,7 +27,7 @@ import java.io.Serializable;
  * 短信消息模板
  */
 @Data
-public class MobileMsgTemplate implements Serializable {
+public class MobileMsgTemplateDTO implements Serializable {
     /**
      * 手机号
      */
@@ -54,7 +54,7 @@ public class MobileMsgTemplate implements Serializable {
      */
     private String template;
 
-    public MobileMsgTemplate(String mobile, String context, String channel, String signName, String template){
+    public MobileMsgTemplateDTO(String mobile, String context, String channel, String signName, String template){
         this.mobile = mobile;
         this.context = context;
         this.channel = channel;
