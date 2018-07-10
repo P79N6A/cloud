@@ -19,7 +19,7 @@
         <module>cloud-demo</module>
         <module>cloud-config</module>
         <module>cloud-common</module>
-        <module>cloud-base-service-modules</module>
+        <module>service-modules</module>
     </modules>
 
 </project>

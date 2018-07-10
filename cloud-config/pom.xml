@@ -39,39 +39,6 @@
 		<url>https://github.com/ctripcorp/apollo/issues</url>
 	</issueManagement>
 
-	<developers>
-		<developer>
-			<id>nobodyiam</id>
-			<name>Jason(Shun) Song</name>
-			<email>nobodyiam at gmail.com</email>
-			<organization>Ctrip, Inc.</organization>
-			<organizationUrl>http://www.ctrip.com</organizationUrl>
-			<roles>
-				<role>Developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<id>lepdou</id>
-			<name>Le Zhang</name>
-			<email>lepdou at gmail.com</email>
-			<organization>Ctrip, Inc.</organization>
-			<organizationUrl>http://www.ctrip.com</organizationUrl>
-			<roles>
-				<role>Developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<id>yiming187</id>
-			<name>Billy(Yiming) Liu</name>
-			<email>liuyiming.vip at gmail.com</email>
-			<organization>Ctrip, Inc.</organization>
-			<organizationUrl>http://www.ctrip.com</organizationUrl>
-			<roles>
-				<role>Developer(Inactive)</role>
-			</roles>
-		</developer>
-	</developers>
-
 	<properties>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -87,7 +54,7 @@
 		<maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
 		<!-- for travis usage -->
 		<github.global.server>github</github.global.server>
-		<github.global.oauth2Token>${env.GITHUB_OAUTH_TOKEN}</github.global.oauth2Token>
+		<!--<github.global.oauth2Token>${env.GITHUB_OAUTH_TOKEN}</github.global.oauth2Token>-->
 	</properties>
 
 	<modules>
