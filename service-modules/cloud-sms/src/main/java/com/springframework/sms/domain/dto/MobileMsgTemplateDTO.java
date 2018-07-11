@@ -42,7 +42,6 @@ public class MobileMsgTemplateDTO implements Serializable {
     private String channel;
     /**
      * 短信类型(验证码或者通知短信)
-     * 暂时不用，留着后面存数据库备用吧
      */
     private String type;
     /**
@@ -54,11 +53,4 @@ public class MobileMsgTemplateDTO implements Serializable {
      */
     private String template;
 
-    public MobileMsgTemplateDTO(String mobile, String context, String channel, String signName, String template){
-        this.mobile = mobile;
-        this.context = context;
-        this.channel = channel;
-        this.signName = signName;
-        this.template = template;
-    }
 }

@@ -12,8 +12,9 @@ import lombok.ToString;
  */
 @Data
 @ToString
-@TableName("ding_talk_msg")
+@TableName("t_ding_talk_msg")
 public class DingTalkMsgTemplate {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+    private String context;
 }

@@ -1,6 +1,7 @@
 package com.springframework.sms.domain.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
@@ -9,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author summer
@@ -17,7 +19,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ToString
-@TableName("mobile_sms")
+@TableName("t_mobile_sms")
 public class MobileMsgTemplate extends Model<MobileMsgTemplate> {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
@@ -33,6 +35,12 @@ public class MobileMsgTemplate extends Model<MobileMsgTemplate> {
      * 短信通道
      */
     private String channel;
+
+    /**
+     * 运行商
+     */
+    @TableField("operators_id")
+    private Long operatorsId;
     /**
      * 短信类型(验证码或者通知短信)
      */
@@ -45,6 +53,18 @@ public class MobileMsgTemplate extends Model<MobileMsgTemplate> {
      * 短信模板
      */
     private String template;
+    /**
+     * ctime
+     */
+    private Date createTime;
+    /**
+     * utime
+     */
+    private Date updateTime;
+    /**
+     * 操作人
+     */
+    private String operator;
 
     @Override
     protected Serializable pkVal() {

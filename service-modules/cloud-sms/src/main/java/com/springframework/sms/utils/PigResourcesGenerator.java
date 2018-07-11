@@ -15,7 +15,7 @@
  * Author: summer (wangiegie@gmail.com)
  */
 
-package com.springframework.demo.utils;
+package com.springframework.sms.utils;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
@@ -43,7 +43,7 @@ public class PigResourcesGenerator {
 
     public static void main(String[] args) {
         String outputDir = "/Users/summer/work/temp";
-        final String viewOutputDir = outputDir + "/view/";
+//        final String viewOutputDir = outputDir + "/view/";
         AutoGenerator mpg = new AutoGenerator();
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
@@ -71,37 +71,37 @@ public class PigResourcesGenerator {
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
-        strategy.setSuperControllerClass("com.github.pig.common.web.BaseController");
+        strategy.setSuperControllerClass("com.springframework.sms.web.BaseController");
         // 表名生成策略
         strategy.setNaming(NamingStrategy.underline_to_camel);
         mpg.setStrategy(strategy);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.github.pig.admin");
+        pc.setParent("com.springframework.sms.web");
         pc.setController("controller");
         mpg.setPackageInfo(pc);
 
         // 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
-        InjectionConfig cfg = new InjectionConfig() {
-            @Override
-            public void initMap() {
-            }
-        };
+//        InjectionConfig cfg = new InjectionConfig() {
+//            @Override
+//            public void initMap() {
+//            }
+//        };
         // 生成的模版路径，不存在时需要先新建
-        File viewDir = new File(viewOutputDir);
-        if (!viewDir.exists()) {
-            viewDir.mkdirs();
-        }
+//        File viewDir = new File(viewOutputDir);
+//        if (!viewDir.exists()) {
+//            viewDir.mkdirs();
+//        }
         List<FileOutConfig> focList = new ArrayList<FileOutConfig>();
-        focList.add(new FileOutConfig("/templates/listvue.vue.vm") {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                return getGeneratorViewPath(viewOutputDir, tableInfo, ".vue");
-            }
-        });
-        cfg.setFileOutConfigList(focList);
-        mpg.setCfg(cfg);
+//        focList.add(new FileOutConfig("/templates/listvue.vue.vm") {
+//            @Override
+//            public String outputFile(TableInfo tableInfo) {
+//                return getGeneratorViewPath(viewOutputDir, tableInfo, ".vue");
+//            }
+//        });
+//        cfg.setFileOutConfigList(focList);
+//        mpg.setCfg(cfg);
 
 
         //生成controller相关
