@@ -13,3 +13,18 @@ CREATE TABLE `route_config` (
   `operator` varchar(255) NOT NULL DEFAULT '' COMMENT '操作人',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `t_mobile_sms` (
+  `id` bigint(20) NOT NULL,
+  `operators_id` bigint(20) DEFAULT NULL COMMENT '运营商',
+  `mobile` varchar(255) DEFAULT '' COMMENT '手机号',
+  `context` text COMMENT '短信文本',
+  `channel` varchar(255) DEFAULT '' COMMENT '短信通道',
+  `status` bit(1) DEFAULT NULL,
+  `type` varchar(255) DEFAULT '' COMMENT '短信类型',
+  `signName` varchar(255) DEFAULT '' COMMENT '签名',
+  `template` varchar(500) DEFAULT '' COMMENT '短信模板',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',,
+  `operator` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
