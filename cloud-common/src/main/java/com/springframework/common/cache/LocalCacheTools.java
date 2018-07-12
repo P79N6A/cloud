@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 使用本地缓存做一层代理，使用集中缓存做数据预热
  */
 public class LocalCacheTools implements CacheTools{
-    private Gcache<String/*key*/, Object> cachedUkeyMap;
+    private Gcache<String, Object> cachedUkeyMap;
     private CacheService cacheService;
     private AtomicInteger remoteHit = new AtomicInteger(0);
     public LocalCacheTools(int maxnum, CacheService cacheService){
@@ -43,13 +43,13 @@ public class LocalCacheTools implements CacheTools{
     }
 
     @Override
-    public Boolean set(String regionName, String key, Object value) {
+    public synchronized Boolean set(String regionName, String key, Object value) {
         cachedUkeyMap.put(getRealKey(regionName, key), value);
        return cacheService.set(regionName, key, value);
     }
 
     @Override
-    public Boolean remove(String regionName, String key) {
+    public synchronized Boolean remove(String regionName, String key) {
         cachedUkeyMap.invalidate(getRealKey(regionName, key));
        return cacheService.remove(regionName, key);
     }
