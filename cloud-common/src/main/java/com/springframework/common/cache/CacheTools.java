@@ -1,4 +1,4 @@
-package com.springframework.common.untrans;
+package com.springframework.common.cache;
 /**
  * @author summer
  */
@@ -15,13 +15,13 @@ public interface CacheTools {
 	 * @param key
 	 * @param value
 	 */
-	void set(String regionName, String key, Object value);
+	Boolean set(String regionName, String key, Object value);
 
 	/**
 	 * @param regionName
 	 * @param key
 	 */
-	void remove(String regionName, String key);
+	Boolean remove(String regionName, String key);
 
 	/**
 	 * @return

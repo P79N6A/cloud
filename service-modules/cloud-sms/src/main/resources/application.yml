@@ -30,6 +30,10 @@ spring:
       testOnReturn: false
       poolPreparedStatements: true
       maxOpenPreparedStatements: 20
+  redis:
+    host: localhost
+  rabbitmq:
+    host: localhost
 mybatis-plus:
     mapper-locations: classpath*:mapper/*Mapper.xml
     typeAliasesPackage: com.springframework.sms.domain.*.entity

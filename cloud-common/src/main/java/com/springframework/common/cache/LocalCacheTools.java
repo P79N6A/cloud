@@ -1,4 +1,4 @@
-package com.springframework.common.untrans;
+package com.springframework.common.cache;
 
 
 
@@ -7,7 +7,7 @@ import com.springframework.common.utils.StringUtil;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @author ge.biao
+ * @author summer
  * 使用本地缓存做一层代理，使用集中缓存做数据预热
  */
 public class LocalCacheTools implements CacheTools{
@@ -43,15 +43,15 @@ public class LocalCacheTools implements CacheTools{
     }
 
     @Override
-    public void set(String regionName, String key, Object value) {
+    public Boolean set(String regionName, String key, Object value) {
         cachedUkeyMap.put(getRealKey(regionName, key), value);
-        cacheService.set(regionName, key, value);
+       return cacheService.set(regionName, key, value);
     }
 
     @Override
-    public void remove(String regionName, String key) {
+    public Boolean remove(String regionName, String key) {
         cachedUkeyMap.invalidate(getRealKey(regionName, key));
-        cacheService.remove(regionName, key);
+       return cacheService.remove(regionName, key);
     }
 
     @Override
