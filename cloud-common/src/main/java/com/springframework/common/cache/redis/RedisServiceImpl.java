@@ -19,14 +19,12 @@ import java.util.concurrent.TimeUnit;
  * @author summer
  * 2018/7/12
  */
-@Component
 @Slf4j
 public class RedisServiceImpl implements CacheService {
     private static final String MD5 = "md5";
     private static final int SIZE = 128;
     private RedisTemplate<String, Object> redisTemplate;
 
-    @Autowired
     public RedisServiceImpl(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
