@@ -20,6 +20,7 @@
         <module>cloud-config</module>
         <module>cloud-common</module>
         <module>service-modules</module>
+        <module>cloud-visual</module>
     </modules>
 
 </project>
