@@ -15,6 +15,7 @@
         <module>cat</module>
         <module>cache-cloud</module>
         <module>canal</module>
+        <module>camel</module>
     </modules>
 
 
