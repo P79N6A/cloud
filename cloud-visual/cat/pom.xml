@@ -263,34 +263,35 @@ encoding/<project>=UTF-8
     </build>
     <repositories>
         <repository>
-            <id>central</id>
-            <name>Maven2 Central Repository</name>
-            <url>http://repo1.maven.org/maven2</url>
-        </repository>
-        <repository>
             <id>unidal.releases</id>
             <layout>default</layout>
             <url>http://unidal.org/nexus/content/repositories/releases/</url>
         </repository>
+        <repository>
+            <id>central</id>
+            <name>aliyun Central Repository</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </repository>
     </repositories>
     <pluginRepositories>
-        <pluginRepository>
-            <id>central</id>
-            <url>http://repo1.maven.org/maven2</url>
-        </pluginRepository>
         <pluginRepository>
             <id>unidal.releases</id>
             <url>http://unidal.org/nexus/content/repositories/releases/</url>
         </pluginRepository>
+        <pluginRepository>
+            <id>central</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </pluginRepository>
     </pluginRepositories>
     <distributionManagement>
         <repository>
-            <id>releases</id>
-            <url>${releases.repo}</url>
+            <id>nexus-releases</id>
+            <name>Packaging Release Repository</name>
+            <url>http://unidal.org/nexus/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
-            <url>${snapshots.repo}</url>
+            <url>http://unidal.org/nexus/content/repositories/releases/</url>
         </snapshotRepository>
     </distributionManagement>
     <properties>
