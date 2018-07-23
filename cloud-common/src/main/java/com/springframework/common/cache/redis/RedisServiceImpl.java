@@ -4,9 +4,7 @@ import com.google.common.collect.Sets;
 import com.springframework.common.cache.CacheService;
 import com.springframework.common.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
