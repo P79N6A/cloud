@@ -2,52 +2,78 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>common-modules</artifactId>
-        <groupId>com.springframework</groupId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
+    <!--<parent>-->
+        <!--<artifactId>common-modules</artifactId>-->
+        <!--<groupId>com.springframework</groupId>-->
+        <!--<version>0.0.1-SNAPSHOT</version>-->
+    <!--</parent>-->
+    <groupId>com.springframework</groupId>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>datasource</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <description>读写分离数据源-基于aop注解</description>
+    <description>sharding-jdbc-mybatis-plus-spring-boot-starter</description>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <java.version>1.8</java.version>
+        <spring-boot.version>2.0.3.RELEASE</spring-boot.version>
+        <lombok.version>1.16.22</lombok.version>
+    </properties>
     <dependencies>
 
-        <!-- 第三方外部依赖 -->
+        <dependency>
+            <groupId>io.shardingjdbc</groupId>
+            <artifactId>sharding-jdbc-core</artifactId>
+            <version>2.0.0.M1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>2.2.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>5.0.4.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-            <version>5.0.4.RELEASE</version>
-        </dependency>
-        <!-- aspectj相关jar包 -->
-        <!-- aspectj -->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>1.8.13</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${spring-boot.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>1.8.13</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <version>${spring-boot.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-ext</artifactId>
-            <version>1.7.25</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring-boot.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.20</version>
+            <version>${lombok.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
