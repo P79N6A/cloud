@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springframework.log.dao.InterfaceLogDao">
+    <resultMap id="BaseResultMap" type="com.springframework.log.domain.InterfaceLog">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <id column="consumer_application" property="consumerApplication" jdbcType="VARCHAR"/>
+        <id column="consumer_host" property="consumerHost" jdbcType="VARCHAR"/>
+        <id column="provider_application" property="providerApplication" jdbcType="VARCHAR"/>
+        <id column="provider_host" property="providerHost" jdbcType="VARCHAR"/>
+        <id column="interface_name" property="interfaceName" jdbcType="VARCHAR"/>
+        <id column="methode_name" property="methodeName" jdbcType="VARCHAR"/>
+        <id column="request_param" property="requestParam" jdbcType="VARCHAR"/>
+        <id column="response" property="response" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="insertSuccessLog" parameterType="com.springframework.log.domain.InterfaceLog">
+        insert into
+        interface_success_log (consumer_application,consumer_host,provider_application,provider_host,interface_name,methode_name,request_param,response)
+        values
+        (
+        #{consumerApplication,jdbcType=VARCHAR},
+        #{consumerHost,jdbcType=VARCHAR},
+        #{providerApplication,jdbcType=VARCHAR},
+        #{providerHost,jdbcType=VARCHAR},
+        #{interfaceName,jdbcType=VARCHAR},
+        #{methodeName,jdbcType=VARCHAR},
+        #{requestParam,jdbcType=VARCHAR},
+        #{response,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertErrorLog" parameterType="com.springframework.log.domain.InterfaceLog">
+        insert into
+        interface_error_log (consumer_application,consumer_host,provider_application,provider_host,interface_name,methode_name,request_param,response)
+        values
+        (
+        #{consumerApplication,jdbcType=VARCHAR},
+        #{consumerHost,jdbcType=VARCHAR},
+        #{providerApplication,jdbcType=VARCHAR},
+        #{providerHost,jdbcType=VARCHAR},
+        #{interfaceName,jdbcType=VARCHAR},
+        #{methodeName,jdbcType=VARCHAR},
+        #{requestParam,jdbcType=VARCHAR},
+        #{response,jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteErrorLogByTime">
+
+        delete from interface_error_log
+        where create_time &lt; #{date,jdbcType=TIMESTAMP}
+        order by id
+        limit 100
+    </delete>
+
+    <delete id="deleteErrorLog">
+        delete from interface_error_log
+        order by id
+        limit 100
+    </delete>
+
+    <delete id="deleteSuccessLogByTime">
+        delete from interface_success_log
+        where create_time &lt; #{date,jdbcType=TIMESTAMP}
+        order by id
+        limit 100
+    </delete>
+
+    <delete id="deleteSuccessLog">
+        delete from interface_success_log
+        order by id
+        limit 100
+    </delete>
+
+    <select id="getSuccessLogCount" resultType="java.lang.Long">
+        select count(1) from interface_success_log
+    </select>
+
+    <select id="getErrorLogCount" resultType="java.lang.Long">
+        select count(1) from interface_error_log
+    </select>
+</mapper>

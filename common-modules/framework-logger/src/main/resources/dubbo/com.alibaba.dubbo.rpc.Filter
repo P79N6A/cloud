@@ -1,0 +1,2 @@
+logPersistConsumerDubboFilter=com.weimob.cube.log.dubbo.LogPersistConsumerDubboFilter
+logPersistProviderDubboFilter=com.weimob.cube.log.dubbo.LogPersistProviderDubboFilter
