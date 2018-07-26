@@ -418,7 +418,8 @@ public class BeanUtil implements Util4Script{
 					if (ignoreNull){
 						beanMap.remove(key);
 					}
-				} else if (!isSimpleProperty(pv.getClass())) {// 非Primitive类型
+					// 非Primitive类型
+				} else if (!isSimpleProperty(pv.getClass())) {
 					if (!nested) {
 						beanMap.remove(key);
 					} else {
@@ -432,7 +433,8 @@ public class BeanUtil implements Util4Script{
 					}
 				}
 			}
-			beanMap.remove("class");//class属性去除
+			//class属性去除
+			beanMap.remove("class");
 		} catch (Exception e) {
 			DB_LOGGER.warn(e, 20);
 			return null;
