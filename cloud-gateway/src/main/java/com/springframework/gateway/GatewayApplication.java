@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerInterceptor;
@@ -14,8 +15,7 @@ import org.springframework.web.client.RestTemplate;
 /**
  * @author summer  Gateway网关
  */
-@SpringBootApplication
-@EnableDiscoveryClient
+@SpringCloudApplication
 @Slf4j
 @MapperScan(basePackages = "com.springframework.gateway.domain.*.mapper")
 public class GatewayApplication {

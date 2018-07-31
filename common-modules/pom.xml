@@ -17,6 +17,7 @@
         <module>framework-logger</module>
         <module>framework-redis</module>
         <module>framework-cache</module>
+        <module>framework-feign</module>
     </modules>
 
 
