@@ -1,15 +1,11 @@
 package com.springframework.common.utils;
 
-import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -79,7 +75,7 @@ public class LoggerUtils {
 	}
 	public static Map<String, Integer> resetExceptionCount(){
 		Map<String, AtomicInteger> cur = exceptionCount;
-		exceptionCount = Maps.newConcurrentMap();
+		exceptionCount =new ConcurrentHashMap<>();
 		criticalCount.set(0);
 		exceptionTimefrom = System.currentTimeMillis();
 		singleMax = 0;
@@ -87,7 +83,7 @@ public class LoggerUtils {
 		return getCountMap(cur);
 	}
 	private static Map<String, Integer> getCountMap(Map<String, AtomicInteger> countMap){
-		Map<String, Integer> result = Maps.newHashMap();
+		Map<String, Integer> result = new HashMap<>();
 		for(Map.Entry<String, AtomicInteger> entry: countMap.entrySet()){
 			result.put(entry.getKey(), entry.getValue().get());
 		}

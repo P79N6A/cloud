@@ -1,8 +1,8 @@
 package com.springframework.common.utils;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,14 +13,14 @@ import java.util.List;
  */
 public class LogTraceUtil {
     private final static TLogger DB_LOGGER = LoggerUtils.getLogger(LogTraceUtil.class);
-    private static List<LogTrace> traceList = Lists.newArrayList();
+    private static List<LogTrace> traceList = new ArrayList<>();
 
     public static void addTrace(LogTrace trace) {
         traceList.add(trace);
     }
 
     public static List<String> getTraceInfo() {
-        List<String> result = Lists.newArrayList();
+        List<String> result = new ArrayList<>();
         for (LogTrace trace : traceList) {
             try {
                 String ts = trace.getTrace();

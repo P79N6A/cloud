@@ -1,10 +1,9 @@
-package com.springframework.common.cache;
+package com.springframework.cache;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheStats;
 import com.google.common.collect.ImmutableMap;
-import com.springframework.common.support.LocalCachable;
 
 import java.io.Serializable;
 import java.util.Map;

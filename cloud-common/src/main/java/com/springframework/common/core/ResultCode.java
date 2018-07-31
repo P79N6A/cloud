@@ -1,10 +1,10 @@
 package com.springframework.common.core;
 
 
-import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -72,7 +72,7 @@ public class ResultCode<T> implements Serializable {
     }
 
     public static ResultCode getSuccessMap() {
-        return new ResultCode(CODE_SUCCESS, null, Maps.newHashMap());
+        return new ResultCode(CODE_SUCCESS, null, new HashMap());
     }
 
     public static <T> ResultCode getFailureReturn(T retval) {

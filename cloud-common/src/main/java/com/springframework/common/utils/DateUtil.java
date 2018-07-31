@@ -1,6 +1,5 @@
 package com.springframework.common.utils;
 
-import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 
 import java.sql.Timestamp;
@@ -1226,7 +1225,7 @@ public class DateUtil implements Util4Script {
      * @return 最高可购买时间
      */
     public static String getCansellTime(String busytimes, int days) {
-        Map<String, Integer> dayMap = Maps.newHashMap();
+        Map<String, Integer> dayMap = new HashMap();
         String[] busytimeArr = StringUtils.split(busytimes, ";");
         for (int i = 0; i < busytimeArr.length; i++) {
             String[] time = StringUtils.split(busytimeArr[i], ",");

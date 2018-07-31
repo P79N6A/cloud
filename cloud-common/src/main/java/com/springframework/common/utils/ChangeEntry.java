@@ -1,6 +1,5 @@
 package com.springframework.common.utils;
 
-import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 
 import java.sql.Timestamp;
@@ -24,16 +23,16 @@ public class ChangeEntry {
 			oldMap = BeanUtil.getBeanMap(oldObj);
 		}
 		if(oldMap==null) {
-            oldMap = Maps.newHashMap();
+            oldMap = new HashMap();
         }
 	}
 	public Map<String, String> getChangeMap(Object newObj){
 		Map<String, ?> tmpMap = new HashMap<String, Object>(oldMap);
 		Map<String, ?> newMap = BeanUtil.getBeanMap(newObj);
 		if(newMap ==null) {
-            newMap = Maps.newHashMap();
+            newMap = new HashMap();
         }
-		Map<String, String> changeMap =Maps.newHashMap();
+		Map<String, String> changeMap =new HashMap();
 		List<String> keySet = new ArrayList<String>();
 		keySet.addAll(tmpMap.keySet());
 		keySet.addAll(newMap.keySet());

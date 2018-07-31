@@ -94,7 +94,7 @@ public abstract class ClassUtils {
 
 
 	/**
-	 * Register the given common classes with the ClassUtils cache.
+	 * Register the given common classes with the ClassUtils redis.
 	 */
 	private static void registerCommonClasses(Class<?>... commonClasses) {
 		for (Class<?> clazz : commonClasses) {
@@ -296,10 +296,10 @@ public abstract class ClassUtils {
 	}
 
 	/**
-	 * Check whether the given class is cache-safe in the given context,
+	 * Check whether the given class is redis-safe in the given context,
 	 * i.e. whether it is loaded by the given ClassLoader or a parent of it.
 	 * @param clazz the class to analyze
-	 * @param classLoader the ClassLoader to potentially cache metadata in
+	 * @param classLoader the ClassLoader to potentially redis metadata in
 	 */
 	public static boolean isCacheSafe(Class<?> clazz, ClassLoader classLoader) {
 		Assert.notNull(clazz, "Class must not be null");

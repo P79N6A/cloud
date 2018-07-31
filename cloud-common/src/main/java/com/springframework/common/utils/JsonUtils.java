@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.OutputStream;
@@ -75,19 +74,19 @@ public class JsonUtils {
 
 	public static Map readJsonToMap(String json) {
 		if (StringUtils.isBlank(json)){
-			return Maps.newHashMap();
+			return new HashMap();
 		}
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.registerModule(TJsonModule.TAOTAO_MODULE);
 		try {
 			Map result = mapper.readValue(json, Map.class);
 			if (result == null) {
-                result = Maps.newHashMap();
+                result = new HashMap();
             }
 			return result;
 		} catch (Exception e) {
 			DB_LOGGER.error("json:" + StringUtils.substring(json, 0, 500) + "\n" + LoggerUtils.getExceptionTrace(e, 15));
-			return Maps.newHashMap();
+			return new HashMap();
 		}
 
 	}
@@ -159,7 +158,7 @@ public class JsonUtils {
 
 	public static Map readJsonToMap(String json, PropertyNamingStrategy pns) {
 		if (StringUtils.isBlank(json)){
-			return Maps.newHashMap();
+			return new HashMap();
 		}
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.registerModule(TJsonModule.TAOTAO_MODULE);
@@ -169,12 +168,12 @@ public class JsonUtils {
 		try {
 			Map result = mapper.readValue(json, Map.class);
 			if (result == null) {
-                result =Maps.newHashMap();
+                result =new HashMap();
             }
 			return result;
 		} catch (Exception e) {
 			DB_LOGGER.error("json:" + StringUtils.substring(json, 0, 500) + "\n" + LoggerUtils.getExceptionTrace(e, 15));
-			return Maps.newHashMap();
+			return new HashMap();
 		}
 	}
 	

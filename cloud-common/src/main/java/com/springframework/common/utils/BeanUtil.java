@@ -2,7 +2,6 @@ package com.springframework.common.utils;
 
 import com.springframework.common.bytecode.Wrapper;
 import com.springframework.common.support.TraceErrorException;
-import com.google.common.collect.Maps;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.bag.HashBag;
@@ -171,7 +170,7 @@ public class BeanUtil implements Util4Script{
 	}
 
 	public static <T> Map beanListToMap(final Collection<T> beanList, String keyproperty, String valueproperty, boolean ignoreNull) {
-		Map result = Maps.newHashMap();
+		Map result = new HashMap();
 		if(beanList==null){
 			return result;
 		}
@@ -262,7 +261,7 @@ public class BeanUtil implements Util4Script{
 	 * @return
 	 */
 	public static Map beanListToMap(final Collection beanList, String keyproperty) {
-		Map result = Maps.newHashMap();
+		Map result = new HashMap();
 		if(beanList==null){
 			return result;
 		}
@@ -356,7 +355,7 @@ public class BeanUtil implements Util4Script{
 		Object bean = null;
 		while (it.hasNext()) {
 			bean = it.next();
-			Map beanMap = Maps.newHashMap();
+			Map beanMap = new HashMap();
 			boolean hasProperty = false;
 			for (String property : properties) {
 				try {
@@ -475,7 +474,7 @@ public class BeanUtil implements Util4Script{
 		if (keys == null || keys.length == 0){
 			return getBeanMap(bean, nested, ignoreNull);
 		}
-		Map result = Maps.newHashMap();
+		Map result = new HashMap();
 		Object pv = null;
 		for (String key : keys) {
 			pv = get(bean, key);
@@ -596,7 +595,7 @@ public class BeanUtil implements Util4Script{
 	 * @return
 	 */
 	public static Map getKeyValuePairMap(List beanList, String keyProperty, String valueProperty) {
-		Map result = Maps.newHashMap();
+		Map result = new HashMap();
 		for (Object bean : beanList) {
 			try {
 				Object keyvalue = PropertyUtils.getProperty(bean, keyProperty);
@@ -610,7 +609,7 @@ public class BeanUtil implements Util4Script{
 	}
 
 	public static Map<Object, List> groupBeanProperty(List beanList, String keyname, String valuename) {
-		Map<Object, List> result = Maps.newHashMap();
+		Map<Object, List> result = new HashMap();
 		for (Object bean : beanList) {
 			try {
 				Object keyvalue = get(bean, keyname);
@@ -732,7 +731,7 @@ public class BeanUtil implements Util4Script{
 	}
 
 	public static Map<String, String> getSimpleStringMapWithKey(final Object bean, String... keys) {
-		Map<String, String> result = Maps.newHashMap();
+		Map<String, String> result = new HashMap();
 		Object pv;
 		for (String key : keys) {
 			try {
@@ -753,7 +752,7 @@ public class BeanUtil implements Util4Script{
 	 * @return
 	 */
 	public static Map<String, String> toSimpleStringMap(Map map) {
-		Map<String, String> result = Maps.newHashMap();
+		Map<String, String> result = new HashMap();
 		for (Object key : map.keySet()) {
 			String tmpKey = getStringValue(key);
 			// if(ValidateUtil.isVariable(tmpKey, 1, 50)){

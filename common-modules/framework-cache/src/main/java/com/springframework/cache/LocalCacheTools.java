@@ -1,8 +1,9 @@
-package com.springframework.common.cache;
+package com.springframework.cache;
 
 
 
-import com.springframework.common.utils.StringUtil;
+
+import com.springframework.utils.StringUtil;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -12,11 +13,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class LocalCacheTools implements CacheTools{
     private Gcache<String, Object> cachedUkeyMap;
-    private CacheService cacheService;
+    private GenericCacheManager genericCacheManager;
     private AtomicInteger remoteHit = new AtomicInteger(0);
-    public LocalCacheTools(int maxnum, CacheService cacheService){
+    public LocalCacheTools(int maxnum, GenericCacheManager genericCacheManager){
         cachedUkeyMap = new Gcache<String, Object>(maxnum);
-        this.cacheService = cacheService;
+        this.genericCacheManager = genericCacheManager;
     }
 
     private String getRealKey(String regionName, String key){
@@ -33,7 +34,7 @@ public class LocalCacheTools implements CacheTools{
         String realKey = getRealKey(regionName, key);
         Object result = cachedUkeyMap.getIfPresent(realKey);
         if(result == null){
-            result = cacheService.get(regionName, key);
+            result = genericCacheManager.get(regionName, key);
             if(result!=null){
                 remoteHit.incrementAndGet();
                 cachedUkeyMap.put(realKey, result);
@@ -45,13 +46,13 @@ public class LocalCacheTools implements CacheTools{
     @Override
     public synchronized Boolean set(String regionName, String key, Object value) {
         cachedUkeyMap.put(getRealKey(regionName, key), value);
-       return cacheService.set(regionName, key, value);
+       return genericCacheManager.set(regionName, key, value);
     }
 
     @Override
     public synchronized Boolean remove(String regionName, String key) {
         cachedUkeyMap.invalidate(getRealKey(regionName, key));
-       return cacheService.remove(regionName, key);
+       return genericCacheManager.remove(regionName, key);
     }
 
     @Override

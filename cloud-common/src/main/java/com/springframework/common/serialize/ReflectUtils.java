@@ -1,6 +1,5 @@
 package com.springframework.common.serialize;
 
-import com.google.common.collect.Maps;
 import javassist.CtClass;
 import javassist.CtConstructor;
 import javassist.CtMethod;
@@ -916,7 +915,7 @@ public final class ReflectUtils {
     }
 
     public static Object getEmptyObject(Class<?> returnType) {
-        return getEmptyObject(returnType, Maps.newHashMap(), 0);
+        return getEmptyObject(returnType, new HashMap(), 0);
     }
 
     private static Object getEmptyObject(Class<?> returnType, Map<Class<?>, Object> emptyInstances, int level) {
@@ -1026,7 +1025,7 @@ public final class ReflectUtils {
     }
 
     public static Map<String, Field> getBeanPropertyFields(Class cl) {
-        Map<String, Field> properties = Maps.newHashMap();
+        Map<String, Field> properties = new HashMap<>();
         for (; cl != null; cl = cl.getSuperclass()) {
             Field[] fields = cl.getDeclaredFields();
             for (Field field : fields) {
@@ -1044,7 +1043,7 @@ public final class ReflectUtils {
     }
 
     public static List<String> getBeanAllFieldNames(Class cl) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         for (; cl != null; cl = cl.getSuperclass()) {
             Field[] fields = cl.getDeclaredFields();
             for (Field field : fields) {
@@ -1059,7 +1058,7 @@ public final class ReflectUtils {
     }
 
     public static Map<String, Method> getBeanPropertyReadMethods(Class cl) {
-        Map<String, Method> properties = Maps.newHashMap();
+        Map<String, Method> properties = new HashMap<>();
         for (; cl != null; cl = cl.getSuperclass()) {
             Method[] methods = cl.getDeclaredMethods();
             for (Method method : methods) {

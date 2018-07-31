@@ -1,10 +1,10 @@
 package com.springframework.common.support;
 
-import com.google.common.collect.Maps;
 import com.springframework.common.utils.LoggerUtils;
 import com.springframework.common.utils.TLogger;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -18,7 +18,7 @@ public abstract class ExecutorManager {
      * @param executor
      * @param maxWaitSecondsBeforeDomainRestart
      */
-    private static Map<String, ThreadPoolExecutor> executorMap = Maps.newConcurrentMap();
+    private static Map<String, ThreadPoolExecutor> executorMap = new ConcurrentHashMap<>();
 
     public static void registerExecutor(String name, ThreadPoolExecutor executor) {
         executorMap.put(name, executor);

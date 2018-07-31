@@ -17,8 +17,6 @@ package com.springframework.common.bytecode;
 
 import com.springframework.common.serialize.ClassHelper;
 import com.springframework.common.serialize.ReflectUtils;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.springframework.common.utils.ClassUtils;
 
 import java.lang.NoSuchMethodException;
@@ -26,8 +24,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
@@ -261,18 +258,18 @@ public abstract class Wrapper
 		c3.append(name).append(" w; try{ w = ((").append(name).append(")$1); }catch(Throwable e){ throw new IllegalArgumentException(e); }");
 
 		// <property name, property types>
-		Map<String, Class<?>> pts = Maps.newHashMap();
+		Map<String, Class<?>> pts = new HashMap();
 		// <method desc, Method instance>
-		Map<String, Method> ms = Maps.newLinkedHashMap();
+		Map<String, Method> ms = new LinkedHashMap<>();
 		// method names.
-		List<String> mns = Lists.newArrayList();
+		List<String> mns = new ArrayList<>();
 		// declaring method names.
-		List<String> dmns =Lists.newArrayList();
+		List<String> dmns =new ArrayList<>();
 
-		List<String> readPns =Lists.newArrayList();
+		List<String> readPns =new ArrayList<>();
 		//only fields(exclude read method)
-		List<String> fieldPns = Lists.newArrayList();
-		List<String> writePns = Lists.newArrayList();
+		List<String> fieldPns = new ArrayList<>();
+		List<String> writePns = new ArrayList<>();
 		// get all public field.
 		for( Field f : c.getFields() )
 		{

@@ -1,6 +1,5 @@
 package com.springframework.common.utils;
 
-import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.*;
 import org.dom4j.io.OutputFormat;
@@ -127,7 +126,7 @@ public class XmlUtils {
 	}
 	public static Map<String, Object> xml2Map(String infoXML) {
 		Document document;
-		Map<String, Object> map = Maps.newHashMap();
+		Map<String, Object> map = new HashMap();
 		try {
 			document = DocumentHelper.parseText(infoXML);
 			Element root = document.getRootElement();

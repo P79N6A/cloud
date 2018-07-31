@@ -1,6 +1,5 @@
 package com.springframework.common.utils;
 
-import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.UnmodifiableMap;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -23,8 +22,8 @@ public class IPUtil {
     private final static transient TLogger DB_LOGGER = LoggerUtils.getLogger(IPUtil.class);
     private static Map<String/*code*/, String/*name*/> provinceMap;
     private static Map<String/*provinceCode*/, Map<String/*citycode*/, String/*cityname*/>> proCityMap;
-    private static Map<String/*citycode*/, String/*cityname*/> cityMap = Maps.newHashMap();
-    private static Map<String/*citycode*/, String/*provincecode*/> city2Pro = Maps.newHashMap();
+    private static Map<String/*citycode*/, String/*cityname*/> cityMap = new HashMap();
+    private static Map<String/*citycode*/, String/*provincecode*/> city2Pro = new HashMap();
     private static AtomicBoolean init = new AtomicBoolean(false);
 
     static {
@@ -86,7 +85,7 @@ public class IPUtil {
                 Reader reader = new BufferedReader(new InputStreamReader(IPUtil.class.getClassLoader().getResourceAsStream("province.txt"), "utf-8"));
         ) {
             List<String> provinceList = IOUtils.readLines(reader);
-            Map<String, String> map = Maps.newHashMap();
+            Map<String, String> map = new HashMap();
             for (String province : provinceList) {
                 String[] pair = StringUtils.split(province, "\t");
                 if (pair.length == 2) {
@@ -102,14 +101,14 @@ public class IPUtil {
                 Reader reader = new BufferedReader(new InputStreamReader(IPUtil.class.getClassLoader().getResourceAsStream("city.txt"), "utf-8"));
         ) {
             List<String> cityList = IOUtils.readLines(reader);
-            Map<String/*provinceCode*/, Map<String/*citycode*/, String/*cityname*/>> cmap = Maps.newHashMap();
+            Map<String/*provinceCode*/, Map<String/*citycode*/, String/*cityname*/>> cmap = new HashMap();
 
             for (String city : cityList) {
                 String[] pair/*pcode,ccode,cname*/ = StringUtils.split(city, "\t");
                 if (pair.length == 3) {
                     Map<String, String> row = cmap.get(pair[0]);
                     if (row == null) {
-                        row = Maps.newHashMap();
+                        row = new HashMap();
                         cmap.put(pair[0], row);
                     }
                     row.put(pair[1], pair[2]);

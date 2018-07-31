@@ -1,7 +1,5 @@
 package com.springframework.common.serialize;
 
-import com.google.common.collect.Maps;
-
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -127,7 +125,7 @@ public class PojoUtils {
             }
             return dest;
         }
-        Map<String, Object> map = Maps.newHashMap();
+        Map<String, Object> map = new HashMap();
         history.put(pojo, map);
         map.put("class", pojo.getClass().getName());
         for (Method method : pojo.getClass().getMethods()) {
@@ -224,13 +222,13 @@ public class PojoUtils {
         Class<? extends Map> cl = src.getClass();
         Map result = null;
         if (HashMap.class == cl) {
-            result = Maps.newHashMap();
+            result = new HashMap();
         } else if (Hashtable.class == cl) {
             result = new Hashtable();
         } else if (IdentityHashMap.class == cl) {
             result = new IdentityHashMap();
         } else if (LinkedHashMap.class == cl) {
-            result = Maps.newLinkedHashMap();
+            result = new LinkedHashMap();
         } else if (Properties.class == cl) {
             result = new Properties();
         } else if (TreeMap.class == cl) {
@@ -238,7 +236,7 @@ public class PojoUtils {
         } else if (WeakHashMap.class == cl) {
             return new WeakHashMap();
         } else if (ConcurrentHashMap.class == cl) {
-            result = Maps.newConcurrentMap();
+            result = new ConcurrentHashMap();
         } else if (ConcurrentSkipListMap.class == cl) {
             result = new ConcurrentSkipListMap();
         } else {
@@ -255,7 +253,7 @@ public class PojoUtils {
         }
 
         if (result == null) {
-            result = Maps.newHashMap();
+            result = new HashMap();
         }
 
         return result;
@@ -549,7 +547,7 @@ public class PojoUtils {
         if (result != null) {
             ConcurrentMap<String, Field> fields = CLASS_FIELD_CACHE.get(cls);
             if (fields == null) {
-                fields = Maps.newConcurrentMap();
+                fields = new ConcurrentHashMap<>();
                 CLASS_FIELD_CACHE.putIfAbsent(cls, fields);
             }
             fields = CLASS_FIELD_CACHE.get(cls);

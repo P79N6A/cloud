@@ -1,12 +1,12 @@
-package com.springframework.common.cache.redis;
+package com.springframework.redis;
 
 import com.google.common.collect.Sets;
-import com.springframework.common.cache.CacheService;
-import com.springframework.common.utils.StringUtil;
+import com.springframework.cache.GenericCacheManager;
+import com.springframework.utils.StringUtil;
+import com.sun.istack.internal.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -18,12 +18,12 @@ import java.util.concurrent.TimeUnit;
  * 2018/7/12
  */
 @Slf4j
-public class RedisServiceImpl implements CacheService {
+public class RedisManagerGeneric implements GenericCacheManager {
     private static final String MD5 = "md5";
     private static final int SIZE = 128;
     private RedisTemplate<String, Object> redisTemplate;
 
-    public RedisServiceImpl(RedisTemplate<String, Object> redisTemplate) {
+    public RedisManagerGeneric(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
