@@ -193,5 +193,26 @@
             <url>http://maven.weimob.com/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>nexus-releases</id>-->
+            <!--<url>http://nexus.yonghuivip.com/nexus/content/repositories/releases</url>-->
+        <!--</repository>-->
+        <!--<repository>-->
+            <!--<id>nexus-snapshots</id>-->
+            <!--<url>http://nexus.yonghuivip.com/nexus/content/repositories/snapshots</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
+
+    <!--<distributionManagement>-->
+        <!--<repository>-->
+            <!--<id>nexus-releases</id>-->
+            <!--<url>http://nexus.yonghuivip.com/nexus/content/repositories/releases</url>-->
+        <!--</repository>-->
+        <!--<snapshotRepository>-->
+            <!--<id>nexus-snapshots</id>-->
+            <!--<url>http://nexus.yonghuivip.com/nexus/content/repositories/snapshots</url>-->
+        <!--</snapshotRepository>-->
+    <!--</distributionManagement>-->
 </project>
 
