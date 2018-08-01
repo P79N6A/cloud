@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <version>0.0.1-SNAPSHOT</version>
     <artifactId>framework-feign</artifactId>
 
     <dependencyManagement>
@@ -30,8 +30,9 @@
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <repositories>
