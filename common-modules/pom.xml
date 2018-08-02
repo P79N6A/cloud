@@ -3,13 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cloud</artifactId>
-        <groupId>com.springframework</groupId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath/>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.3.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <version>0.0.1-SNAPSHOT</version>
+    <groupId>com.springframework</groupId>
     <artifactId>common-modules</artifactId>
     <packaging>pom</packaging>
     <modules>
@@ -22,7 +23,161 @@
         <module>framework-utils</module>
         <module>framework-enum</module>
         <module>framework-exception</module>
+        <module>framework-mvc</module>
     </modules>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+
+        <!--framework-->
+        <framework-cache.version>0.0.1-SNAPSHOT</framework-cache.version>
+        <framework-datasource.version>0.0.1-SNAPSHOT</framework-datasource.version>
+        <framework-enum.version>0.0.1-SNAPSHOT</framework-enum.version>
+        <framework-exception.version>0.0.1-SNAPSHOT</framework-exception.version>
+        <framework-feign.version>0.0.1-SNAPSHOT</framework-feign.version>
+        <framework-hystrix.version>0.0.1-SNAPSHOT</framework-hystrix.version>
+        <framework-logger.version>0.0.1-SNAPSHOT</framework-logger.version>
+        <framework-mvc.version>0.0.1-SNAPSHOT</framework-mvc.version>
+        <framework-redis.version>0.0.1-SNAPSHOT</framework-redis.version>
+        <framework-utils.version>0.0.1-SNAPSHOT</framework-utils.version>
 
 
+        <sharding-jdbc.version>2.0.0.M1</sharding-jdbc.version>
+        <mybatis-plus.version>2.2.0</mybatis-plus.version>
+        <spring-jdbc.version>5.0.4.RELEASE</spring-jdbc.version>
+
+        <spring-cloud-openfeign.version>2.0.0.RELEASE</spring-cloud-openfeign.version>
+        <spring-cloud-hystrix.version>2.0.0.RELEASE</spring-cloud-hystrix.version>
+        <spring-boot.version>2.0.3.RELEASE</spring-boot.version>
+
+        <!--utils-->
+        <lombok.version>1.16.22</lombok.version>
+        <guava.version>23.0</guava.version>
+
+        <!--redis-->
+        <jedis.version>2.9.0</jedis.version>
+        <spring-boot.version>2.0.3.RELEASE</spring-boot.version>
+        <!--servlet-->
+        <javax.servlet.version>3.1.0</javax.servlet.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-openfeign</artifactId>
+                <version>2.0.0.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+                <version>${spring-cloud-hystrix.version}</version>
+            </dependency>
+
+            <!--framework-all-->
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-cache</artifactId>
+                <version>${framework-cache.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-datasource</artifactId>
+                <version>${framework-datasource.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-enum</artifactId>
+                <version>${framework-enum.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-exception</artifactId>
+                <version>${framework-exception.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-feign</artifactId>
+                <version>${framework-feign.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-hystrix</artifactId>
+                <version>${framework-hystrix.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-logger</artifactId>
+                <version>${framework-logger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-mvc</artifactId>
+                <version>${framework-mvc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-redis</artifactId>
+                <version>${framework-redis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-utils</artifactId>
+                <version>${framework-utils.version}</version>
+            </dependency>
+            <!--redis-->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
+
+            <!--datasource-->
+            <dependency>
+                <groupId>io.shardingjdbc</groupId>
+                <artifactId>sharding-jdbc-core</artifactId>
+                <version>${sharding-jdbc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${spring-jdbc.version}</version>
+            </dependency>
+            <!--utils-->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
