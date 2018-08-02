@@ -18,7 +18,8 @@
 	<modules>
 		<module>cloud-sms</module>
 		<module>cloud-mail</module>
-	</modules>
+        <module>cloud-user</module>
+    </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

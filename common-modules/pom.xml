@@ -19,6 +19,9 @@
         <module>framework-cache</module>
         <module>framework-feign</module>
         <module>framework-hystrix</module>
+        <module>framework-utils</module>
+        <module>framework-enum</module>
+        <module>framework-exception</module>
     </modules>
 
 
