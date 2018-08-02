@@ -1,7 +1,6 @@
 package com.springframework.gateway.config;
 
-import com.alibaba.druid.support.json.JSONUtils;
-import com.springframework.common.utils.JsonUtils;
+import com.springframework.utils.JsonUtils;
 import com.springframework.gateway.domain.routeconfig.dto.RouteConfigDTO;
 import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
 import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;

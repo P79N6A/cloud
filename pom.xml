@@ -18,7 +18,6 @@
         <module>cloud-doc</module>
         <module>cloud-demo</module>
         <module>cloud-config</module>
-        <module>cloud-common</module>
         <module>service-modules</module>
         <module>cloud-visual</module>
         <module>common-modules</module>

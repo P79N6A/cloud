@@ -25,7 +25,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import com.springframework.common.utils.Assert;
+import com.springframework.utils.Assert;
 import com.springframework.sms.domain.dto.MobileMsgTemplateDTO;
 import com.springframework.sms.config.SmsAliyunPropertiesConfig;
 import lombok.extern.slf4j.Slf4j;

@@ -80,7 +80,7 @@
             </dependency>
             <dependency>
                 <groupId>com.springframework</groupId>
-                <artifactId>common</artifactId>
+                <artifactId>framework-utils</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <!--读写分离分表分库 -end-->

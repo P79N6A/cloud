@@ -1,7 +1,7 @@
 package com.springframework.gateway.domain.routeconfig.dto;
 
 import com.google.common.collect.Lists;
-import com.springframework.common.utils.JsonUtils;
+import com.springframework.utils.JsonUtils;
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
