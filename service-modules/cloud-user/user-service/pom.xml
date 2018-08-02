@@ -99,6 +99,12 @@
             <groupId>com.springframework</groupId>
             <artifactId>framework-swgger</artifactId>
         </dependency>
+
+
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>user-api</artifactId>
+        </dependency>
         <!--==========================分割线==========================-->
         <dependency>
             <groupId>com.alibaba</groupId>

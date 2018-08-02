@@ -1,4 +1,4 @@
-package com.framework.user.domain.service;
+package com.framework.user.service;
 
 /**
  * @author summer

@@ -15,6 +15,7 @@
     <modules>
         <module>user-api</module>
         <module>user-service</module>
+        <module>user-domain</module>
     </modules>
 
     <properties>
@@ -118,11 +119,38 @@
                 <artifactId>framework-swgger</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-mvc</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <!--user-->
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>user-service</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>user-api</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>user-domain</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
             <!--==========================分割线==========================-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>1.1.10</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.16.22</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
