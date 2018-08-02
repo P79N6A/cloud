@@ -43,6 +43,7 @@
         <framework-mvc.version>0.0.1-SNAPSHOT</framework-mvc.version>
         <framework-redis.version>0.0.1-SNAPSHOT</framework-redis.version>
         <framework-utils.version>0.0.1-SNAPSHOT</framework-utils.version>
+        <framework-task-executor.version>0.0.1-SNAPSHOT</framework-task-executor.version>
 
         <!--sharding-->
         <sharding-jdbc.version>2.0.0.M1</sharding-jdbc.version>
@@ -162,6 +163,11 @@
                 <groupId>com.springframework</groupId>
                 <artifactId>framework-utils</artifactId>
                 <version>${framework-utils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-task-executor</artifactId>
+                <version>${framework-task-executor.version}</version>
             </dependency>
             <!--redis-->
             <dependency>

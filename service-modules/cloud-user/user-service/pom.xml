@@ -10,16 +10,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>user-service</artifactId>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <spring-boot-admin.version>2.0.1</spring-boot-admin.version>
-        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
-        <spring-boot.version>2.0.3.RELEASE</spring-boot.version>
-        <!--datasource-->
-        <datasource.version>1.0-SNAPSHOT</datasource.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -74,10 +64,6 @@
             <groupId>com.springframework</groupId>
             <artifactId>framework-datasource</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.springframework</groupId>
-            <artifactId>common</artifactId>
-        </dependency>
         <!--读写分离分表分库 -end-->
         <!--缓存redis-->
         <dependency>
@@ -105,6 +91,14 @@
             <groupId>com.springframework</groupId>
             <artifactId>framework-enum</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-swgger</artifactId>
+        </dependency>
         <!--==========================分割线==========================-->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -113,24 +107,9 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.22</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-bean-validators</artifactId>
-            <version>2.7.0</version>
-        </dependency>
+
     </dependencies>
 
     <build>
@@ -144,8 +123,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.2</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
         </plugins>

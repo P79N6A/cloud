@@ -5,8 +5,10 @@
         <groupId>com.springframework</groupId>
         <version>0.0.1-SNAPSHOT</version>
         <artifactId>service-modules</artifactId>
+        <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <version>0.0.1-SNAPSHOT</version>
     <artifactId>cloud-sms</artifactId>
     <name>cloud-sms</name>
     <description>Demo project for Spring Boot</description>

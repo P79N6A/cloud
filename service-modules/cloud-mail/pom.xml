@@ -6,7 +6,9 @@
 		<groupId>com.springframework</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 		<artifactId>service-modules</artifactId>
+		<relativePath/>
 	</parent>
+	<version>0.0.1-SNAPSHOT</version>
 	<artifactId>cloud-mail</artifactId>
 	<name>cloud-mail</name>
 	<description>Demo project for Spring Boot</description>
