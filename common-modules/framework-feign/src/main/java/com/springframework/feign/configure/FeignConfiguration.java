@@ -20,8 +20,9 @@ public class FeignConfiguration extends FeignAutoConfiguration {
 
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        filterRegistrationBean.setFilter(originFilter());
-        return filterRegistrationBean;
+        FilterRegistrationBean filterRegiste = new FilterRegistrationBean();
+        filterRegiste.setFilter(originFilter());
+        filterRegiste.setAsyncSupported(true);
+        return filterRegiste;
     }
 }
