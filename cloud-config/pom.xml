@@ -823,16 +823,16 @@
 	</reporting>
 
 	<repositories>
-		<repository>
-			<id>internal.repo</id>
-			<name>ctripcorp Central Repository</name>
-			<url>https://raw.github.com/ctripcorp/apollo/mvn-repo/</url>
-		</repository>
-		<repository>
-			<id>central</id>
-			<name>aliyun Central Repository</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
-		</repository>
+		<!--<repository>-->
+			<!--<id>internal.repo</id>-->
+			<!--<name>ctripcorp Central Repository</name>-->
+			<!--<url>https://raw.github.com/ctripcorp/apollo/mvn-repo/</url>-->
+		<!--</repository>-->
+		<!--<repository>-->
+			<!--<id>central</id>-->
+			<!--<name>aliyun Central Repository</name>-->
+			<!--<url>http://maven.aliyun.com/nexus/content/groups/public</url>-->
+		<!--</repository>-->
 	</repositories>
 	<distributionManagement>
 		<repository>
