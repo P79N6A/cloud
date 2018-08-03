@@ -31,7 +31,7 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>com.github.xie-summer</groupId>
+			<groupId>com.springframework</groupId>
 			<artifactId>cachecloud-open-client-basic</artifactId>
 			<version>${cachecloud-open-client-basic.version}</version>
 		</dependency>

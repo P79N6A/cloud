@@ -17,7 +17,7 @@
         <tomcat.version>8.0.28</tomcat.version>
         <cachecloud-open-client-basic>1.0-SNAPSHOT</cachecloud-open-client-basic>
         <cachecloud-jedis>1.0-SNAPSHOT</cachecloud-jedis>
-        <cachecloud-open-common.version>1.0-SNAPSHOT</cachecloud-open-common.version>
+        <cachecloud-open-common.version>0.0.1-SNAPSHOT</cachecloud-open-common.version>
     </properties>
     <dependencies>
         <dependency>
@@ -163,7 +163,7 @@
             <groupId>net.sf.json-lib</groupId>
             <artifactId>json-lib</artifactId>
             <version>2.2.3</version>
-            <classifier>jdk15</classifier>  
+            <classifier>jdk15</classifier>
         </dependency>
         <dependency>
             <groupId>commons-configuration</groupId>
@@ -184,28 +184,37 @@
             <artifactId>fastjson</artifactId>
         </dependency>
 
-		<dependency>
-			<groupId>com.github.xie-summer</groupId>
-			<artifactId>cachecloud-open-client-basic</artifactId>
-			<version>${cachecloud-open-client-basic}</version>
-		</dependency>
-	
-		<dependency>
-			<groupId>com.github.xie-summer</groupId>
-			<artifactId>cachecloud-jedis</artifactId>
-			<version>${cachecloud-jedis}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.github.xie-summer</groupId>
-			<artifactId>cachecloud-open-common</artifactId>
-			<version>${cachecloud-open-common.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>cachecloud-open-client-basic</artifactId>
+            <version>${cachecloud-open-client-basic}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>cachecloud-jedis</artifactId>
+            <version>${cachecloud-jedis}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>cachecloud-open-common</artifactId>
+            <version>${cachecloud-open-common.version}</version>
+        </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
