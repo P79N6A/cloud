@@ -26,6 +26,7 @@
         <module>framework-mvc</module>
         <module>framework-swgger</module>
         <module>framework-task-executor</module>
+        <module>framework-stream</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,6 +41,7 @@
         <framework-feign.version>0.0.1-SNAPSHOT</framework-feign.version>
         <framework-hystrix.version>0.0.1-SNAPSHOT</framework-hystrix.version>
         <framework-logger.version>0.0.1-SNAPSHOT</framework-logger.version>
+        <framework-stream.version>0.0.1-SNAPSHOT</framework-stream.version>
         <framework-mvc.version>0.0.1-SNAPSHOT</framework-mvc.version>
         <framework-redis.version>0.0.1-SNAPSHOT</framework-redis.version>
         <framework-utils.version>0.0.1-SNAPSHOT</framework-utils.version>
@@ -148,6 +150,11 @@
                 <groupId>com.springframework</groupId>
                 <artifactId>framework-logger</artifactId>
                 <version>${framework-logger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-stream</artifactId>
+                <version>${framework-stream.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.springframework</groupId>
