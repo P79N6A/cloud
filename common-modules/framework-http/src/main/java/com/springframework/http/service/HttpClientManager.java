@@ -1,5 +1,6 @@
 package com.springframework.http.service;
 
+import com.springframework.http.configure.*;
 import com.springframework.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.HttpRequestRetryHandler;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -29,8 +32,10 @@ import static com.springframework.http.utils.HttpUtils.getStats;
  * 2018/8/8
  * 描述：HttpClient客户端封装
  */
-@Service("httpClientManager")
 @Slf4j
+@Configuration
+@EnableConfigurationProperties({ThreadPoolTaskExecutor.class, MyconnectionKeepAliveStrategy.class, MyDefaultProxyRoutePlanner.class,
+        MyDefaultRedirectStrategy.class, MyPoolingHttpClientConnectionManager.class,MyHttpRequestRetryHandler.class,MyRequestConfig.class})
 public class HttpClientManager implements FactoryBean<CloseableHttpClient>, InitializingBean, DisposableBean {
 
     /**

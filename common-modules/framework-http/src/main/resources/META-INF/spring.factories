@@ -1,0 +1,16 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.springframework.http.configure.MyconnectionKeepAliveStrategy,\
+com.springframework.http.configure.MyDefaultRedirectStrategy,\
+com.springframework.http.configure.MyHttpRequestRetryHandler,\
+com.springframework.http.configure.MyPoolingHttpClientConnectionManager,\
+com.springframework.http.configure.MyRequestConfig,\
+com.springframework.http.configure.MyDefaultProxyRoutePlanner,\
+com.springframework.http.configure.MySSLConnectionSocketFactory,\
+com.springframework.http.configure.async.MyAsyncRequestConfig,\
+com.springframework.http.configure.async.MyCredentialsProvider,\
+com.springframework.http.configure.async.MyIOReactorConfig,\
+com.springframework.http.configure.async.MySchemeIOSessionStrategy,\
+com.springframework.http.service.HttpClientManager,\
+com.springframework.http.service.AsyncHttpClientManager
+
+
