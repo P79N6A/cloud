@@ -27,6 +27,12 @@
         <module>framework-swgger</module>
         <module>framework-task-executor</module>
         <module>framework-stream</module>
+        <module>framework-http</module>
+        <module>framework-constants</module>
+        <module>framework-idgenerator</module>
+        <module>framework-job</module>
+        <module>framework-security</module>
+        <module>framework-dfs</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -45,6 +51,13 @@
         <framework-mvc.version>0.0.1-SNAPSHOT</framework-mvc.version>
         <framework-redis.version>0.0.1-SNAPSHOT</framework-redis.version>
         <framework-utils.version>0.0.1-SNAPSHOT</framework-utils.version>
+        <framework-dfs.version>0.0.1-SNAPSHOT</framework-dfs.version>
+        <framework-swgger.version>0.0.1-SNAPSHOT</framework-swgger.version>
+        <framework-constants.version>0.0.1-SNAPSHOT</framework-constants.version>
+        <framework-http.version>0.0.1-SNAPSHOT</framework-http.version>
+        <framework-idgenerator.version>0.0.1-SNAPSHOT</framework-idgenerator.version>
+        <framework-job.version>0.0.1-SNAPSHOT</framework-job.version>
+        <framework-security.version>0.0.1-SNAPSHOT</framework-security.version>
         <framework-task-executor.version>0.0.1-SNAPSHOT</framework-task-executor.version>
 
         <!--sharding-->
@@ -170,6 +183,42 @@
                 <groupId>com.springframework</groupId>
                 <artifactId>framework-utils</artifactId>
                 <version>${framework-utils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-swgger</artifactId>
+                <version>${framework-swgger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-http</artifactId>
+                <version>${framework-http.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-idgenerator</artifactId>
+                <version>${framework-idgenerator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-constants</artifactId>
+                <version>${framework-constants.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-dfs</artifactId>
+                <version>${framework-dfs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-security</artifactId>
+                <version>${framework-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-job</artifactId>
+                <version>${framework-job.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.springframework</groupId>
