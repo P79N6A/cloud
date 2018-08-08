@@ -209,6 +209,11 @@ public class AsyncHttpClientManager implements FactoryBean<CloseableHttpClient>,
         return null;
     }
 
+    public CloseableHttpAsyncClient getCloseableHttpAsyncClient(boolean proxy) {
+        return proxy ? proxyAsyncHttpClient : asyncHttpClient;
+    }
+
+
     @Override
     public Class<?> getObjectType() {
         return (this.asyncHttpClient == null ? CloseableHttpClient.class : this.asyncHttpClient.getClass());
