@@ -102,24 +102,6 @@ public class HttpUtils {
         SSLUtilities.trustAllHttpsCertificates();
     }
 
-    private SSLConnectionSocketFactory getSSLConnectionSocketFactory() {
-        SSLContext context;
-        try {
-            context = SSLContext.getInstance("TLS");
-            TrustManager[] _trustManagers = new TrustManager[]{new FakeX509TrustManager()};
-            context.init(null, _trustManagers, new SecureRandom());
-            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
-                    context,
-                    new String[]{"TLSv1.2", "TLSv1.1", "TLSv1", "SSLv3"},
-                    null,
-                    SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-            return sslsf;
-        } catch (NoSuchAlgorithmException | KeyManagementException e) {
-            throw new IllegalStateException(e.getMessage());
-        }
-
-    }
-
     public CloseableHttpClient getHttpClient() {
         try {
             return httpClientManager.getObject();

@@ -43,6 +43,8 @@ public class HttpClientManager implements FactoryBean<CloseableHttpClient>, Init
     private final HttpRequestRetryHandler httpRequestRetryHandler;
     private final DefaultProxyRoutePlanner proxyRoutePlanner;
     private final PoolingHttpClientConnectionManager poolHttpcConnManager;
+    private final RequestConfig config;
+
 
     @Autowired
     public HttpClientManager(DefaultRedirectStrategy defaultRedirectStrategy, ConnectionKeepAliveStrategy connectionKeepAliveStrategy, HttpRequestRetryHandler httpRequestRetryHandler, DefaultProxyRoutePlanner proxyRoutePlanner, PoolingHttpClientConnectionManager poolHttpcConnManager, RequestConfig config, ThreadPoolTaskExecutor httpClientManagerCleanTaskExecutor) {
@@ -54,8 +56,6 @@ public class HttpClientManager implements FactoryBean<CloseableHttpClient>, Init
         this.config = config;
         this.httpClientManagerCleanTaskExecutor = httpClientManagerCleanTaskExecutor;
     }
-
-    private RequestConfig config;
 
     /**
      * 销毁上下文时，销毁HttpClient实例
