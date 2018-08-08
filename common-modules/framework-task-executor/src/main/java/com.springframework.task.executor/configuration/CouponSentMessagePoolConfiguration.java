@@ -2,6 +2,7 @@ package com.springframework.task.executor.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.ThreadPoolExecutor;
@@ -11,6 +12,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * 2018/7/13
  */
 @Configuration
+@EnableAsync
 public class CouponSentMessagePoolConfiguration {
     @Bean
     public ThreadPoolTaskExecutor couponSentMessageTaskExecutor() {
@@ -27,6 +29,18 @@ public class CouponSentMessagePoolConfiguration {
         threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
 //  重要，优雅关闭
         threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true);
+        return threadPoolTaskExecutor;
+    }
+    @Bean
+    public ThreadPoolTaskExecutor httpClientManagerCleanTaskExecutor() {
+        ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
+        threadPoolTaskExecutor.setCorePoolSize(2);
+        threadPoolTaskExecutor.setKeepAliveSeconds(300);
+        threadPoolTaskExecutor.setMaxPoolSize(3);
+        threadPoolTaskExecutor.setQueueCapacity(30);
+        threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true);
+
         return threadPoolTaskExecutor;
     }
 }

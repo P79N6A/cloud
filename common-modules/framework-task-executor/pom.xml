@@ -13,6 +13,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-logger</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>

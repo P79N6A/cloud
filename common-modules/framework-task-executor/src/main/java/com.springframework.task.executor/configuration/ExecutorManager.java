@@ -2,6 +2,8 @@ package com.springframework.task.executor.configuration;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,7 +36,7 @@ public abstract class ExecutorManager {
             while (totalWait > 0 && entry.getValue().getActiveCount() > 0) {
                 try {
                     Thread.sleep(1000L);
-//                    log.warn("wait:" + entry.getKey() + " to complete!" + totalWait);
+                    log.warn("wait:" + entry.getKey() + " to complete!" + totalWait);
                 } catch (InterruptedException e) {
                 }
                 totalWait--;

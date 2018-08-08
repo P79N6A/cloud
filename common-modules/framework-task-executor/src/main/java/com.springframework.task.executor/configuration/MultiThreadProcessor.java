@@ -62,7 +62,7 @@ public class MultiThreadProcessor {
                 task.run();
                 counter.incrementAndGet();
             } catch (Throwable e) {
-//                log.warn(e, 50);
+                log.warn("",e);
 
             } finally {
                 cdl.countDown();
