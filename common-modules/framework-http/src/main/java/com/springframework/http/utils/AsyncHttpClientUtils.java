@@ -1,7 +1,7 @@
 package com.springframework.http.utils;
 
 import com.google.common.collect.Maps;
-import com.springframework.http.service.async.HttpClientFactory;
+import com.springframework.http.service.AsyncHttpClientManager;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -27,6 +27,12 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class AsyncHttpClientUtils {
 
+    private AsyncHttpClientManager asyncHttpClientManager;
+
+    public AsyncHttpClientUtils(AsyncHttpClientManager asyncHttpClientManager) {
+        this.asyncHttpClientManager = asyncHttpClientManager;
+    }
+
     private static Logger LOG = LoggerFactory
             .getLogger(AsyncHttpClientUtils.class);
 
@@ -46,6 +52,7 @@ public class AsyncHttpClientUtils {
         }
         return result;
     }
+
     private static void hostCount(HttpUriRequest request) {
         try {
             if (request == null) {
@@ -68,6 +75,7 @@ public class AsyncHttpClientUtils {
             LOG.error(e + "");
         }
     }
+
     /**
      * 向指定的url发送一次异步post请求,参数是字符串
      *
@@ -78,14 +86,13 @@ public class AsyncHttpClientUtils {
      * @return 返回结果, 请求失败时返回null
      * @apiNote http接口处用 @RequestParam接收参数
      */
-    public static void httpAsyncPost(String baseUrl, String postString,
-                                     String urlParams, FutureCallback callback) throws Exception {
+    public void httpAsyncPost(String baseUrl, String postString,
+                              String urlParams, FutureCallback callback) throws Exception {
         if (baseUrl == null || "".equals(baseUrl)) {
             LOG.warn("we don't have base url, check config");
             throw new Exception("missing base url");
         }
-        CloseableHttpAsyncClient hc = HttpClientFactory.getInstance().getHttpAsyncClientPool()
-                .getAsyncHttpClient();
+        CloseableHttpAsyncClient hc = asyncHttpClientManager.getCloseableHttpAsyncClient(false);
         try {
             hc.start();
             HttpPost httpPost = new HttpPost(baseUrl);
@@ -125,16 +132,15 @@ public class AsyncHttpClientUtils {
      * @return 返回结果, 请求失败时返回null
      * @apiNote http接口处用 @RequestParam接收参数
      */
-    public static void httpAsyncPost(String baseUrl, List<BasicNameValuePair> postBody,
-                                     List<BasicNameValuePair> urlParams, FutureCallback callback) throws Exception {
+    public void httpAsyncPost(String baseUrl, List<BasicNameValuePair> postBody,
+                              List<BasicNameValuePair> urlParams, FutureCallback callback) throws Exception {
         if (baseUrl == null || "".equals(baseUrl)) {
             LOG.warn("we don't have base url, check config");
             throw new Exception("missing base url");
         }
 
         try {
-            CloseableHttpAsyncClient hc = HttpClientFactory.getInstance().getHttpAsyncClientPool()
-                    .getAsyncHttpClient();
+            CloseableHttpAsyncClient hc = asyncHttpClientManager.getCloseableHttpAsyncClient(false);
 
             hc.start();
 
@@ -177,14 +183,13 @@ public class AsyncHttpClientUtils {
      * @return 返回结果, 请求失败时返回null
      * @apiNote http接口处用 @RequestParam接收参数
      */
-    public static void httpAsyncGet(String baseUrl, String urlParams, FutureCallback callback) throws Exception {
+    public void httpAsyncGet(String baseUrl, String urlParams, FutureCallback callback) throws Exception {
 
         if (baseUrl == null || "".equals(baseUrl)) {
             LOG.warn("we don't have base url, check config");
             throw new Exception("missing base url");
         }
-        CloseableHttpAsyncClient hc = HttpClientFactory.getInstance().getHttpAsyncClientPool()
-                .getAsyncHttpClient();
+        CloseableHttpAsyncClient hc = asyncHttpClientManager.getCloseableHttpAsyncClient(false);
         try {
 
 
@@ -223,15 +228,14 @@ public class AsyncHttpClientUtils {
      * @return 返回结果, 请求失败时返回null
      * @apiNote http接口处用 @RequestParam接收参数
      */
-    public static void httpAsyncGet(String baseUrl, List<BasicNameValuePair> urlParams, FutureCallback callback) throws Exception {
+    public void httpAsyncGet(String baseUrl, List<BasicNameValuePair> urlParams, FutureCallback callback) throws Exception {
         if (baseUrl == null || "".equals(baseUrl)) {
             LOG.warn("we don't have base url, check config");
             throw new Exception("missing base url");
         }
 
         try {
-            CloseableHttpAsyncClient hc = HttpClientFactory.getInstance().getHttpAsyncClientPool()
-                    .getAsyncHttpClient();
+            CloseableHttpAsyncClient hc = asyncHttpClientManager.getCloseableHttpAsyncClient(false);
 
             hc.start();
 
