@@ -2,15 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>common-modules</artifactId>
-        <groupId>com.springframework</groupId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath/>
-    </parent>
+    <groupId>com.springframework</groupId>
+    <version>0.0.1-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>framework-logger</artifactId>
+    <artifactId>dubbo-logger</artifactId>
     <build>
         <plugins>
             <plugin>
@@ -27,6 +22,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.16.22</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -175,25 +171,25 @@
 
 
     <!--<repositories>-->
-        <!--<repository>-->
-            <!--<id>nexus-releases</id>-->
-            <!--<url>http://nexus.yonghuivip.com/nexus/content/repositories/releases</url>-->
-        <!--</repository>-->
-        <!--<repository>-->
-            <!--<id>nexus-snapshots</id>-->
-            <!--<url>http://nexus.yonghuivip.com/nexus/content/repositories/snapshots</url>-->
-        <!--</repository>-->
+    <!--<repository>-->
+    <!--<id>nexus-releases</id>-->
+    <!--<url>http://nexus.yonghuivip.com/nexus/content/repositories/releases</url>-->
+    <!--</repository>-->
+    <!--<repository>-->
+    <!--<id>nexus-snapshots</id>-->
+    <!--<url>http://nexus.yonghuivip.com/nexus/content/repositories/snapshots</url>-->
+    <!--</repository>-->
     <!--</repositories>-->
 
     <!--<distributionManagement>-->
-        <!--<repository>-->
-            <!--<id>nexus-releases</id>-->
-            <!--<url>http://nexus.yonghuivip.com/nexus/content/repositories/releases</url>-->
-        <!--</repository>-->
-        <!--<snapshotRepository>-->
-            <!--<id>nexus-snapshots</id>-->
-            <!--<url>http://nexus.yonghuivip.com/nexus/content/repositories/snapshots</url>-->
-        <!--</snapshotRepository>-->
+    <!--<repository>-->
+    <!--<id>nexus-releases</id>-->
+    <!--<url>http://nexus.yonghuivip.com/nexus/content/repositories/releases</url>-->
+    <!--</repository>-->
+    <!--<snapshotRepository>-->
+    <!--<id>nexus-snapshots</id>-->
+    <!--<url>http://nexus.yonghuivip.com/nexus/content/repositories/snapshots</url>-->
+    <!--</snapshotRepository>-->
     <!--</distributionManagement>-->
 
 
