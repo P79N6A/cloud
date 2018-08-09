@@ -36,7 +36,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.CodingErrorAction;
@@ -47,6 +46,7 @@ import static com.springframework.http.utils.AsyncHttpClientUtils.getStats;
 /** @author summer 2018/8/8 描述：HttpClient客户端封装 */
 @Configuration
 @Slf4j
+//@Service
 @EnableConfigurationProperties({
   MyAsyncRequestConfig.class, MyCredentialsProvider.class,
   MyIOReactorConfig.class, MySchemeIOSessionStrategy.class
@@ -55,10 +55,10 @@ public class AsyncHttpClientManager
     implements FactoryBean<CloseableHttpClient>, InitializingBean, DisposableBean {
 
   /** http代理相关参数 */
-  private String host = "";
+  private String host = "localhost";
 
   /** */
-  private int port = 0;
+  private int port = 8080;
 
   /** 连接池最大连接数 */
   private static int poolSize = 3000;
@@ -73,26 +73,14 @@ public class AsyncHttpClientManager
   private CloseableHttpAsyncClient proxyAsyncHttpClient;
 
   private PoolingNHttpClientConnectionManager conMgr = null;
-
-  private final ThreadPoolTaskExecutor httpClientManagerCleanTaskExecutor;
-  private final RequestConfig asyncConfig;
-  private final IOReactorConfig ioReactorConfig;
-  private final CredentialsProvider credentialsProvider;
-  private final Registry<SchemeIOSessionStrategy> sessionStrategyRegistry;
-
   @Autowired
-  public AsyncHttpClientManager(
-      CredentialsProvider credentialsProvider,
-      IOReactorConfig ioReactorConfig,
-      Registry<SchemeIOSessionStrategy> sessionStrategyRegistry,
-      RequestConfig asyncConfig,
-      ThreadPoolTaskExecutor httpClientManagerCleanTaskExecutor) {
-    this.asyncConfig = asyncConfig;
-    this.ioReactorConfig = ioReactorConfig;
-    this.credentialsProvider = credentialsProvider;
-    this.sessionStrategyRegistry = sessionStrategyRegistry;
-    this.httpClientManagerCleanTaskExecutor = httpClientManagerCleanTaskExecutor;
-  }
+  private RequestConfig asyncConfig;
+  @Autowired
+  private IOReactorConfig ioReactorConfig;
+  @Autowired
+  private CredentialsProvider credentialsProvider;
+  @Autowired
+  private Registry<SchemeIOSessionStrategy> sessionStrategyRegistry;
 
   /**
    * 销毁上下文时，销毁HttpClient实例
@@ -123,7 +111,7 @@ public class AsyncHttpClientManager
      * 而且还可以不使用锁机制就能被其他线程共享
      */
     this.asyncHttpClient = createAsyncClient(false);
-    this.proxyAsyncHttpClient = createAsyncClient(true);
+    this.proxyAsyncHttpClient = createAsyncClient(false);
     this.logHostCountCommand();
     this.idleConnectionEvictorCommand();
   }

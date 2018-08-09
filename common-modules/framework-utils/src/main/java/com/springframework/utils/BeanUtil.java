@@ -1,7 +1,6 @@
 package com.springframework.utils;
 
 import com.springframework.utils.bytecode.Wrapper;
-import com.springframework.utils.support.TraceErrorException;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.bag.HashBag;
@@ -706,7 +705,7 @@ public class BeanUtil implements Util4Script{
 			return toSimpleStringMap((Map) bean);
 		}
 		if (BeanUtil.isSimpleProperty(bean.getClass())) {
-			throw new TraceErrorException("bean can't be simple!");
+			throw new RuntimeException("bean can't be simple!");
 		}
 		Map beanMap = null;
 		try {

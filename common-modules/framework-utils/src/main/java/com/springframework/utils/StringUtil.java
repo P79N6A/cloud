@@ -1,6 +1,5 @@
 package com.springframework.utils;
 
-import com.springframework.utils.support.TraceErrorException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -193,7 +192,7 @@ public class StringUtil extends StringUtils implements Util4Script {
       s += DIGITAL;
     }
     if (length > 100) {
-      throw new TraceErrorException("生成的字符串长度必须<100！");
+      throw new RuntimeException("生成的字符串长度必须<100！");
     }
     return getRandomString(s, length);
   }

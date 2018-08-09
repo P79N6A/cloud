@@ -2,6 +2,9 @@ package com.springframework.demo.web;
 
 import com.springframework.demo.domain.routeconfig.entity.RouteConfig;
 import com.springframework.demo.domain.routeconfig.service.RouteConfigService;
+import com.springframework.http.service.HttpClientManager;
+import com.springframework.http.utils.HttpResult;
+import com.springframework.http.utils.HttpUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,8 @@ import java.util.List;
 @Api("路由配置")
 public class RouteConfigController {
     private final RouteConfigService routeConfigService;
-
+    @Autowired(required = false)
+    private HttpClientManager httpClientManager;
     @Autowired
     public RouteConfigController(RouteConfigService routeConfigService) {
         this.routeConfigService = routeConfigService;
@@ -50,7 +54,9 @@ public class RouteConfigController {
     @GetMapping("")
     @ApiOperation(value = "查询路由配置", notes = "查询路由配置信息")
     public Mono<String> findAll() {
-        List<RouteConfig> data =  routeConfigService.findRouteConfigList();
-        return Mono.just("成功");
+        final HttpResult string = new HttpUtils(httpClientManager).getUrlAsString("http://www.baidu.com");
+
+//        List<RouteConfig> data =  routeConfigService.findRouteConfigList();
+        return Mono.just("成功"+string);
     }
 }

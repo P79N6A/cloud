@@ -33,34 +33,29 @@ import static com.springframework.http.utils.HttpUtils.getStats;
  * 描述：HttpClient客户端封装
  */
 @Slf4j
+//@Service
 @Configuration
 @EnableConfigurationProperties({ThreadPoolTaskExecutor.class, MyconnectionKeepAliveStrategy.class, MyDefaultProxyRoutePlanner.class,
         MyDefaultRedirectStrategy.class, MyPoolingHttpClientConnectionManager.class,MyHttpRequestRetryHandler.class,MyRequestConfig.class})
 public class HttpClientManager implements FactoryBean<CloseableHttpClient>, InitializingBean, DisposableBean {
 
+
     /**
      * FactoryBean生成的目标对象
      */
     private CloseableHttpClient client;
-    private final ThreadPoolTaskExecutor httpClientManagerCleanTaskExecutor;
-    private final ConnectionKeepAliveStrategy connectionKeepAliveStrategy;
-    private final DefaultRedirectStrategy defaultRedirectStrategy;
-    private final HttpRequestRetryHandler httpRequestRetryHandler;
-    private final DefaultProxyRoutePlanner proxyRoutePlanner;
-    private final PoolingHttpClientConnectionManager poolHttpcConnManager;
-    private final RequestConfig config;
-
-
     @Autowired
-    public HttpClientManager(DefaultRedirectStrategy defaultRedirectStrategy, ConnectionKeepAliveStrategy connectionKeepAliveStrategy, HttpRequestRetryHandler httpRequestRetryHandler, DefaultProxyRoutePlanner proxyRoutePlanner, PoolingHttpClientConnectionManager poolHttpcConnManager, RequestConfig config, ThreadPoolTaskExecutor httpClientManagerCleanTaskExecutor) {
-        this.connectionKeepAliveStrategy = connectionKeepAliveStrategy;
-        this.httpRequestRetryHandler = httpRequestRetryHandler;
-        this.defaultRedirectStrategy = defaultRedirectStrategy;
-        this.proxyRoutePlanner = proxyRoutePlanner;
-        this.poolHttpcConnManager = poolHttpcConnManager;
-        this.config = config;
-        this.httpClientManagerCleanTaskExecutor = httpClientManagerCleanTaskExecutor;
-    }
+    private ConnectionKeepAliveStrategy connectionKeepAliveStrategy;
+    @Autowired
+    private DefaultRedirectStrategy defaultRedirectStrategy;
+    @Autowired
+    private HttpRequestRetryHandler httpRequestRetryHandler;
+    @Autowired
+    private DefaultProxyRoutePlanner proxyRoutePlanner;
+    @Autowired
+    private PoolingHttpClientConnectionManager poolHttpcConnManager;
+    @Autowired
+    private RequestConfig config;
 
     /**
      * 销毁上下文时，销毁HttpClient实例

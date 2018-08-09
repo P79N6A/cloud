@@ -1,7 +1,5 @@
 package com.springframework.utils;
 
-import com.springframework.utils.support.TraceErrorException;
-
 import java.io.File;
 
 /**
@@ -15,7 +13,7 @@ public class TmpFileUtil {
             if (file.isFile()) {
                 file.delete();
             } else {
-                throw new TraceErrorException("can't delete directory:" + file);
+                throw new RuntimeException("can't delete directory:" + file);
             }
         } else {
             DB_LOGGER.warn("fileNotExists:" + file);

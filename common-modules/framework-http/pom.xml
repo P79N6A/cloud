@@ -10,7 +10,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>framework-http</artifactId>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 <dependencies>
     <!--framework-all-->
     <dependency>
@@ -20,6 +32,7 @@
     <dependency>
         <groupId>com.springframework</groupId>
         <artifactId>framework-logger</artifactId>
+        <scope>provided</scope>
     </dependency>
     <dependency>
         <groupId>com.springframework</groupId>
