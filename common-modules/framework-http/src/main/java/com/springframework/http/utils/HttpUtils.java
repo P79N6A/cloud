@@ -3,6 +3,7 @@ package com.springframework.http.utils;
 import com.google.common.collect.Maps;
 import com.springframework.http.service.HttpClientManager;
 import com.springframework.utils.JsonUtils;
+import org.apache.commons.collections.map.CaseInsensitiveMap;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.*;
@@ -702,7 +703,7 @@ public class HttpUtils {
 
     private static Map<String, String> getAllHeaders(HttpResponse response) {
         Header[] headers = response.getAllHeaders();
-        Map<String, String> headerMap = new HashMap<>();
+        Map<String, String> headerMap =  new CaseInsensitiveMap();
         for (Header header : headers) {
             if (StringUtils.isNotBlank(header.getName()) && StringUtils.isNotBlank(header.getValue())) {
                 headerMap.put(header.getName(), header.getValue());
