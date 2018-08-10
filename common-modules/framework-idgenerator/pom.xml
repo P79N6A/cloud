@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <description>唯一序列生成器-redis和Twitter_Snowflake</description>
     <artifactId>framework-idgenerator</artifactId>
 
 

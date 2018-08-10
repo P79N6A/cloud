@@ -1,4 +1,6 @@
-package com.springframework.utils;
+package com.springframework.log.log;
+
+import com.springframework.utils.BeanUtil;
 
 import java.io.IOException;
 import java.io.StringWriter;

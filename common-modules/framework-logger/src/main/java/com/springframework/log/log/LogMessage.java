@@ -1,4 +1,4 @@
-package com.springframework.utils;
+package com.springframework.log.log;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;

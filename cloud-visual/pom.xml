@@ -17,6 +17,7 @@
         <module>cache-cloud</module>
         <module>canal</module>
         <module>camel</module>
+        <module>zipkin</module>
     </modules>
 
 

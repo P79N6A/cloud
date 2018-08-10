@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <description>缓存抽象接口-及localcache实现</description>
     <artifactId>framework-cache</artifactId>
 
     <dependencies>

@@ -2,7 +2,7 @@ package com.springframework.http.utils;
 
 import com.google.common.collect.Maps;
 import com.springframework.http.service.HttpClientManager;
-import com.springframework.utils.JsonUtils;
+import com.springframework.log.log.JsonUtils;
 import org.apache.commons.collections.map.CaseInsensitiveMap;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;

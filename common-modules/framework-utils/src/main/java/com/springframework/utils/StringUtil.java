@@ -431,15 +431,7 @@ public class StringUtil extends StringUtils implements Util4Script {
     return true;
   }
 
-  public static String getExceptionTrace(Exception e, int i) {
-    return LoggerUtils.getExceptionTrace(e, i);
-  }
-
-  public static String getExceptionTrace(Throwable e, int i) {
-    return LoggerUtils.getExceptionTrace(e, i);
-  }
-
-  public static String getExceptionTrace(Exception e) {
-    return LoggerUtils.getExceptionTrace(e);
+  public static String format(String messageFormat, Object... params) {
+    return String.format(messageFormat, params);
   }
 }

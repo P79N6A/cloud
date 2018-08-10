@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <description>hystrix熔断器</description>
     <artifactId>framework-hystrix</artifactId>
     <properties>
         <hystrix.version>2.0.0.RELEASE</hystrix.version>

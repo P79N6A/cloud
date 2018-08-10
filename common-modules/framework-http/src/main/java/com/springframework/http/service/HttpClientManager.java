@@ -1,7 +1,7 @@
 package com.springframework.http.service;
 
 import com.springframework.http.configure.*;
-import com.springframework.utils.JsonUtils;
+import com.springframework.log.log.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
@@ -21,7 +21,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.stereotype.Service;
 
 import java.util.Map;
 

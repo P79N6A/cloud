@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <description>统一异常框架</description>
     <artifactId>framework-exception</artifactId>
 
     <build>

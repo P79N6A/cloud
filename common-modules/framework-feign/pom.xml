@@ -9,6 +9,7 @@
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <description>远程服务调用fegin客户端</description>
     <version>0.0.1-SNAPSHOT</version>
     <artifactId>framework-feign</artifactId>
 

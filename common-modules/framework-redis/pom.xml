@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <description>cache框架-redis实现</description>
     <artifactId>framework-redis</artifactId>
     <dependencies>
         <dependency>

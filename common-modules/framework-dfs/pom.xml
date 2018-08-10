@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <description>分布式文件存储fastDFS</description>
     <artifactId>framework-dfs</artifactId>
 
 

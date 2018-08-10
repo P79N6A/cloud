@@ -33,6 +33,8 @@
         <module>framework-job</module>
         <module>framework-security</module>
         <module>framework-dfs</module>
+        <module>framework-config</module>
+        <module>framework-trace</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -58,6 +60,8 @@
         <framework-idgenerator.version>0.0.1-SNAPSHOT</framework-idgenerator.version>
         <framework-job.version>0.0.1-SNAPSHOT</framework-job.version>
         <framework-security.version>0.0.1-SNAPSHOT</framework-security.version>
+        <framework-trace.version>0.0.1-SNAPSHOT</framework-trace.version>
+        <framework-config.version>0.0.1-SNAPSHOT</framework-config.version>
         <framework-task-executor.version>0.0.1-SNAPSHOT</framework-task-executor.version>
 
         <!--sharding-->
@@ -140,6 +144,16 @@
             </dependency>
 
             <!--framework-all-->
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-trace</artifactId>
+                <version>${framework-trace.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-config</artifactId>
+                <version>${framework-config.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.springframework</groupId>
                 <artifactId>framework-cache</artifactId>

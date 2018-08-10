@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <description>线程池统一管理框架</description>
     <artifactId>framework-task-executor</artifactId>
 
     <dependencies>
