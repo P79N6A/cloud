@@ -36,6 +36,7 @@
         <module>framework-config</module>
         <module>framework-trace</module>
         <module>framework-domain</module>
+        <module>framework-state-machine</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
