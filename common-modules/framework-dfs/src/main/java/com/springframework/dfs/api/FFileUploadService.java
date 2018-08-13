@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author summer
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface FFileUploadService {
 
-    public String upload(HttpServletRequest request, @RequestParam(value = "file") MultipartFile file, @RequestParam(value = "application") String application);
+    public String upload(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "file") MultipartFile file, @RequestParam(value = "application") String application);
 
     public ResponseEntity<byte[]> download(@RequestParam(value = "path") String path);
 

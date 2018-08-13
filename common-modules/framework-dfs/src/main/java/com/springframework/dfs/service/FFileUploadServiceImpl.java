@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.Date;
@@ -30,18 +31,20 @@ import java.util.Date;
 @RestController
 public class FFileUploadServiceImpl implements FFileUploadService {
     private static final Logger log = LoggerFactory.getLogger(FFileUploadServiceImpl.class);
-
     @Autowired
+    public FFileUploadServiceImpl(FastDFSClientWrapper dfsClient, FileUploadLogService fileUploadLogService) {
+        this.dfsClient = dfsClient;
+        this.fileUploadLogService = fileUploadLogService;
+    }
+
     private FastDFSClientWrapper dfsClient;
-
-    @Autowired
     private FileUploadLogService fileUploadLogService;
 
     /**
      * 文件上传
      */
     @Override
-    public String upload(HttpServletRequest request, @RequestParam(value = "file") MultipartFile file, @RequestParam(value = "application") String application) {
+    public String upload(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "file") MultipartFile file, @RequestParam(value = "application") String application) {
         try {
             String filePath = dfsClient.uploadFile(file);
             //TODO 保存文件上传记录，文件下载时需要通过filePath获取文件的原名称
@@ -57,6 +60,7 @@ public class FFileUploadServiceImpl implements FFileUploadService {
             fileUploadLog.setPath(filePath);
             fileUploadLog.setRequestParam(request.getQueryString());
             fileUploadLog.setStatus(FileUploadLogStatus.VALID.getValue());
+            fileUploadLog.setResponse(response.getStatus()+"");
             fileUploadLogService.insertSuccessLog(fileUploadLog);
             return filePath;
         } catch (IOException e) {
