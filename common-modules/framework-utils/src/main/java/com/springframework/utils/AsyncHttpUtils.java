@@ -1,6 +1,6 @@
-//package com.springframework.common.utils;
+//package com.springframework.fds.utils;
 //
-//import com.google.common.collect.Maps;
+//import com.google.fds.collect.Maps;
 //import com.ning.http.client.*;
 //import com.ning.http.client.AsyncHttpClient.BoundRequestBuilder;
 //import com.ning.http.client.AsyncHttpClientConfig.Builder;

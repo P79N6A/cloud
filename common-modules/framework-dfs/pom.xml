@@ -12,6 +12,19 @@
     <artifactId>framework-dfs</artifactId>
 
     <dependencies>
+        <!--内部框架-->
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-enum</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-logger</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.github.tobato</groupId>
             <artifactId>fastdfs-client</artifactId>
@@ -21,8 +34,24 @@
             <artifactId>spring-webmvc</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 

@@ -12,6 +12,11 @@
     <artifactId>framework-utils</artifactId>
 
     <dependencies>
+        <!--内部框架-->
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-logger</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -25,6 +30,10 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -73,6 +82,10 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>

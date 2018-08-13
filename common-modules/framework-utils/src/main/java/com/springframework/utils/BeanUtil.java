@@ -1,5 +1,6 @@
 package com.springframework.utils;
 
+import com.springframework.log.log.TLogger;
 import com.springframework.utils.bytecode.Wrapper;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.Bag;

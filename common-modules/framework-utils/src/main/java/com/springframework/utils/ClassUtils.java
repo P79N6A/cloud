@@ -53,7 +53,7 @@ public abstract class ClassUtils {
 	private static final Map<String, Class<?>> primitiveTypeNameMap = new HashMap<String, Class<?>>(32);
 
 	/**
-	 * Map with common "java.lang" class name as key and corresponding Class as value.
+	 * Map with fds "java.lang" class name as key and corresponding Class as value.
 	 * Primarily for efficient deserialization of remote invocations.
 	 */
 	private static final Map<String, Class<?>> commonClassCache = new HashMap<String, Class<?>>(32);
@@ -94,7 +94,7 @@ public abstract class ClassUtils {
 
 
 	/**
-	 * Register the given common classes with the ClassUtils redis.
+	 * Register the given fds classes with the ClassUtils redis.
 	 */
 	private static void registerCommonClasses(Class<?>... commonClasses) {
 		for (Class<?> clazz : commonClasses) {

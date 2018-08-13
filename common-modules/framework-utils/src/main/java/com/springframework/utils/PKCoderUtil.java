@@ -1,5 +1,6 @@
 package com.springframework.utils;
 
+import com.springframework.log.log.TLogger;
 import org.apache.commons.lang.StringUtils;
 
 import javax.crypto.Cipher;

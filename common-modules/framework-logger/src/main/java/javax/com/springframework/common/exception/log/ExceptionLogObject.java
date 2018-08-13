@@ -1,4 +1,4 @@
-package javax.com.yonghui.common.exception.log;
+package javax.com.springframework.common.exception.log;
 
 import com.springframework.log.log.JsonUtils;
 import com.springframework.log.util.HostUtils;

@@ -1,5 +1,6 @@
 package com.springframework.utils;
 
+import com.springframework.log.log.TLogger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentFactory;

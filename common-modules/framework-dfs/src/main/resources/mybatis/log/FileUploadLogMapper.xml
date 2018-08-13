@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springframework.dfs.mapper.FileUploadLogMapper">
+    <resultMap id="BaseResultMap" type="com.springframework.dfs.domain.entity.FileUploadLog">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <id column="application" property="application" jdbcType="VARCHAR"/>
+        <id column="host" property="host" jdbcType="VARCHAR"/>
+        <id column="ip" property="ip" jdbcType="VARCHAR"/>
+        <id column="file_name" property="fileName" jdbcType="VARCHAR"/>
+        <id column="file_type" property="fileType" jdbcType="INT"/>
+        <id column="status" property="status" jdbcType="INT"/>
+        <id column="path" property="path" jdbcType="VARCHAR"/>
+        <id column="request_param" property="requestParam" jdbcType="VARCHAR"/>
+        <id column="create_time" property="createTime" jdbcType="DATE"/>
+        <id column="operater" property="operater" jdbcType="VARCHAR"/>
+        <id column="response" property="response" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="insertSuccessLog" parameterType="com.springframework.dfs.domain.entity.FileUploadLog">
+        insert into
+        file_upload_log
+        (application,
+        host,
+        ip,
+        file_name,
+        file_type,
+        status,
+        path,
+        request_param,
+        create_time,
+        operater,
+        response)
+        values
+        (
+        #{application,jdbcType=VARCHAR},
+        #{host,jdbcType=VARCHAR},
+        #{ip,jdbcType=VARCHAR},
+        #{fileName,jdbcType=VARCHAR},
+        #{fileType,jdbcType=INT},
+        #{status,jdbcType=INT},
+        #{path,jdbcType=VARCHAR},
+        #{requestParam,jdbcType=VARCHAR},
+        #{createTime,jdbcType=DATE},
+        #{operater,jdbcType=VARCHAR},
+        #{response,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertErrorLog" parameterType="com.springframework.dfs.domain.entity.FileUploadLog">
+        insert into
+        file_upload_log
+        (application,
+        host,
+        ip,
+        file_name,
+        file_type,
+        status,
+        path,
+        request_param,
+        create_time,
+        operater,
+        response)
+        values
+        (
+        #{application,jdbcType=VARCHAR},
+        #{host,jdbcType=VARCHAR},
+        #{ip,jdbcType=VARCHAR},
+        #{fileName,jdbcType=VARCHAR},
+        #{fileType,jdbcType=INT},
+        #{status,jdbcType=INT},
+        #{path,jdbcType=VARCHAR},
+        #{requestParam,jdbcType=VARCHAR},
+        #{createTime,jdbcType=DATE},
+        #{operater,jdbcType=VARCHAR},
+        #{response,jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteErrorLogByTime">
+
+        delete from file_upload_log
+        where create_time &lt; #{date,jdbcType=TIMESTAMP}
+        order by id
+        limit 100
+    </delete>
+
+    <delete id="deleteErrorLog">
+        delete from file_upload_log
+        order by id
+        limit 100
+    </delete>
+
+    <delete id="deleteSuccessLogByTime">
+        delete from file_upload_log
+        where create_time &lt; #{date,jdbcType=TIMESTAMP}
+        order by id
+        limit 100
+    </delete>
+
+    <delete id="deleteSuccessLog">
+        delete from file_upload_log
+        order by id
+        limit 100
+    </delete>
+
+    <select id="getSuccessLogCount" resultType="java.lang.Long">
+        select count(1) from file_upload_log
+    </select>
+
+    <select id="getErrorLogCount" resultType="java.lang.Long">
+        select count(1) from file_upload_log
+    </select>
+    <select id="findFileName" resultType="java.lang.String">
+        select file_name as  fileName from file_upload_log where path= #{path,jdbcType=VARCHAR}
+    </select>
+</mapper>

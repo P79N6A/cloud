@@ -1,5 +1,6 @@
 package com.springframework.utils;
 
+import com.springframework.log.log.TLogger;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.*;
 import org.dom4j.io.OutputFormat;

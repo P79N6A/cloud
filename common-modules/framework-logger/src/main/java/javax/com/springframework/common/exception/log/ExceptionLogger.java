@@ -1,15 +1,15 @@
-package javax.com.yonghui.common.exception.log;
+package javax.com.springframework.common.exception.log;
 
 import com.google.common.base.Strings;
-import com.yonghui.common.constants.Constant;
-import com.springframework.log.util.ExceptionUtils;
+import com.springframework.constants.Constant;
+import com.springframework.exception.BaseException;
+import com.springframework.exception.BaseKnownException;
 import com.springframework.log.util.RequestUtils;
-import org.jetbrains.annotations.NotNull;
+import com.sun.istack.internal.NotNull;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.com.yonghui.common.exception.BaseException;
-import javax.com.yonghui.common.exception.BaseKnownException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
@@ -65,7 +65,6 @@ public class ExceptionLogger {
         }
 
         if ((ex.getClass() == RuntimeException.class || ex.getClass() == ExecutionException.class
-                || ex.getClass() == com.alibaba.dubbo.rpc.RpcException.class
                 || (supportNestedServletException && ex.getClass() == org.springframework.web.util.NestedServletException.class)
                 || ex.getClass() == java.lang.reflect.InvocationTargetException.class) //如果通过反射执行的，需要特别处理
                 && ex.getCause() != null) {

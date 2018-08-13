@@ -11,6 +11,16 @@
     <description>枚举类</description>
     <artifactId>framework-enum</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-logger</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

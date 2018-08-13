@@ -1,4 +1,4 @@
-package com.springframework.log.util;
+package com.springframework.utils;
 
 import com.springframework.constants.Constant;
 import org.apache.commons.lang3.exception.ExceptionUtils;

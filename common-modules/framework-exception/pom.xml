@@ -11,6 +11,13 @@
     <description>统一异常框架</description>
     <artifactId>framework-exception</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

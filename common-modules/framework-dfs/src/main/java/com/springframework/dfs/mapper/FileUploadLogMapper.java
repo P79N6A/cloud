@@ -1,24 +1,26 @@
-package com.springframework.dfs.api;
+package com.springframework.dfs.mapper;
 
 import com.springframework.dfs.domain.entity.FileUploadLog;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 
 /**
- * @author summer
- * 2018/8/13
+ * @author xieshengrong
  */
-public interface FileUploadLogService {
+@Mapper
+public interface FileUploadLogMapper {
 
     int insertSuccessLog(FileUploadLog log);
 
     int insertErrorLog(FileUploadLog log);
 
-    int deleteErrorLogByTime(Date date);
+    int deleteErrorLogByTime(@Param("date") Date date);
 
     int deleteErrorLog();
 
-    int deleteSuccessLogByTime(Date date);
+    int deleteSuccessLogByTime(@Param("date") Date date);
 
     int deleteSuccessLog();
 
@@ -30,5 +32,5 @@ public interface FileUploadLogService {
      * @param path
      * @return
      */
-    String findFileName(String path);
+    String findFileName(@Param("path")String path);
 }

@@ -21,7 +21,7 @@
  * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.springframework.utils;
+package com.springframework.log.log;
 
 import org.slf4j.Logger;
 import org.slf4j.Marker;
