@@ -35,6 +35,7 @@
         <module>framework-dfs</module>
         <module>framework-config</module>
         <module>framework-trace</module>
+        <module>framework-domain</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -53,6 +54,7 @@
         <framework-mvc.version>0.0.1-SNAPSHOT</framework-mvc.version>
         <framework-redis.version>0.0.1-SNAPSHOT</framework-redis.version>
         <framework-utils.version>0.0.1-SNAPSHOT</framework-utils.version>
+        <framework-domain.version>0.0.1-SNAPSHOT</framework-domain.version>
         <framework-dfs.version>0.0.1-SNAPSHOT</framework-dfs.version>
         <framework-swgger.version>0.0.1-SNAPSHOT</framework-swgger.version>
         <framework-constants.version>0.0.1-SNAPSHOT</framework-constants.version>
@@ -212,6 +214,11 @@
                 <groupId>com.springframework</groupId>
                 <artifactId>framework-utils</artifactId>
                 <version>${framework-utils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-domain</artifactId>
+                <version>${framework-domain.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.springframework</groupId>

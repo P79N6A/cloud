@@ -1,0 +1,33 @@
+Builder模式构造DTO对象
+当接口有超过3个以上的参数，特别是参数中有相同数据类型时，是非常不方便调用方明确含义的。在调用方未拿到source code jar时，多个参数，很容易传错，而且调用方的代码，含义不明确，更要命的是，如果方法有多个重载，支持更多的参数时，非常容易出错。
+通过使用Builder模式来构造DTO，解决此问题
+构造DTO对象 abc
+构造DTO对象对应的builder abcBuilder
+两者必须是同一个包下。且builder必须独立于对应的dto，注意：有些书籍中建议builder作为dto的内部类，但因为我们的dto要经过dubbo spring cloud 序列化。内部类builder会导致序列化异常。
+dto中设置private 字段，并实现get set，注意：set方法对builder模式不是必须的，但是如果没有相应set方法，会导致spring cloud序列化出错。所以要保留set方法。
+builder中设置同名的protected字段。builder例子：
+
+
+在builder中，增加方法用于传入参数，方法名建议用介词：for, on, of, with, by and etc 不建议用set。以免混淆。比如 forOrder, byPartner, withCode, onChannel
+在DTO中，保证有一个默认构造函数，一个传入builder的构造函数，例如：
+
+
+在Builder中，最后有一个 build() 方法，这个build方法内，直接return new abc(this) 即可。
+如果DTO要求某些字段必须有值，可以在build方法return前，对参数进行简单的校验。注意：此处校验，不要包含任何可能会变化的业务逻辑，只对数据是否null等进行基础校验，如果不确定对象是否永远不能为空，请勿在build方法中校验，因为Builder类是随着API一起发布出去的，在调用方引入的，任何包含可能会变的业务校验，都将依赖于调用方更新API包才能实现。所以更复杂的DTO校验，请在服务提供方进行。
+DTO必须有空的构造函数，否则序列化会出错。
+DTO建议通过IntelliJIDEA 自动生成toString重载，例子：
+
+
+
+这样比较方便debug调试。
+当DTO对象有List等集合字段时，可以通过下面的builder例子来设置此集合，避免调用方必须先创建集合，再传入。
+
+
+
+全部实现builder模式后，对于调用方。代码和参数含义非常清楚明细，层次结构优雅，以下是一个复杂的多层次的builder模式构造出来的对象，构造对象的代码
+
+
+
+
+builder模式下，构建DTO是通过链式调用，并且最后build()来完成，类似java stream的操作。链式调用和stream操作一样，每个链式调用都要换行，保证代码层次清晰。
+建议：对外的服务，请求dto都使用builder模式构建。对内的业务接口，超过三个参数的，建议使用builder创建。
