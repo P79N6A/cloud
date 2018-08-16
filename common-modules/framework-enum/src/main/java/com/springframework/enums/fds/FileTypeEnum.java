@@ -41,7 +41,10 @@ public enum FileTypeEnum implements IntValueDescription {
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+        return "FileTypeEnum{" +
+                "value=" + value +
+                ", desc='" + desc + '\'' +
+                '}';
     }
 
     @Override
