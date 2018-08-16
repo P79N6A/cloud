@@ -8,13 +8,17 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <description>枚举类</description>
+    <description>枚举类(跨项目,后期跨项目枚举可以和model放在api包中)</description>
     <artifactId>framework-enum</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.springframework</groupId>
             <artifactId>framework-logger</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

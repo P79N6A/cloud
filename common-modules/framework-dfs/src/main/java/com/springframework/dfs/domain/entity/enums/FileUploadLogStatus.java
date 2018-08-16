@@ -1,4 +1,4 @@
-package com.springframework.enums.fds;
+package com.springframework.dfs.domain.entity.enums;
 
 import lombok.Getter;
 
