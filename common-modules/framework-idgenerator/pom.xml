@@ -12,4 +12,11 @@
     <artifactId>framework-idgenerator</artifactId>
 
 
+    <dependencies>
+        <!--项目内部框架-->
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-redis</artifactId>
+        </dependency>
+    </dependencies>
 </project>
