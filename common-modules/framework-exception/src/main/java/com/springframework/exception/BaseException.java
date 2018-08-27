@@ -3,13 +3,15 @@ package com.springframework.exception;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.function.Supplier;
+
 /**
  * @author summer
  * 2018/8/13
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseException extends RuntimeException{
+public abstract class BaseException extends RuntimeException implements Supplier<BaseException> {
 
     /**
      * httpcode状态码
@@ -35,4 +37,7 @@ public class BaseException extends RuntimeException{
      * 自定义信息
      */
     private String customInfo;
+
+    @Override
+    public abstract BaseException get() ;
 }
