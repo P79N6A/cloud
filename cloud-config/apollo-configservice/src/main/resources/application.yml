@@ -2,13 +2,15 @@ spring:
   application:
     name: apollo-configservice
   profiles:
-    active: ${apollo_profile}
+    active: github
 
 ctrip:
   appid: 100003171
   
 server:
-  port: 8080
-  
+  port: 9090
+
+#  path: /opt/logs/100003171
+#  file: ${logging.path}/apollo-configservice.log
 logging:
-  file: /opt/logs/100003171/apollo-configservice.log
+  config: classpath:logback.xml

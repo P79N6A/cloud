@@ -1,5 +1,8 @@
 package com.ctrip.framework.apollo.portal.controller;
 
+import com.ctrip.framework.apollo.common.dto.AppNamespaceDTO;
+import com.ctrip.framework.apollo.common.utils.BeanUtils;
+import com.ctrip.framework.apollo.portal.listener.AppNamespaceDeletionEvent;
 import com.google.common.collect.Sets;
 
 import com.ctrip.framework.apollo.common.dto.NamespaceDTO;
@@ -101,6 +104,7 @@ public class NamespaceController {
     String operator = userInfoHolder.getUser().getUserId();
 
     roleInitializationService.initNamespaceRoles(appId, namespaceName, operator);
+    roleInitializationService.initNamespaceEnvRoles(appId, namespaceName, operator);
 
     for (NamespaceCreationModel model : models) {
       NamespaceDTO namespace = model.getNamespace();
@@ -132,18 +136,43 @@ public class NamespaceController {
     return ResponseEntity.ok().build();
   }
 
+  @PreAuthorize(value = "@permissionValidator.isSuperAdmin()")
+  @RequestMapping(value = "/apps/{appId}/appnamespaces/{namespaceName:.+}", method = RequestMethod.DELETE)
+  public ResponseEntity<Void> deleteAppNamespace(@PathVariable String appId, @PathVariable String namespaceName) {
+
+    AppNamespace appNamespace = appNamespaceService.deleteAppNamespace(appId, namespaceName);
+
+    publisher.publishEvent(new AppNamespaceDeletionEvent(appNamespace));
+
+    return ResponseEntity.ok().build();
+  }
+
+  @RequestMapping(value = "/apps/{appId}/appnamespaces/{namespaceName:.+}", method = RequestMethod.GET)
+  public AppNamespaceDTO findAppNamespace(@PathVariable String appId, @PathVariable String namespaceName) {
+    AppNamespace appNamespace = appNamespaceService.findByAppIdAndName(appId, namespaceName);
+
+    if (appNamespace == null) {
+      throw new BadRequestException(
+          String.format("AppNamespace not exists. AppId = %s, NamespaceName = %s", appId, namespaceName));
+    }
+
+    return BeanUtils.transfrom(AppNamespaceDTO.class, appNamespace);
+  }
+
   @PreAuthorize(value = "@permissionValidator.hasCreateAppNamespacePermission(#appId, #appNamespace)")
   @RequestMapping(value = "/apps/{appId}/appnamespaces", method = RequestMethod.POST)
-  public AppNamespace createAppNamespace(@PathVariable String appId, @RequestBody AppNamespace appNamespace) {
+  public AppNamespace createAppNamespace(@PathVariable String appId,
+      @RequestParam(defaultValue = "true") boolean appendNamespacePrefix,
+      @RequestBody AppNamespace appNamespace) {
 
     RequestPrecondition.checkArgumentsNotEmpty(appNamespace.getAppId(), appNamespace.getName());
     if (!InputValidator.isValidAppNamespace(appNamespace.getName())) {
       throw new BadRequestException(String.format("Namespace格式错误: %s",
-              InputValidator.INVALID_CLUSTER_NAMESPACE_MESSAGE + " & "
-                      + InputValidator.INVALID_NAMESPACE_NAMESPACE_MESSAGE));
+          InputValidator.INVALID_CLUSTER_NAMESPACE_MESSAGE + " & "
+              + InputValidator.INVALID_NAMESPACE_NAMESPACE_MESSAGE));
     }
 
-    AppNamespace createdAppNamespace = appNamespaceService.createAppNamespaceInLocal(appNamespace);
+    AppNamespace createdAppNamespace = appNamespaceService.createAppNamespaceInLocal(appNamespace, appendNamespacePrefix);
 
     if (portalConfig.canAppAdminCreatePrivateNamespace() || createdAppNamespace.isPublic()) {
       assignNamespaceRoleToOperator(appId, appNamespace.getName());
