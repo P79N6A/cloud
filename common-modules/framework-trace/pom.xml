@@ -30,9 +30,5 @@
             <groupId>com.springframework</groupId>
             <artifactId>framework-utils</artifactId>
         </dependency>
-        <dependency>
-            <groupId></groupId>
-            <artifactId></artifactId>
-        </dependency>
     </dependencies>
 </project>
