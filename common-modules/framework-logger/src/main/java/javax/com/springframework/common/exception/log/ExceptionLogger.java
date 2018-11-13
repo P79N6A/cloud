@@ -5,12 +5,12 @@ import com.springframework.constants.Constant;
 import com.springframework.exception.BaseException;
 import com.springframework.exception.BaseKnownException;
 import com.springframework.log.util.RequestUtils;
-import com.sun.istack.internal.NotNull;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 

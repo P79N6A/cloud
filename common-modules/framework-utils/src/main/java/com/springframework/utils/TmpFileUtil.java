@@ -1,14 +1,15 @@
 package com.springframework.utils;
 
-import com.springframework.log.log.TLogger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 
 /**
  * @author summer
  */
+
+@Slf4j
 public class TmpFileUtil {
-    private static final transient TLogger DB_LOGGER = LoggerUtils.getLogger(TmpFileUtil.class);
 
     public static void deleteFile(File file) {
         if (file.exists()) {
@@ -18,7 +19,7 @@ public class TmpFileUtil {
                 throw new RuntimeException("can't delete directory:" + file);
             }
         } else {
-            DB_LOGGER.warn("fileNotExists:" + file);
+            log.warn("fileNotExists:" + file);
         }
     }
 

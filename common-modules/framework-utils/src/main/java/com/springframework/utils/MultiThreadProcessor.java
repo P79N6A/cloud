@@ -1,7 +1,7 @@
 package com.springframework.utils;
 
 
-import com.springframework.log.log.TLogger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -9,8 +9,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author summer
  */
+@Slf4j
 public class MultiThreadProcessor {
-    private static final TLogger logger = LoggerUtils.getLogger(MultiThreadProcessor.class);
     private static final int EXECUTOR_KEEP_ALIVE_TIME = 60000;
     private static final int EXECUTOR_MAXIMUM_POOL_SIZE = Math.min(10, Runtime.getRuntime().availableProcessors());
     private static final int EXECUTOR_CORE_POOL_SIZE = 1;
@@ -62,7 +62,7 @@ public class MultiThreadProcessor {
                 task.run();
                 counter.incrementAndGet();
             } catch (Throwable e) {
-                logger.warn(e, 50);
+                log.warn("",e);
             } finally {
                 cdl.countDown();
             }

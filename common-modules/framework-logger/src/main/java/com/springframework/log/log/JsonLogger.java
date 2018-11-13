@@ -24,7 +24,6 @@
  */
 package com.springframework.log.log;
 
-import com.springframework.utils.TLogger;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.Marker;

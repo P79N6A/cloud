@@ -14,10 +14,6 @@
     <dependencies>
         <!--内部框架-->
         <dependency>
-            <groupId>com.springframework</groupId>
-            <artifactId>framework-logger</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <scope>compile</scope>

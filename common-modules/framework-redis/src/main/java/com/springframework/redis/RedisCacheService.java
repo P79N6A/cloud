@@ -3,10 +3,10 @@ package com.springframework.redis;
 import com.google.common.collect.Sets;
 import com.springframework.cache.GenericCacheManager;
 import com.springframework.utils.StringUtil;
-import com.sun.istack.internal.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

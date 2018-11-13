@@ -16,5 +16,9 @@
             <groupId>com.springframework</groupId>
             <artifactId>framework-utils</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-logger</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -1,7 +1,7 @@
 package com.springframework.utils;
 
 
-import com.springframework.log.log.TLogger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,8 +26,8 @@ import java.util.Enumeration;
  * @author gebiao(ge.biao @ taotao.com)
  * @since Jun 14, 2013 6:25:19 PM
  */
+@Slf4j
 public class CAUtil {
-    private static final transient TLogger DB_LOGGER = LoggerUtils.getLogger(CAUtil.class);
     public static final String MD5withRSA = "MD5withRSA";
     public static final String SHA1WithRSA = "SHA1WithRSA";
 
@@ -38,11 +38,11 @@ public class CAUtil {
         try {
             prikey = (PrivateKey) ks.getKey(ks.aliases().nextElement(), nPassword);
         } catch (UnrecoverableKeyException e) {
-            DB_LOGGER.error("", e);
+            log.error("", e);
         } catch (KeyStoreException e) {
-            DB_LOGGER.error("", e);
+            log.error("", e);
         } catch (NoSuchAlgorithmException e) {
-            DB_LOGGER.error("", e);
+            log.error("", e);
         }
         return prikey;
     }
@@ -55,11 +55,11 @@ public class CAUtil {
         try {
             prikey = (PrivateKey) ks.getKey(alias, nPassword);
         } catch (UnrecoverableKeyException e) {
-            DB_LOGGER.error("", e);
+            log.error("", e);
         } catch (KeyStoreException e) {
-            DB_LOGGER.error("", e);
+            log.error("", e);
         } catch (NoSuchAlgorithmException e) {
-            DB_LOGGER.error("", e);
+            log.error("", e);
         }
         return prikey;
     }
@@ -74,13 +74,13 @@ public class CAUtil {
             ks.load(fis, password.toCharArray());
             return ks;
         } catch (Exception e) {
-            DB_LOGGER.error("", e);
+            log.error("", e);
         } finally {
             if (null != fis) {
                 try {
                     fis.close();
                 } catch (IOException e) {
-                    DB_LOGGER.error("", e);
+                    log.error("", e);
                 }
             }
         }
@@ -96,7 +96,7 @@ public class CAUtil {
                 keyAlias = enumas.nextElement();
             }
         } catch (KeyStoreException e) {
-            DB_LOGGER.error("", e);
+            log.error("", e);
         }
         return keyAlias;
     }
@@ -109,15 +109,15 @@ public class CAUtil {
             ism = new FileInputStream(certFile);
             x509Certificate = (X509Certificate) cf.generateCertificate(ism);
         } catch (CertificateException e) {
-            DB_LOGGER.error("", e);
+            log.error("", e);
         } catch (FileNotFoundException e) {
-            DB_LOGGER.error("", e);
+            log.error("", e);
         } finally {
             if (null != ism) {
                 try {
                     ism.close();
                 } catch (IOException e) {
-                    DB_LOGGER.error("", e);
+                    log.error("", e);
                 }
             }
         }
@@ -130,7 +130,7 @@ public class CAUtil {
             KeyStore ks = getKsfromPfx(certFile, password);
             cert = ks.getCertificate(alias);
         } catch (KeyStoreException e) {
-            DB_LOGGER.error("", e);
+            log.error("", e);
         }
         return cert;
     }
@@ -196,7 +196,7 @@ public class CAUtil {
             byte[] signed = signature.sign();
             return Base64.getEncoder().encodeToString(signed);
         } catch (Exception e) {
-            DB_LOGGER.warn(e, 20);
+            log.warn("",e);
             return "";
         }
     }
@@ -209,7 +209,7 @@ public class CAUtil {
             byte[] signed = signature.sign();
             return Base64.getEncoder().encodeToString(signed);
         } catch (Exception e) {
-            DB_LOGGER.warn(e, 20);
+            log.warn("",e);
             return "";
         }
     }
@@ -222,7 +222,7 @@ public class CAUtil {
             byte[] signed = signature.sign();
             return signed;
         } catch (Exception e) {
-            DB_LOGGER.warn(e, 20);
+            log.warn("",e);
             return null;
         }
     }

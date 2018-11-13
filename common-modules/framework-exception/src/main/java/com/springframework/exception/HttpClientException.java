@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
  * 2018/8/27
  */
 @AllArgsConstructor
-@NoArgsConstructor
 public class HttpClientException extends BaseException{
     @Override
     public BaseException get() {

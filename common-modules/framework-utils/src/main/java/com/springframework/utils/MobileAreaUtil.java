@@ -1,6 +1,6 @@
 package com.springframework.utils;
 
-import com.springframework.log.log.TLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -14,9 +14,9 @@ import java.util.Map;
 /**
  * @author summer
  */
+@Slf4j
 public class MobileAreaUtil {
 	private static Map<String, String> mobileAreaMap = new HashMap<String, String>();
-	private final static transient TLogger DB_LOGGER = LoggerUtils.getLogger(MobileAreaUtil.class);
 	static{
 		init();
 	}
@@ -29,9 +29,9 @@ public class MobileAreaUtil {
 				mobileAreaMap.put(tmp[0], tmp[1] + "," + tmp[2]);
 			}
 		}catch(Exception e){
-			DB_LOGGER.warn("MobileAreaUtil init error:" + e.getMessage());
+			log.warn("MobileAreaUtil init error:" + e.getMessage());
 		}
-		DB_LOGGER.warn("MobileAreaUtil init size:" + mobileAreaMap.size());
+		log.warn("MobileAreaUtil init size:" + mobileAreaMap.size());
 	}
 	public static String getMobileCitycode(String mobile){
 		if(!ValidateUtil.isMobile(mobile)){
@@ -40,7 +40,7 @@ public class MobileAreaUtil {
 		String smobile = mobile.substring(0, 7);
 		String res = mobileAreaMap.get(smobile);
 		if(StringUtils.isBlank(res)){
-			DB_LOGGER.warn("unfind mobile area:" + mobile);
+			log.warn("unfind mobile area:" + mobile);
 			return "";
 		}
 		return StringUtils.split(res, ",")[0];
@@ -52,7 +52,7 @@ public class MobileAreaUtil {
 		String smobile = mobile.substring(0, 7);
 		String res = mobileAreaMap.get(smobile);
 		if(StringUtils.isBlank(res)){
-			DB_LOGGER.warn("unfind mobile area:" + mobile);
+			log.warn("unfind mobile area:" + mobile);
 			return "";
 		}
 		return StringUtils.split(res, ",")[1];

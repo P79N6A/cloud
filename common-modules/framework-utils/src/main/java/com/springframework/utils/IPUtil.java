@@ -1,7 +1,6 @@
 package com.springframework.utils;
 
-import com.springframework.log.log.LoggerUtils;
-import com.springframework.log.log.TLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.map.UnmodifiableMap;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -19,9 +18,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * @author summer
  */
+@Slf4j
 public class IPUtil {
     public final static IpData ipData = new IpData();
-    private final static transient TLogger DB_LOGGER = LoggerUtils.getLogger(IPUtil.class);
     private static Map<String/*code*/, String/*name*/> provinceMap;
     private static Map<String/*provinceCode*/, Map<String/*citycode*/, String/*cityname*/>> proCityMap;
     private static Map<String/*citycode*/, String/*cityname*/> cityMap = new HashMap();
@@ -56,7 +55,7 @@ public class IPUtil {
                 }
             }
         } catch (Exception e) {
-            DB_LOGGER.error("获取城市代码错误", e);
+            log.error("获取城市代码错误", e);
         }
         return new String[]{"", "", ""};
     }
@@ -143,7 +142,7 @@ public class IPUtil {
                 success++;
             } catch (Exception e) {
                 error++;
-                DB_LOGGER.warn("RowError:" + line + ", LineNo:" + (success + error));
+                log.warn("RowError:" + line + ", LineNo:" + (success + error));
             }
         }
         ipData.ipList[0] = Long.MIN_VALUE;
@@ -153,7 +152,7 @@ public class IPUtil {
         Arrays.sort(ipData.ipList);
         ipData.ipList[1] = ipData.ipList[2] - 1;
         ipData.ipList[i] = ipData.pairMap.get(ipData.ipList[i - 1]) + 1;
-        DB_LOGGER.warn("Init IP Data, total count:" + lines.size() + ",success:" + success + ",error:" + error);
+        log.warn("Init IP Data, total count:" + lines.size() + ",success:" + success + ",error:" + error);
     }
 
     public static String getAddress(String ip) {
@@ -163,7 +162,7 @@ public class IPUtil {
         Long ip2 = ipData.pairMap.get(ip1);
         String find = null;
         if (ip1 == null || ip2 == null) {
-            DB_LOGGER.warn("INVALIDIP:" + ip);
+            log.warn("INVALIDIP:" + ip);
             return find;
         }
         if (ipNum >= ip1 && ipNum <= ip2) {
@@ -177,7 +176,7 @@ public class IPUtil {
         if (ip1 != null && ip1.length > 3) {
             return Long.parseLong(ip1[0]) * 256 * 256 * 256 + Long.parseLong(ip1[1]) * 256 * 256 + Long.parseLong(ip1[2]) * 256 + Long.parseLong(ip1[3]);
         } else {
-            DB_LOGGER.warn("INVALIDIP:" + ip);
+            log.warn("INVALIDIP:" + ip);
         }
         return 0L;
     }

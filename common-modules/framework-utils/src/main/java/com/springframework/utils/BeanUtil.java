@@ -1,7 +1,7 @@
 package com.springframework.utils;
 
-import com.springframework.log.log.TLogger;
 import com.springframework.utils.bytecode.Wrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.bag.HashBag;
@@ -21,8 +21,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author bob.hu
  * @date 2011-04-11 10:28:07
  */
+@Slf4j
 public class BeanUtil implements Util4Script{
-	private static final transient TLogger DB_LOGGER = LoggerUtils.getLogger(BeanUtil.class);
 	private static Map<Class, List<String>> writeListPropertyMap = new ConcurrentHashMap<Class, List<String>>();
 	public static Class<?> getFieldType(Class clazz, String property) {
 
@@ -31,7 +31,7 @@ public class BeanUtil implements Util4Script{
 			Class<?> v = wrap.getPropertyType(property);
 			return v;
 		} catch (Exception e) {
-			DB_LOGGER.warn(e, 2);
+			log.warn("",e);
 		}
 		return null;
 	}
@@ -142,7 +142,7 @@ public class BeanUtil implements Util4Script{
 			Wrapper wrap = Wrapper.getWrapper(bean.getClass());
 			return wrap.getPropertyValue(bean, property);
 		} catch (Exception e) {
-			DB_LOGGER.warn(e, 2);
+			log.warn("",e);
 		}
 		return null;
 	}
@@ -435,7 +435,7 @@ public class BeanUtil implements Util4Script{
 			//class属性去除
 			beanMap.remove("class");
 		} catch (Exception e) {
-			DB_LOGGER.warn(e, 20);
+			log.warn("",e);
 			return null;
 		}
 		return beanMap;
@@ -451,7 +451,7 @@ public class BeanUtil implements Util4Script{
 			try {
 				result.put(pn, wrap.getPropertyValue(bean, pn));
 			} catch (Exception e) {
-				DB_LOGGER.warn(e, 2);
+				log.warn("",e);
 			}
 		}
 		return result;
