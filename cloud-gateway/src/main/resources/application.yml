@@ -31,7 +31,7 @@ spring:
 #        filters:
 #          - RewritePath=/demo-server/(?<segment>.*), /$\{segment}
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/gateway-server-db?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://127.0.0.1:3306/cloud?useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123
     # 使用druid数据源

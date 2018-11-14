@@ -4,10 +4,10 @@ server:
   tomcat:
     max-threads: 500 # Maximum amount of worker threads.
     min-spare-threads: 50 # Minimum amount of worker threads
-
 # 注册服务
 eureka:
   instance:
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@_version@
     health-check-url-path: /actuator/health
     prefer-ip-address: true
     lease-renewal-interval-in-seconds: 5
@@ -17,6 +17,8 @@ eureka:
       defaultZone: http://admin:admin@127.0.0.1:8080/eureka/
 
 spring:
+  application:
+    name: cloud-admin
   security:
     user:
       password: admin

@@ -4,11 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 /** @author summer 服务发现注册中心 */
 @SpringCloudApplication
 @EnableEurekaServer
+@EnableDiscoveryClient
 @Slf4j
 public class EurekaApplication {
 

@@ -26,6 +26,7 @@ import static java.util.Collections.synchronizedMap;
 public class DynamicRouteDefinitionLocator implements RouteDefinitionRepository {
     private RedisTemplate redis;
     private final Map<String, RouteDefinition> routes = synchronizedMap(new LinkedHashMap<String, RouteDefinition>());
+
     DynamicRouteDefinitionLocator(RedisTemplate redisTemplate) {
         this.redis = redisTemplate;
     }
@@ -34,18 +35,18 @@ public class DynamicRouteDefinitionLocator implements RouteDefinitionRepository 
     @SuppressWarnings("unchecked")
     public Mono<Void> save(Mono<RouteDefinition> route) {
         RouteConfig routeConfig = new RouteConfig();
-        Date curr =new Date(Instant.now().getEpochSecond());
+        Date curr = new Date(Instant.now().getEpochSecond());
         StringBuilder filtersSts = new StringBuilder();
         StringBuilder predicateListStr = new StringBuilder();
-        List<FilterDefinition> filters =null;
-        List<PredicateDefinition> predicateList =null;
-        if(route.blockOptional().isPresent()){
-            filters=Objects.requireNonNull(route.block()).getFilters();
-            filters.forEach( e ->{
+        List<FilterDefinition> filters = null;
+        List<PredicateDefinition> predicateList = null;
+        if (route.blockOptional().isPresent()) {
+            filters = Objects.requireNonNull(route.block()).getFilters();
+            filters.forEach(e -> {
                 filtersSts.append(e.toString()).append("-");
             });
-            predicateList=Objects.requireNonNull(route.block()).getPredicates();
-            predicateList.forEach(e ->{
+            predicateList = Objects.requireNonNull(route.block()).getPredicates();
+            predicateList.forEach(e -> {
                 predicateListStr.append(e.toString()).append("-");
             });
         }

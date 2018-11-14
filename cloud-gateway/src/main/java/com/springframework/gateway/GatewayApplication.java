@@ -17,17 +17,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @SpringCloudApplication
 @Slf4j
-@MapperScan(basePackages = "com.springframework.gateway.domain.*.mapper")
 public class GatewayApplication {
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-    @Bean
-    LoadBalancerInterceptor loadBalancerInterceptor(LoadBalancerClient loadBalance){
-        return new LoadBalancerInterceptor(loadBalance);
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(GatewayApplication.class, args);
         log.warn("Gateway网关服务 started success");

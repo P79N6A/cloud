@@ -139,8 +139,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
         routeConfig.setServiceName(serviceId);
         routeConfig.setUri(routeDefinition.getUri()+"");
         routeConfig.setOperator(DiscoveryClientRouteDefinitionLocator.class.getSimpleName());
-        Integer result = routeConfigService.save(routeConfig);
-        return Optional.ofNullable(result).isPresent()?result:0;
+        return routeConfigService.save(routeConfig);
     }
 
     String getValueFromExpr(SimpleEvaluationContext evalCtxt, SpelExpressionParser parser, ServiceInstance instance, Map.Entry<String, String> entry) {

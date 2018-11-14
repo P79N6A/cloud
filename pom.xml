@@ -10,13 +10,15 @@
     </parent>
     <groupId>com.springframework</groupId>
     <artifactId>cloud</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${_version}</version>
+
     <packaging>pom</packaging>
 
     <name>cloud</name>
     <description>Cloud project for Spring Boot 2.0</description>
 
     <properties>
+        <_version>0.0.1-SNAPSHOT</_version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>

@@ -1,9 +1,7 @@
 package com.springframework.gateway.config;
 
 import com.google.common.collect.Lists;
-import com.springframework.gateway.constant.CommonConstant;
 import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;
-import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.cloud.gateway.support.NotFoundException;

@@ -12,6 +12,7 @@
     <artifactId>framework-domain</artifactId>
 
     <dependencies>
+        <!--内部框架依赖-->
         <dependency>
             <groupId>com.springframework</groupId>
             <artifactId>framework-utils</artifactId>
@@ -20,5 +21,15 @@
             <groupId>com.springframework</groupId>
             <artifactId>framework-logger</artifactId>
         </dependency>
+        <!--内部框架依赖  end-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+        </dependency>
+
     </dependencies>
 </project>
