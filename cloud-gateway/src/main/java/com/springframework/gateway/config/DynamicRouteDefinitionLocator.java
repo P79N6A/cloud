@@ -2,7 +2,7 @@ package com.springframework.gateway.config;
 
 import com.google.common.collect.Lists;
 import com.springframework.gateway.constant.CommonConstant;
-import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
+import com.springframework.gateway.domain.entity.RouteConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
@@ -51,8 +51,6 @@ public class DynamicRouteDefinitionLocator implements RouteDefinitionRepository 
             });
         }
         routeConfig.setRouteId(route.block().getId());
-        routeConfig.setCreateTime(curr);
-        routeConfig.setUpdateTime(curr);
         routeConfig.setFilters(filtersSts.toString());
         routeConfig.setPredicates(predicateListStr.toString());
         routeConfig.setStatus(true);

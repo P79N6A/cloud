@@ -1,10 +1,8 @@
-package com.springframework.gateway.domain.routeconfig.service;
+package com.springframework.gateway.domain.service;
 
-import com.springframework.gateway.domain.routeconfig.dto.RouteConfigDTO;
-import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
+import com.springframework.gateway.domain.dto.RouteConfigDTO;
+import com.springframework.gateway.domain.entity.RouteConfig;
 import org.springframework.cloud.gateway.route.RouteDefinition;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -19,7 +17,7 @@ public interface RouteConfigService {
      * @param routeConfig
      * @return
      */
-    Integer save(RouteConfig routeConfig);
+    boolean save(RouteConfig routeConfig);
 
     /**
      * 查询所有路由配置

@@ -1,4 +1,4 @@
----
+info.version: @project.version@
 server:
   port: 20000
   tomcat:
@@ -7,7 +7,7 @@ server:
 # 注册服务
 eureka:
   instance:
-    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@_version@
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
     health-check-url-path: /actuator/health
     prefer-ip-address: true
     lease-renewal-interval-in-seconds: 5
@@ -23,18 +23,10 @@ spring:
     user:
       password: admin
       name: admin
-#  mail: ##邮件通知
-#    host: smtp.qq.com
-#    username: 578440089@qq.com
   boot:
     admin:
-#      turbine:             ##配置Turbine服务器和集群
-#        location: turbine
-#        enabled: true
-#        clusters: [default]
-#      notify:  ##admin邮件通知
-#        mail:
-#          to: 578440089@qq.com
+      ui:
+        title: 服务治理监控平台
       probed-endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream,activiti
 management:
   endpoint:

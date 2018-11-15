@@ -1,4 +1,4 @@
----
+info.version: @project.version@
 server:
   port: 20030
   tomcat:

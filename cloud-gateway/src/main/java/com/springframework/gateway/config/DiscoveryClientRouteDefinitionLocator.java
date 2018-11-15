@@ -1,9 +1,9 @@
 package com.springframework.gateway.config;
 
 import com.springframework.utils.JsonUtils;
-import com.springframework.gateway.domain.routeconfig.dto.RouteConfigDTO;
-import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
-import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;
+import com.springframework.gateway.domain.dto.RouteConfigDTO;
+import com.springframework.gateway.domain.entity.RouteConfig;
+import com.springframework.gateway.domain.service.RouteConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -32,11 +32,12 @@ import static java.util.Collections.synchronizedMap;
  */
 @Slf4j
 public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRepository {
-    private  DiscoveryClient discoveryClient;
-    private  DiscoveryLocatorProperties properties;
-    private  String routeIdPrefix;
-    private  RouteConfigService routeConfigService;
+    private DiscoveryClient discoveryClient;
+    private DiscoveryLocatorProperties properties;
+    private String routeIdPrefix;
+    private RouteConfigService routeConfigService;
     private final Map<String, RouteDefinition> routes = synchronizedMap(new LinkedHashMap<String, RouteDefinition>());
+
     public DiscoveryClientRouteDefinitionLocator(DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties, RouteConfigService routeConfigService) {
         this.discoveryClient = discoveryClient;
         this.properties = properties;
@@ -47,7 +48,6 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
             this.routeIdPrefix = this.discoveryClient.getClass().getSimpleName() + "_";
         }
     }
-
 
 
     @Override
@@ -74,7 +74,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                     }
                     String serviceId = instance.getServiceId();
                     RouteConfigDTO routeConfig = routeConfigService.findRouteConfig(serviceId);
-                    if (Optional.ofNullable(routeConfig).isPresent() && !routeConfig.getStatus()) {
+                    if (Objects.nonNull(routeConfig) && !routeConfig.getStatus()) {
                         return false;
                     }
                     return include;
@@ -84,7 +84,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                     RouteDefinition routeDefinition = new RouteDefinition();
                     RouteConfigDTO routeConfig = routeConfigService.findRouteConfig(serviceId);
                     //状态有效
-                    if (Optional.ofNullable(routeConfig).isPresent() && routeConfig.getStatus()) {
+                    if (Objects.nonNull(routeConfig) && routeConfig.getStatus()) {
                         routeDefinition.setId(routeConfig.getRouteId());
                         routeDefinition.setOrder(routeConfig.getOrder());
                         routeDefinition.setUri(URI.create(routeConfig.getUri()));
@@ -93,8 +93,9 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                     } else {
                         routeDefinition.setId(this.routeIdPrefix + serviceId);
                         String uri = urlExpr.getValue(evalCtxt, instance, String.class);
-                        routeDefinition.setUri(URI.create(uri));
-
+                        if(!StringUtils.isEmpty(uri)){
+                            routeDefinition.setUri(URI.create(uri));
+                        }
                         final ServiceInstance instanceForEval = new DiscoveryClientRouteDefinitionLocator.DelegatingServiceInstance(instance, properties);
 
                         for (PredicateDefinition original : this.properties.getPredicates()) {
@@ -116,30 +117,26 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                             }
                             routeDefinition.getFilters().add(filter);
                         }
-                        final Integer saveRouteConfig = saveOrUpdateRouteConfig(routeDefinition, serviceId);
-                        if(saveRouteConfig==0){
-                            log.warn("保存路由配置数量为{},参数{}，服务id{}",saveRouteConfig,routeDefinition,serviceId);
-                        }
+                        final RouteConfig config = saveOrUpdateRouteConfig(routeDefinition, serviceId);
+                        log.info("保存路由配置数量为{},参数{}，服务id{}", config, routeDefinition, serviceId);
                     }
                     return routeDefinition;
                 });
     }
 
-    private Integer saveOrUpdateRouteConfig(RouteDefinition routeDefinition, String serviceId) {
+    private RouteConfig saveOrUpdateRouteConfig(RouteDefinition routeDefinition, String serviceId) {
         RouteConfig routeConfig = new RouteConfig();
-        Date curr = new Date(Instant.now().getEpochSecond());
         routeConfig.setId(null);
         routeConfig.setRouteId(routeDefinition.getId());
-        routeConfig.setCreateTime(curr);
-        routeConfig.setUpdateTime(curr);
         routeConfig.setFilters(JsonUtils.writeObjectToJson(routeDefinition.getFilters()));
         routeConfig.setPredicates(JsonUtils.writeObjectToJson(routeDefinition.getPredicates()));
         routeConfig.setStatus(true);
         routeConfig.setServiceId(serviceId);
         routeConfig.setServiceName(serviceId);
-        routeConfig.setUri(routeDefinition.getUri()+"");
+        routeConfig.setUri(routeDefinition.getUri() + "");
         routeConfig.setOperator(DiscoveryClientRouteDefinitionLocator.class.getSimpleName());
-        return routeConfigService.save(routeConfig);
+        routeConfigService.save(routeConfig);
+        return routeConfig;
     }
 
     String getValueFromExpr(SimpleEvaluationContext evalCtxt, SpelExpressionParser parser, ServiceInstance instance, Map.Entry<String, String> entry) {

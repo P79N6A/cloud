@@ -1,7 +1,7 @@
-package com.springframework.gateway.domain.routeconfig.repository;
+package com.springframework.gateway.domain.repository;
 
-import com.springframework.gateway.domain.routeconfig.dto.RouteConfigDTO;
-import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
+import com.springframework.gateway.domain.dto.RouteConfigDTO;
+import com.springframework.gateway.domain.entity.RouteConfig;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public interface RouteConfigDao {
      * @param routeConfig
      * @return
      */
-    Integer save(RouteConfig routeConfig);
+    boolean save(RouteConfig routeConfig);
 
     /**
      * @return

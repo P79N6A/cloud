@@ -16,27 +16,27 @@ public abstract class BaseException extends RuntimeException implements Supplier
     /**
      * httpcode状态码
      */
-    private int httpCode;
+    protected int httpCode;
     /**
      * 内部自定义code
      */
-    private int internalErrorCode;
+    protected int internalErrorCode;
     /**
      * 错误代码
      */
-    private int errorCode;
+    protected int errorCode;
     /**
      * 错误信息
      */
-    private String errorMessage;
+    protected String errorMessage;
     /**
      * 内部错误信息
      */
-    private String internalErrorMessage;
+    protected String internalErrorMessage;
     /**
      * 自定义信息
      */
-    private String customInfo;
+    protected String customInfo;
 
     @Override
     public abstract BaseException get() ;

@@ -1,5 +1,6 @@
 package com.springframework.gateway;
 
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
  * @author summer  Gateway网关
  */
 @SpringCloudApplication
+@SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class)
 @Slf4j
 public class GatewayApplication {
     public static void main(String[] args) {

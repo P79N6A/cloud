@@ -1,22 +1,14 @@
-package com.springframework.gateway.domain.routeconfig.entity;
+package com.springframework.gateway.domain.entity;
 
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
-import com.google.common.collect.Lists;
-import lombok.*;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.cloud.gateway.filter.FilterDefinition;
-import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.springframework.domain.base.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-import javax.validation.Valid;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author summer
@@ -27,10 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("route_config")
-public class RouteConfig extends Model<RouteConfig> {
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+public class RouteConfig extends BaseEntity<RouteConfig> {
 
     @TableField("route_id")
     private String routeId;
@@ -61,11 +50,11 @@ public class RouteConfig extends Model<RouteConfig> {
 
     /**
      * ${name}=${args[0]},${args[1]}...${args[n]}
-     *多个用 - 分隔
+     * 多个用 - 分隔
      * ps: RouteDefinition
      * ${id}=${uri},${predicates[0]},${predicates[1]}...${predicates[n]}
-     *      *  eq:route001=http://127.0.0.1,Host=**.addrequestparameter.org,Path=/get
-     *      *  ps:单个 PredicateDefinition 的 args[i] 存在逗号( , ) ，会被错误的分隔，例如说，"Query=foo,bz"
+     * *  eq:route001=http://127.0.0.1,Host=**.addrequestparameter.org,Path=/get
+     * *  ps:单个 PredicateDefinition 的 args[i] 存在逗号( , ) ，会被错误的分隔，例如说，"Query=foo,bz"
      */
     private String predicates;
     /**
@@ -76,22 +65,10 @@ public class RouteConfig extends Model<RouteConfig> {
 
 
     /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-    /**
-     * 更新时间
-     */
-    @TableField("update_time")
-    private Date updateTime;
-    /**
      * 操作人
      */
     private String operator;
 
-
-    public static final String ID = "id";
     public static final String PATH = "Path=/";
 
     public static final String SERVICE_ID = "service_id";
@@ -106,14 +83,10 @@ public class RouteConfig extends Model<RouteConfig> {
 
     public static final String PREDICATES = "predicates";
 
-    public static final String CREATE_TIME = "create_time";
-
-    public static final String UPDATE_TIME = "update_time";
-
     public static final String OPERATOR = "operator";
 
     @Override
     protected Serializable pkVal() {
-        return this.id;
+        return id;
     }
 }

@@ -1,6 +1,6 @@
 package com.springframework.gateway.config;
 
-import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;
+import com.springframework.gateway.domain.service.RouteConfigService;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.gateway.discovery.DiscoveryLocatorProperties;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package com.springframework.gateway.domain.routeconfig.dto;
+package com.springframework.gateway.domain.dto;
 
 import com.google.common.collect.Lists;
 import com.springframework.utils.JsonUtils;

@@ -1,27 +1,21 @@
-package com.springframework.gateway.domain.routeconfig.service.impl;
+package com.springframework.gateway.domain.service.impl;
 
-import com.google.common.collect.Lists;
-import com.springframework.gateway.constant.CommonConstant;
-import com.springframework.gateway.domain.routeconfig.dto.RouteConfigDTO;
-import com.springframework.gateway.domain.routeconfig.repository.impl.RouteConfigDaoImpl;
-import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;
-import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
+import com.springframework.gateway.domain.dto.RouteConfigDTO;
+import com.springframework.gateway.domain.entity.RouteConfig;
+import com.springframework.gateway.domain.repository.impl.RouteConfigDaoImpl;
+import com.springframework.gateway.domain.service.RouteConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author summer
  * 2018/7/2
  */
-@Service
+@Service("routeConfigService")
 public class RouteConfigServiceImpl implements RouteConfigService {
     private RedisTemplate redisTemplate;
     private RouteConfigDaoImpl routeConfigDao;
@@ -34,7 +28,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
 
 
     @Override
-    public Integer save(RouteConfig routeConfig) {
+    public boolean save(RouteConfig routeConfig) {
         return routeConfigDao.save(routeConfig);
     }
 

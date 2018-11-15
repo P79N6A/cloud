@@ -2,9 +2,9 @@
 //
 //import com.google.common.collect.Lists;
 //import com.springframework.gateway.constant.CommonConstant;
-//import com.springframework.gateway.domain.routeconfig.dto.RouteConfigDTO;
-//import com.springframework.gateway.domain.routeconfig.entity.RouteConfig;
-//import com.springframework.gateway.domain.routeconfig.service.RouteConfigService;
+//import RouteConfigDTO;
+//import RouteConfig;
+//import RouteConfigService;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.cloud.client.ServiceInstance;
 //import org.springframework.cloud.client.discovery.DiscoveryClient;
