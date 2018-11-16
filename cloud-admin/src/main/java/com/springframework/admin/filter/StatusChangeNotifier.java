@@ -17,19 +17,14 @@
 
 package com.springframework.admin.filter;
 
-import com.alibaba.fastjson.JSONObject;
-import com.google.common.base.Joiner;
 import com.springframework.admin.config.notifier.MonitorPropertiesConfig;
-import com.springframework.common.template.MobileMsgTemplate;
-import com.springframework.constants.CommonConstant;
-import com.springframework.constants.MqQueueConstant;
-import com.springframework.enums.sms.EnumSmsChannelTemplate;
-import com.springframework.utils.DateUtil;
-import de.codecentric.boot.admin.event.ClientApplicationEvent;
-import de.codecentric.boot.admin.event.ClientApplicationStatusChangedEvent;
-import de.codecentric.boot.admin.notify.AbstractStatusChangeNotifier;
+import de.codecentric.boot.admin.server.domain.entities.Instance;
+import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
+import de.codecentric.boot.admin.server.domain.events.InstanceEvent;
+import de.codecentric.boot.admin.server.notify.AbstractStatusChangeNotifier;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import reactor.core.publisher.Mono;
 
 
 /**
@@ -39,8 +34,10 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
     private RabbitTemplate rabbitTemplate;
     private MonitorPropertiesConfig monitorMobilePropertiesConfig;
+    private InstanceRepository repositpry;
 
-    public StatusChangeNotifier(MonitorPropertiesConfig monitorMobilePropertiesConfig, RabbitTemplate rabbitTemplate) {
+    public StatusChangeNotifier(InstanceRepository repositpry, MonitorPropertiesConfig monitorMobilePropertiesConfig, RabbitTemplate rabbitTemplate) {
+        super(repositpry);
         this.rabbitTemplate = rabbitTemplate;
         this.monitorMobilePropertiesConfig = monitorMobilePropertiesConfig;
     }
@@ -51,45 +48,47 @@ public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
      * @param event 事件
      * @throws Exception 异常
      */
+//    protected void doNotify(InstanceRegisteredEvent event) {
+//        if (event instanceof ClientApplicationStatusChangedEvent) {
+//            log.info("Application {} ({}) is {}", event.getApplication().getName(),
+//                    event.getApplication().getId(), ((ClientApplicationStatusChangedEvent) event).getTo().getStatus());
+//            String text = String.format("应用:%s 服务ID:%s 状态改变为：%s，时间：%s"
+//                    , event.getApplication().getName()
+//                    , event.getApplication().getId()
+//                    , ((ClientApplicationStatusChangedEvent) event).getTo().getStatus()
+//                    , DateUtil.formatTimestamp(event.getTimestamp()));
+//
+//            JSONObject contextJson = new JSONObject();
+//            contextJson.put("name", event.getApplication().getName());
+//            contextJson.put("seid", event.getApplication().getId());
+//            contextJson.put("time", DateUtil.formatTimestamp(event.getTimestamp()));
+//
+//            //开启短信通知
+//            if (monitorMobilePropertiesConfig.getMobile().getEnabled()) {
+//                log.info("开始短信通知，内容：{}", text);
+//                rabbitTemplate.convertAndSend( MqQueueConstant.MOBILE_SERVICE_STATUS_CHANGE,
+//                        new MobileMsgTemplate(
+//                                Joiner.on(",").join(monitorMobilePropertiesConfig.getMobile().getMobiles()),
+//                                contextJson.toJSONString(),
+//                                CommonConstant.ALIYUN_SMS,
+//                                EnumSmsChannelTemplate.SERVICE_STATUS_CHANGE.getSignName(),
+//                                EnumSmsChannelTemplate.SERVICE_STATUS_CHANGE.getTemplate()
+//                        ));
+//            }
+//
+//            if (monitorMobilePropertiesConfig.getDingTalk().getEnabled()) {
+//                log.info("开始钉钉通知，内容：{}", text);
+//                rabbitTemplate.convertAndSend(MqQueueConstant.DINGTALK_SERVICE_STATUS_CHANGE, text);
+//            }
+//
+//
+//        } else {
+//            log.info("Application {} ({}) {}", event.getApplication().getName(),
+//                    event.getApplication().getId(), event.getType());
+//        }
+//    }
     @Override
-    protected void doNotify(ClientApplicationEvent event) {
-        if (event instanceof ClientApplicationStatusChangedEvent) {
-            log.info("Application {} ({}) is {}", event.getApplication().getName(),
-                    event.getApplication().getId(), ((ClientApplicationStatusChangedEvent) event).getTo().getStatus());
-            String text = String.format("应用:%s 服务ID:%s 状态改变为：%s，时间：%s"
-                    , event.getApplication().getName()
-                    , event.getApplication().getId()
-                    , ((ClientApplicationStatusChangedEvent) event).getTo().getStatus()
-                    , DateUtil.formatTimestamp(event.getTimestamp()));
-
-            JSONObject contextJson = new JSONObject();
-            contextJson.put("name", event.getApplication().getName());
-            contextJson.put("seid", event.getApplication().getId());
-            contextJson.put("time", DateUtil.formatTimestamp(event.getTimestamp()));
-
-            //开启短信通知
-            if (monitorMobilePropertiesConfig.getMobile().getEnabled()) {
-                log.info("开始短信通知，内容：{}", text);
-                rabbitTemplate.convertAndSend( MqQueueConstant.MOBILE_SERVICE_STATUS_CHANGE,
-                        new MobileMsgTemplate(
-                                Joiner.on(",").join(monitorMobilePropertiesConfig.getMobile().getMobiles()),
-                                contextJson.toJSONString(),
-                                CommonConstant.ALIYUN_SMS,
-                                EnumSmsChannelTemplate.SERVICE_STATUS_CHANGE.getSignName(),
-                                EnumSmsChannelTemplate.SERVICE_STATUS_CHANGE.getTemplate()
-                        ));
-            }
-
-            if (monitorMobilePropertiesConfig.getDingTalk().getEnabled()) {
-                log.info("开始钉钉通知，内容：{}", text);
-                rabbitTemplate.convertAndSend(MqQueueConstant.DINGTALK_SERVICE_STATUS_CHANGE, text);
-            }
-
-
-        } else {
-            log.info("Application {} ({}) {}", event.getApplication().getName(),
-                    event.getApplication().getId(), event.getType());
-        }
+    protected Mono<Void> doNotify(InstanceEvent event, Instance instance) {
+        return null;
     }
-
 }

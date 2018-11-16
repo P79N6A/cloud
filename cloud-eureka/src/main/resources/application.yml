@@ -33,3 +33,5 @@ eureka:
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 20
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@_version@
+logging:
+  config: classpath:logback.xml

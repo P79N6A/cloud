@@ -24,12 +24,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author lengleng
- * @date 2018/4/22
+ * @author summer
  */
 @Data
 @ConditionalOnExpression("!'${mobiles}'.isEmpty()")
 public class MonitorMobilePropertiesConfig {
+    /**
+     * 开启手机通知
+     */
     private Boolean enabled;
     private List<String> mobiles = new ArrayList<>();
 }

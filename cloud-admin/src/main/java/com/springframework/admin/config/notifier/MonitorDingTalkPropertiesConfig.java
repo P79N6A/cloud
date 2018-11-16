@@ -21,8 +21,7 @@ import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 
 /**
- * @author lengleng
- * @date 2018/4/22
+ * @author summer
  */
 @Data
 @ConditionalOnExpression("!'${webhook}'.isEmpty()")

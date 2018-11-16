@@ -18,44 +18,49 @@
 package com.springframework.admin.config.notifier;
 
 import com.springframework.admin.filter.StatusChangeNotifier;
-import de.codecentric.boot.admin.notify.RemindingNotifier;
+import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
+import de.codecentric.boot.admin.server.notify.RemindingNotifier;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 /**
  * @author lengleng
  * @date 2018/1/25
- *  监控提醒配置
+ * 监控提醒配置
  */
 @Configuration
 @EnableScheduling
-public class PigNotifierConfiguration {
+public class NotifierConfiguration {
+    @Autowired
+    private InstanceRepository repositpry;
     @Autowired
     private RabbitTemplate rabbitTemplate;
     @Autowired
     private MonitorPropertiesConfig monitorPropertiesConfig;
+
     @Bean
     @Primary
     public RemindingNotifier remindingNotifier() {
-        RemindingNotifier remindingNotifier = new RemindingNotifier(mobileNotifier());
-        remindingNotifier.setReminderPeriod(TimeUnit.MINUTES.toMillis(1));
+        final StatusChangeNotifier changeNotifier = mobileNotifier();
+        RemindingNotifier remindingNotifier = new RemindingNotifier(changeNotifier, repositpry);
+        remindingNotifier.setReminderPeriod(Duration.ofMillis(1));
         return remindingNotifier;
     }
 
     @Bean
-    public StatusChangeNotifier mobileNotifier(){
-        return new StatusChangeNotifier(monitorPropertiesConfig,rabbitTemplate);
+    public StatusChangeNotifier mobileNotifier() {
+        return new StatusChangeNotifier(repositpry, monitorPropertiesConfig, rabbitTemplate);
     }
 
-    @Scheduled(fixedRate = 60_000L)
-    public void remind() {
-        remindingNotifier().sendReminders();
-    }
+//    @Scheduled(fixedRate = 60_000L)
+//    public void remind() {
+//        RemindingNotifier notifier = remindingNotifier();
+//        notifier.sendReminders();
+//    }
 }
