@@ -16,7 +16,7 @@ spring:
         instance:
           prefer-ip: true
           name: cloud-eureka
-        url: http://localhost:20000
+#        url: http://localhost:20000
 eureka:
   server:
     batch-replication: true

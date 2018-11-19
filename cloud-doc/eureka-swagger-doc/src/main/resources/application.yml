@@ -29,18 +29,28 @@ spring:
   boot:
     admin:
       client:
-        instance:
-          name: cloud-swagger-doc
+        auto-deregistration: true
         enabled: true
+        instance:
+          prefer-ip: true
+          name: cloud-swagger-doc
   redis:
       host: localhost
       port: 6379
       password:
 
+logging:
+  config: classpath:logback.xml
+
+# boot 监控
 management:
   endpoint:
     health:
       show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 #
 #

@@ -17,3 +17,16 @@ zipkin:
       max-requests: 64
       index-shards: 5
       index-replicas: 1
+
+logging:
+  config: classpath:logback.xml
+
+# boot 监控
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
