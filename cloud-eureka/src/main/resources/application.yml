@@ -16,6 +16,7 @@ spring:
         instance:
           prefer-ip: true
           name: cloud-eureka
+        url: http://localhost:20000
 eureka:
   server:
     batch-replication: true
@@ -35,3 +36,13 @@ eureka:
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@_version@
 logging:
   config: classpath:logback.xml
+
+# boot 监控
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"

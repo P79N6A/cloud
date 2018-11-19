@@ -19,23 +19,46 @@ eureka:
 spring:
   application:
     name: cloud-admin
-  security:
-    user:
-      password: admin
-      name: admin
-#  boot:
-#    admin:
-#      turbine:
-#        location: cloud-admin
-#        enabled: true
-#      routes:
-#        endpoints: env,metrics,trace,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream,turbine.stream
+  profiles:
+    active:
+    - secure
+  #  boot:
+  #    admin:
+  #      turbine:
+  #        location: cloud-admin
+  #        enabled: true
+  #      routes:
+  #        endpoints: env,metrics,trace,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream,turbine.stream
   boot:
     admin:
       ui:
         title: 服务治理监控平台
       probed-endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream,activiti
+
+# boot 监控
 management:
   endpoint:
     health:
       show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+---
+spring:
+  profiles: insecure
+
+---
+spring:
+  profiles: secure
+  security:
+    user:
+      name: "admin"
+      password: "admin"
+eureka:
+  instance:
+    metadata-map:
+      user.name: "admin"         #These two are needed so that the server
+      user.password: "admin" #can access the protected client endpoints
