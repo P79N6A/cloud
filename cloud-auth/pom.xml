@@ -22,6 +22,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+
+
+        <framework-mvc.version>0.0.1-SNAPSHOT</framework-mvc.version>
+        <framework-feign.version>0.0.1-SNAPSHOT</framework-feign.version>
+        <auth-api.version>0.0.1-SNAPSHOT</auth-api.version>
     </properties>
 
     <build>
@@ -32,4 +37,26 @@
             </plugin>
         </plugins>
     </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--项目内部框架-->
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-mvc</artifactId>
+                <version>${framework-mvc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-feign</artifactId>
+                <version>${framework-feign.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>auth-api</artifactId>
+                <version>${auth-api.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

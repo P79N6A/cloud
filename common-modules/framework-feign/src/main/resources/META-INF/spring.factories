@@ -1,4 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.springframework.feign.configure.OriginServiceAutoConfiguration,\
-com.springframework.feign.configure.FeignConfig
 

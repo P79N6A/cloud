@@ -13,4 +13,11 @@
     <name>auth-api</name>
     <description>授权认证-api</description>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-mvc</artifactId>
+        </dependency>
+    </dependencies>
 </project>
