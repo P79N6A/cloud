@@ -12,7 +12,7 @@
     <artifactId>auth</artifactId>
     <packaging>pom</packaging>
     <name>cloud-auth</name>
-    <description>授权认证</description>
+    <description>资源服务-认证服务</description>
     <modules>
         <module>auth-api</module>
         <module>auth-api-server</module>
@@ -27,6 +27,8 @@
         <framework-mvc.version>0.0.1-SNAPSHOT</framework-mvc.version>
         <framework-feign.version>0.0.1-SNAPSHOT</framework-feign.version>
         <auth-api.version>0.0.1-SNAPSHOT</auth-api.version>
+
+        <spring-cloud-starter-oauth2.version>1.2.2.RELEASE</spring-cloud-starter-oauth2.version>
     </properties>
 
     <build>
@@ -56,6 +58,12 @@
                 <groupId>com.springframework</groupId>
                 <artifactId>auth-api</artifactId>
                 <version>${auth-api.version}</version>
+            </dependency>
+            <!--oauth2-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-oauth2</artifactId>
+                <version>${spring-cloud-starter-oauth2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
