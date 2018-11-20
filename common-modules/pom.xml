@@ -14,30 +14,30 @@
     <artifactId>common-modules</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>framework-common</module>
-        <module>framework-datasource</module>
-        <module>framework-logger</module>
-        <module>framework-redis</module>
-        <module>framework-cache</module>
-        <module>framework-feign</module>
-        <module>framework-hystrix</module>
-        <module>framework-utils</module>
-        <module>framework-enum</module>
-        <module>framework-exception</module>
-        <module>framework-mvc</module>
-        <module>framework-swgger</module>
-        <module>framework-task-executor</module>
-        <module>framework-stream</module>
-        <module>framework-http</module>
-        <module>framework-constants</module>
-        <module>framework-idgenerator</module>
-        <module>framework-job</module>
-        <module>framework-security</module>
-        <module>framework-dfs</module>
-        <module>framework-config</module>
-        <module>framework-trace</module>
-        <module>framework-domain</module>
-        <module>framework-state-machine</module>
+        <module>./framework-datasource</module>
+        <module>./framework-logger</module>
+        <module>./framework-redis</module>
+        <module>./framework-cache</module>
+        <module>./framework-feign</module>
+        <module>./framework-hystrix</module>
+        <module>./framework-utils</module>
+        <module>./framework-enum</module>
+        <module>./framework-exception</module>
+        <module>./framework-mvc</module>
+        <module>./framework-swgger</module>
+        <module>./framework-task-executor</module>
+        <module>./framework-stream</module>
+        <module>./framework-http</module>
+        <module>./framework-constants</module>
+        <module>./framework-idgenerator</module>
+        <module>./framework-job</module>
+        <module>./framework-security</module>
+        <module>./framework-dfs</module>
+        <module>./framework-config</module>
+        <module>./framework-trace</module>
+        <module>./framework-domain</module>
+        <module>./framework-state-machine</module>
+        <module>./framework-common</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
