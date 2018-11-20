@@ -69,6 +69,7 @@
         <module>service-modules</module>
         <module>cloud-visual</module>
         <module>common-modules</module>
+        <module>cloud-auth</module>
     </modules>
     <build>
         <pluginManagement>
