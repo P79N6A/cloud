@@ -18,6 +18,10 @@
             <artifactId>framework-utils</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-enum</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>

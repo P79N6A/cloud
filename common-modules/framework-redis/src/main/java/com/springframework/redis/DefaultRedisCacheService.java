@@ -2,9 +2,12 @@ package com.springframework.redis;
 
 import com.google.common.collect.Sets;
 import com.springframework.cache.GenericCacheManager;
+import com.springframework.enums.rediskey.CacheNamePrefixEnum;
 import com.springframework.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
@@ -18,17 +21,17 @@ import java.util.concurrent.TimeUnit;
  * 2018/7/12
  */
 @Slf4j
-public class RedisCacheService implements GenericCacheManager {
+@Service("defaultRedisCacheService")
+public class DefaultRedisCacheService implements GenericCacheManager {
     private static final String MD5 = "md5";
     private static final int SIZE = 128;
     private RedisTemplate<String, Object> redisTemplate;
-
-    public RedisCacheService(RedisTemplate<String, Object> redisTemplate) {
+    @Autowired
+    public DefaultRedisCacheService(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
     /**
-     *
      * 生成key
      *
      * @param regionName
@@ -619,5 +622,13 @@ public class RedisCacheService implements GenericCacheManager {
             log.error("移除N个值为value执行出错,key{},count{},value{}", key, count, value, e);
             return 0L;
         }
+    }
+
+    /**
+     * 缓存key 前缀
+     */
+    @Override
+    public CacheNamePrefixEnum registerCacheName() {
+        return null;
     }
 }

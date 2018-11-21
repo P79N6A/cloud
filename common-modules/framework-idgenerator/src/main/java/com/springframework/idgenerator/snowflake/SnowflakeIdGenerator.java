@@ -1,7 +1,7 @@
 package com.springframework.idgenerator.snowflake;
 
 import com.springframework.idgenerator.DistributedIdGenerator;
-import com.springframework.redis.RedisCacheService;
+import com.springframework.redis.DefaultRedisCacheService;
 
 /**
  * @author summer
@@ -12,9 +12,9 @@ public class SnowflakeIdGenerator implements DistributedIdGenerator {
     /**
      * 使用Redis保存workerId
      */
-    private RedisCacheService redisCacheService;
+    private DefaultRedisCacheService redisCacheService;
     private int idType;
-    public SnowflakeIdGenerator(RedisCacheService redisCacheService, int idType) {
+    public SnowflakeIdGenerator(DefaultRedisCacheService redisCacheService, int idType) {
         this.redisCacheService = redisCacheService;
         this.idType = idType;
     }
