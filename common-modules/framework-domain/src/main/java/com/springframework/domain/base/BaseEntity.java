@@ -3,7 +3,6 @@ package com.springframework.domain.base;
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.google.common.base.MoreObjects;
-import com.google.common.base.MoreObjects.ToStringHelper;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -35,7 +34,7 @@ public abstract class BaseEntity<T extends Model> extends Model<T> {
     protected Date lastModifiedTime;
 
 
-    protected ToStringHelper toStringHelper() {
+    protected MoreObjects.ToStringHelper toStringHelper() {
         return MoreObjects.toStringHelper(this).omitNullValues()
                 .add("id", id)
                 .add("created_by", createdBy)

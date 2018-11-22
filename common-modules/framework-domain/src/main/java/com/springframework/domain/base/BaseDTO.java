@@ -1,19 +1,18 @@
 package com.springframework.domain.base;
 
-
 import lombok.Data;
 
 import java.util.Date;
 
+/** @author summer */
 @Data
 public class BaseDTO {
 
-    protected String dataChangeCreatedBy;
+  protected String createdBy;
 
-    protected String dataChangeLastModifiedBy;
+  protected String lastModifiedBy;
 
-    protected Date dataChangeCreatedTime;
+  protected Date createdTime;
 
-    protected Date dataChangeLastModifiedTime;
-
+  protected Date lastModifiedTime;
 }

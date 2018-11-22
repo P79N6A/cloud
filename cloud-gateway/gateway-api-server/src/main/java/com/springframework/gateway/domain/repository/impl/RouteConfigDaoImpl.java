@@ -63,7 +63,8 @@ public class RouteConfigDaoImpl extends ServiceImpl<RouteConfigMapper, RouteConf
 //        QueryWrapper<RouteConfig> wrapper = new QueryWrapper<>();
 //        wrapper.eq(RouteConfig.SERVICE_ID, serviceId);
 //        final RouteConfig routeConfig = routeConfigMapper.selectOne(wrapper);
-        return covertDto(null);
+//        return covertDto(null);
+        return null;
     }
 
     private RouteConfigDTO covertDto(RouteConfig routeConfig) {

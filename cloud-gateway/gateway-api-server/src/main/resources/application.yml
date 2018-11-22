@@ -2,6 +2,8 @@ info.version: @project.version@
 server:
   port: 20010
 spring:
+  application:
+    name: gateway-server
   #http基础认证
   security:
     user:
@@ -163,7 +165,8 @@ management:
       exposure:
         include: "*"
 
-
+logging:
+  config: classpath:logback.xml
 #      routes:
 #      - id: admin-server
 #        uri: lb://ADMIN-SERVER

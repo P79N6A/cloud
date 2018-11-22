@@ -13,14 +13,10 @@
 
     <dependencies>
         <!--内部框架依赖-->
-        <dependency>
-            <groupId>com.springframework</groupId>
-            <artifactId>framework-utils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.springframework</groupId>
-            <artifactId>framework-logger</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.springframework</groupId>-->
+            <!--<artifactId>framework-utils</artifactId>-->
+        <!--</dependency>-->
         <!--内部框架依赖  end-->
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -30,6 +26,19 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
