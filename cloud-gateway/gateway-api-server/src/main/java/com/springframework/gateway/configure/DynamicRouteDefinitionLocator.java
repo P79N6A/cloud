@@ -1,7 +1,7 @@
 package com.springframework.gateway.configure;
 
 import com.google.common.collect.Lists;
-import com.springframework.gateway.constant.CommonConstant;
+import com.springframework.constants.CommonConstant;
 import com.springframework.gateway.domain.entity.RouteConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.FilterDefinition;
