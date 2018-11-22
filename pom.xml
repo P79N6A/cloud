@@ -24,11 +24,13 @@
         <java.version>1.8</java.version>
         <spring-boot-admin.version>2.0.1</spring-boot-admin.version>
         <spring-boot-admin-ui.version>2.0.1</spring-boot-admin-ui.version>
-        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+        <spring-cloud.version>Finchley.SR2</spring-cloud.version>
 
         <spring-cloud-starter-netflix-turbine.version>1.4.4.RELEASE</spring-cloud-starter-netflix-turbine.version>
         <spring-cloud-starter-stream-rabbit.version>2.0.0.RELEASE</spring-cloud-starter-stream-rabbit.version>
         <spring-cloud-starter-oauth2.version>1.2.2.RELEASE</spring-cloud-starter-oauth2.version>
+        <spring-cloud-gateway.version>2.0.2.RELEASE</spring-cloud-gateway.version>
+        <spring-cloud-netflix-dependencies.version>2.0.2.RELEASE</spring-cloud-netflix-dependencies.version>
 
     </properties>
     <dependencyManagement>
@@ -47,7 +49,20 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-netflix-dependencies</artifactId>
+                <version>${spring-cloud-netflix-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-gateway-dependencies</artifactId>
+                <version>${spring-cloud-gateway.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!--cloud组件-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -59,7 +74,6 @@
                 <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
                 <version>${spring-cloud-starter-stream-rabbit.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-oauth2</artifactId>
@@ -70,7 +84,6 @@
     <modules>
         <module>cloud-admin</module>
         <module>cloud-eureka</module>
-        <module>cloud-gateway</module>
         <module>cloud-doc</module>
         <module>cloud-demo</module>
         <module>cloud-config</module>
@@ -78,6 +91,7 @@
         <module>cloud-visual</module>
         <module>common-modules</module>
         <module>cloud-auth</module>
+        <module>cloud-gateway</module>
     </modules>
     <build>
         <pluginManagement>

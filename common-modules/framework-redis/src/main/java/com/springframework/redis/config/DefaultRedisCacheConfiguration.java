@@ -13,9 +13,10 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 @Configuration
 public class DefaultRedisCacheConfiguration {
-    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
-
+    public DefaultRedisCacheConfiguration(RedisTemplate<String, Object> redisTemplate){
+        this.redisTemplate = redisTemplate;
+    }
     @Bean
     GenericCacheManager defaultRedisCacheService() {
         DefaultRedisCacheService cacheService = new DefaultRedisCacheService(redisTemplate);
