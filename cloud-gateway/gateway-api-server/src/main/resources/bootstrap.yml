@@ -1,6 +1,6 @@
 spring:
   application:
-    name: cloud-swagger-doc
+    name: gateway-server
 logging:
   config: classpath:logback.xml
 
