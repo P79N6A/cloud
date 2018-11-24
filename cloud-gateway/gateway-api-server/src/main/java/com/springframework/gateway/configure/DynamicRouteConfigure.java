@@ -27,7 +27,7 @@ public class DynamicRouteConfigure {
 
     @Bean
     public DiscoveryClientRouteDefinitionLocator dynamicRouteLocator(DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties, RouteConfigService routeConfigService) {
-        return new DiscoveryClientRouteDefinitionLocator(discoveryClient,properties,routeConfigService);
+        return new DiscoveryClientRouteDefinitionLocator(discoveryClient, properties, routeConfigService);
     }
 //
 //    @Bean

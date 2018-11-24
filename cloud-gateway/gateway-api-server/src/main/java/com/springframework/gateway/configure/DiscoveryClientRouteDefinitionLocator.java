@@ -5,6 +5,7 @@ import com.springframework.gateway.domain.entity.RouteConfig;
 import com.springframework.gateway.domain.service.RouteConfigService;
 import com.springframework.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.gateway.discovery.DiscoveryLocatorProperties;
@@ -12,6 +13,7 @@ import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
+import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -28,7 +30,9 @@ import java.util.Objects;
 import static java.util.Collections.synchronizedMap;
 
 /**
- * @author summer  基于redis方式做动态路由
+ * 仅限同一服务注册发现治理中心下服务调用网关路由（针对跨中心请参考其他动态路由实现）
+ *
+ * @author summer  基于内存-redis-mysql-discovery方式做动态路由
  * 2018/7/3
  */
 @Slf4j
@@ -37,12 +41,19 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
     private DiscoveryLocatorProperties properties;
     private String routeIdPrefix;
     private RouteConfigService routeConfigService;
-    private final Map<String, RouteDefinition> routes = synchronizedMap(new LinkedHashMap<String, RouteDefinition>());
+    /**
+     * 本地缓存->redis->mysql
+     */
+    private final Map<String, RouteConfigDTO> routes = synchronizedMap(new LinkedHashMap<String, RouteConfigDTO>());
 
     public DiscoveryClientRouteDefinitionLocator(DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties, RouteConfigService routeConfigService) {
         this.discoveryClient = discoveryClient;
         this.properties = properties;
         this.routeConfigService = routeConfigService;
+        init(properties);
+    }
+
+    private void init(DiscoveryLocatorProperties properties) {
         if (StringUtils.hasText(properties.getRouteIdPrefix())) {
             this.routeIdPrefix = properties.getRouteIdPrefix();
         } else {
@@ -73,17 +84,15 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                     if (include == null) {
                         return false;
                     }
-                    String serviceId = instance.getServiceId();
-                    RouteConfigDTO routeConfig = routeConfigService.findRouteConfig(serviceId);
-                    if (Objects.nonNull(routeConfig) && !routeConfig.getStatus()) {
-                        return false;
-                    }
                     return include;
                 })
                 .map(instance -> {
                     String serviceId = instance.getServiceId();
                     RouteDefinition routeDefinition = new RouteDefinition();
-                    RouteConfigDTO routeConfig = routeConfigService.findRouteConfig(serviceId);
+                    RouteConfigDTO routeConfig = routes.get(serviceId);
+                    if (Objects.nonNull(routeConfig) && routeConfig.getStatus()) {
+                        routeConfig = routeConfigService.findRouteConfig(serviceId);
+                    }
                     //状态有效
                     if (Objects.nonNull(routeConfig) && routeConfig.getStatus()) {
                         routeDefinition.setId(routeConfig.getRouteId());
@@ -92,9 +101,9 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                         routeDefinition.setPredicates(routeConfig.getPredicateList());
                         routeDefinition.setFilters(routeConfig.getFilterList());
                     } else {
-                        routeDefinition.setId(this.routeIdPrefix + serviceId);
+                        routeDefinition.setId(serviceId);
                         String uri = urlExpr.getValue(evalCtxt, instance, String.class);
-                        if(!StringUtils.isEmpty(uri)){
+                        if (!StringUtils.isEmpty(uri)) {
                             routeDefinition.setUri(URI.create(uri));
                         }
                         final ServiceInstance instanceForEval = new DiscoveryClientRouteDefinitionLocator.DelegatingServiceInstance(instance, properties);
@@ -136,23 +145,36 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
         routeConfig.setServiceName(serviceId);
         routeConfig.setUri(routeDefinition.getUri() + "");
         routeConfig.setOperator(DiscoveryClientRouteDefinitionLocator.class.getSimpleName());
+        routes.put(serviceId, covertToRouteConfigDTO(routeConfig));
         routeConfigService.saveRouteConfig(routeConfig);
         return routeConfig;
     }
 
-    String getValueFromExpr(SimpleEvaluationContext evalCtxt, SpelExpressionParser parser, ServiceInstance instance, Map.Entry<String, String> entry) {
+    private String getValueFromExpr(SimpleEvaluationContext evalCtxt, SpelExpressionParser parser, ServiceInstance instance, Map.Entry<String, String> entry) {
         Expression valueExpr = parser.parseExpression(entry.getValue());
         return valueExpr.getValue(evalCtxt, instance, String.class);
     }
 
     @Override
     public Mono<Void> save(Mono<RouteDefinition> route) {
-        return null;
+        return route.flatMap(r -> {
+            RouteConfigDTO routeConfig = covertToRouteConfig(r);
+            routes.put(r.getId(), routeConfig);
+            routeConfigService.saveRouteConfig(routeConfig);
+            return Mono.empty();
+        });
     }
 
     @Override
     public Mono<Void> delete(Mono<String> routeId) {
-        return null;
+        return routeId.flatMap(id -> {
+            if (routes.containsKey(id)) {
+                routes.remove(id);
+                routeConfigService.deleteRouteConfigByRouteId(id);
+                return Mono.empty();
+            }
+            return Mono.defer(() -> Mono.error(new NotFoundException("RouteDefinition not found: " + routeId)));
+        });
     }
 
     private static class DelegatingServiceInstance implements ServiceInstance {
@@ -211,4 +233,23 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                     .toString();
         }
     }
+
+    private RouteConfigDTO covertToRouteConfigDTO(RouteConfig routeConfig) {
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(routeConfig, RouteConfigDTO.class);
+    }
+
+    private RouteConfigDTO covertToRouteConfig(RouteDefinition routeDefinition) {
+        RouteConfigDTO routeConfigDTO = new RouteConfigDTO();
+        routeConfigDTO.setFilterList(routeDefinition.getFilters());
+        routeConfigDTO.setPredicateList(routeDefinition.getPredicates());
+        routeConfigDTO.setPredicates(JsonUtils.writeObjectToJson(routeDefinition.getPredicates()));
+        routeConfigDTO.setFilters(JsonUtils.writeObjectToJson(routeDefinition.getFilters()));
+        routeConfigDTO.setRouteId(routeDefinition.getId());
+        routeConfigDTO.setOrder(routeDefinition.getOrder());
+        routeConfigDTO.setStatus(true);
+        routeConfigDTO.setUri(routeDefinition.getUri().toString());
+        return routeConfigDTO;
+    }
+
 }

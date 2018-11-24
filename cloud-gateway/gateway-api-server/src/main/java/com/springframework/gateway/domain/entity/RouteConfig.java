@@ -84,19 +84,13 @@ public class RouteConfig implements Serializable {
     private String operator;
 
     public static final String PATH = "Path=/";
-
     public static final String SERVICE_ID = "service_id";
-
+    public static final String ROUTE_ID = "route_id";
     public static final String SERVICE_NAME = "service_name";
-
     public static final String STATUS = "status";
-
     public static final String URI = "uri";
-
     public static final String ORDER = "order";
-
     public static final String PREDICATES = "predicates";
-
     public static final String OPERATOR = "operator";
 
 }

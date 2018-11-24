@@ -20,12 +20,13 @@ import static java.util.Collections.synchronizedMap;
  * 2018/7/4
  */
 public class MySQLRouteDefinitionRepository implements RouteDefinitionRepository {
-    private RedisTemplate redis;
+    private RedisTemplate redisTemplate;
+    //本地缓存
     private final Map<String, RouteDefinition> routes = synchronizedMap(new LinkedHashMap<String, RouteDefinition>());
     private RouteConfigService routeConfigService;
 
-    public MySQLRouteDefinitionRepository(RedisTemplate redis, RouteConfigService routeConfigService) {
-        this.redis = redis;
+    public MySQLRouteDefinitionRepository(RedisTemplate redisTemplate, RouteConfigService routeConfigService) {
+        this.redisTemplate = redisTemplate;
         this.routeConfigService = routeConfigService;
     }
 

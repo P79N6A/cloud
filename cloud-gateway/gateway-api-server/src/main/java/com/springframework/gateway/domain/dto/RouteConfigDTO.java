@@ -20,33 +20,17 @@ import java.util.List;
 @Slf4j
 @ToString
 public class RouteConfigDTO {
-    private List<PredicateDefinition> predicateList = Lists.newArrayList();
-    private List<FilterDefinition> filterList = Lists.newArrayList();
+    /**
+     * 谓词信息
+     */
+    private List<PredicateDefinition> predicateList;
+    /**
+     * 过滤器信息
+     */
+    private List<FilterDefinition> filterList;
     private Long id;
 
     private String routeId;
-
-    /**
-     * @return 获取路由 PredicateDefinition{name='Path', args={pattern=/demo-server/**}}
-     */
-    public List<PredicateDefinition> getPredicateList() {
-        if (StringUtils.isNotBlank(getPredicates())) {
-            log.debug("路由参数{}", getPredicates());
-            return JsonUtils.readJsonToObjectList(PredicateDefinition.class, getPredicates());
-        }
-        return predicateList;
-    }
-
-    /**
-     * @return 过滤器
-     */
-    public List<FilterDefinition> getFilterList() {
-        if (StringUtils.isNotBlank(getFilters())) {
-            log.debug("路由过滤器参数{}", getFilters());
-            return JsonUtils.readJsonToObjectList(FilterDefinition.class, getFilters());
-        }
-        return filterList;
-    }
 
     /**
      * 服务id
@@ -86,14 +70,12 @@ public class RouteConfigDTO {
     private String filters;
 
 
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
+    private Integer isDeleted;
+
+    private String createdBy;
+    private Date createdTime;
+    private String lastModifiedBy;
+    private Date lastModifiedTime;
     /**
      * 操作人
      */

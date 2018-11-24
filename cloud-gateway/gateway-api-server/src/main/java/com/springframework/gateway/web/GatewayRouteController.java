@@ -38,7 +38,7 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
     private RouteLocator routeLocator;
     private ApplicationEventPublisher publisher;
 
-    public GatewayRouteController(RouteDefinitionLocator routeDefinitionLocator, List<GlobalFilter> globalFilters, @Autowired(required = false)  List<GatewayFilterFactory> gatewayFilters, RouteDefinitionWriter routeDefinitionWriter, RouteLocator routeLocator, ApplicationEventPublisher publisher) {
+    public GatewayRouteController(RouteDefinitionLocator routeDefinitionLocator, List<GlobalFilter> globalFilters, @Autowired(required = false) List<GatewayFilterFactory> gatewayFilters, RouteDefinitionWriter routeDefinitionWriter, RouteLocator routeLocator, ApplicationEventPublisher publisher) {
         this.routeDefinitionLocator = routeDefinitionLocator;
         this.globalFilters = globalFilters;
         this.gatewayFilters = gatewayFilters;
@@ -59,10 +59,12 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
         this.publisher.publishEvent(new RefreshRoutesEvent(this));
         return Mono.just("刷新成功");
     }
+
     @GetMapping("/globalfilters")
     public Mono<HashMap<String, Object>> globalfilters() {
         return getNamesToOrders(this.globalFilters);
     }
+
     @GetMapping("/routefilters")
     public Mono<HashMap<String, Object>> routefilers() {
         return getNamesToOrders(this.gatewayFilters);
@@ -81,6 +83,7 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
         map.put(o.toString(), order);
         return map;
     }
+
     // TODO: Flush out routes without a definition
     @GetMapping("/routes")
     public Mono<List<Map<String, Object>>> routes() {

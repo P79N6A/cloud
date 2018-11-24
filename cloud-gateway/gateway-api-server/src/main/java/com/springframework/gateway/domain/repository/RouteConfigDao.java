@@ -1,8 +1,6 @@
 package com.springframework.gateway.domain.repository;
 
-import com.springframework.gateway.domain.dto.RouteConfigDTO;
 import com.springframework.gateway.domain.entity.RouteConfig;
-import org.springframework.cloud.gateway.route.RouteDefinition;
 
 import java.util.List;
 
@@ -22,7 +20,7 @@ public interface RouteConfigDao {
     /**
      * @return
      */
-    List<RouteDefinition> findAll();
+    List<RouteConfig> findAll();
 
     /**
      * 查询
@@ -30,12 +28,18 @@ public interface RouteConfigDao {
      * @param serviceId
      * @return
      */
-    RouteConfigDTO findRouteConfig(String serviceId);
+    RouteConfig findRouteConfig(String serviceId);
 
     /**查询
      * @param serviceId
      * @param status
      * @return
      */
-    RouteConfigDTO findRouteConfig(String serviceId, Boolean status);
+    RouteConfig findRouteConfig(String serviceId, Boolean status);
+
+    /** 根据 routeId删除配置（逻辑删除）
+     * @param routeId
+     * @return
+     */
+    boolean deleteRouteConfigByRouteId(String routeId);
 }

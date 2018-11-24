@@ -1,15 +1,23 @@
 package com.springframework.gateway.domain.repository.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.springframework.gateway.domain.dto.RouteConfigDTO;
 import com.springframework.gateway.domain.entity.RouteConfig;
 import com.springframework.gateway.domain.mapper.RouteConfigMapper;
 import com.springframework.gateway.domain.repository.RouteConfigDao;
+import com.springframework.utils.BeanUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.filter.FilterDefinition;
+import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.stereotype.Repository;
 
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,49 +43,47 @@ public class RouteConfigDaoImpl extends ServiceImpl<RouteConfigMapper, RouteConf
     }
 
     @Override
-    public List<RouteDefinition> findAll() {
-//        QueryWrapper<RouteConfig> wrapper = new QueryWrapper<>();
-//        final List<RouteConfig> routeConfigList = this.list(wrapper);
-//        if (!CollectionUtils.isEmpty(routeConfigList)) {
-//            List<RouteConfigDTO> dtoList = new ArrayList<>(10);
-//            routeConfigList.parallelStream().forEach(routeConfig -> {
-//                dtoList.add(covertDto(routeConfig));
-//            });
-//            if (!CollectionUtils.isEmpty(dtoList)) {
-//                List<RouteDefinition> routeDefinitionList = new ArrayList<>(10);
-//                dtoList.parallelStream().forEach(config -> {
-//                    RouteDefinition routeDefinition = new RouteDefinition();
-//                    routeDefinitionList.add(routeDefinition);
-//                    BeanUtil.copyProperties(routeDefinition, config);
-//                    routeDefinition.setFilters(config.getFilterList());
-//                    routeDefinition.setPredicates(config.getPredicateList());
-//                });
-//                return routeDefinitionList;
-//            }
-//        }
-        return null;
+    public List<RouteConfig> findAll() {
+
+
+        QueryWrapper<RouteConfig> wrapper = new QueryWrapper<>();
+        final List<RouteConfig> routeConfigList = this.list(wrapper);
+        return routeConfigList;
     }
 
     @Override
-    public RouteConfigDTO findRouteConfig(String serviceId) {
-//        QueryWrapper<RouteConfig> wrapper = new QueryWrapper<>();
-//        wrapper.eq(RouteConfig.SERVICE_ID, serviceId);
-//        final RouteConfig routeConfig = routeConfigMapper.selectOne(wrapper);
-//        return covertDto(null);
-        return null;
-    }
-
-    private RouteConfigDTO covertDto(RouteConfig routeConfig) {
-        ModelMapper mapper = new ModelMapper();
-        return mapper.map(routeConfig, RouteConfigDTO.class);
+    public RouteConfig findRouteConfig(String serviceId) {
+        QueryWrapper<RouteConfig> wrapper = new QueryWrapper<>();
+        wrapper.eq(RouteConfig.SERVICE_ID, serviceId);
+        final RouteConfig routeConfig = routeConfigMapper.selectOne(wrapper);
+        return routeConfig;
     }
 
     @Override
-    public RouteConfigDTO findRouteConfig(String serviceId, Boolean status) {
-//        QueryWrapper<RouteConfig> wrapper = new QueryWrapper<>();
-//        wrapper.eq(RouteConfig.SERVICE_ID, serviceId);
-//        wrapper.eq(RouteConfig.STATUS, status);
-//        final RouteConfig routeConfig = this.getOne(wrapper, false);
-        return covertDto(null);
+    public RouteConfig findRouteConfig(String serviceId, Boolean status) {
+        QueryWrapper<RouteConfig> wrapper = new QueryWrapper<>();
+        wrapper.eq(RouteConfig.SERVICE_ID, serviceId);
+        wrapper.eq(RouteConfig.STATUS, status);
+        final RouteConfig routeConfig = this.getOne(wrapper, false);
+        return routeConfig;
     }
+
+    /**
+     * 根据 routeId删除配置（逻辑删除）
+     *
+     * @param routeId
+     * @return
+     */
+    @Override
+    public boolean deleteRouteConfigByRouteId(String routeId) {
+        UpdateWrapper<RouteConfig> wrapper = new UpdateWrapper<>();
+        wrapper.eq(RouteConfig.ROUTE_ID, routeId);
+        RouteConfig entity = new RouteConfig();
+        entity.setStatus(false);
+        if (!update(entity, wrapper)) {
+            throw new RuntimeException("根据 routeId删除配置失败（逻辑删除）");
+        }
+        return true;
+    }
+
 }

@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
  * 2018/6/29
  */
 @Slf4j
-public class loginfiler implements GlobalFilter {
+public class Loginfiler implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange serverWebExchange, GatewayFilterChain gatewayFilterChain) {
         return gatewayFilterChain.filter(serverWebExchange.mutate().build());

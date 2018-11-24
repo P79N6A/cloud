@@ -6,7 +6,7 @@ import org.springframework.cloud.gateway.route.RouteDefinition;
 
 import java.util.List;
 
-/**
+/** 路由配置服务接口
  * @author summer
  * 2018/7/2
  */
@@ -18,6 +18,11 @@ public interface RouteConfigService {
      * @return
      */
     boolean saveRouteConfig(RouteConfig routeConfig);
+
+    /**保存路由配置
+     * @param routeConfig
+     */
+    boolean saveRouteConfig(RouteConfigDTO routeConfig);
 
     /**
      * 查询所有路由配置
@@ -32,4 +37,10 @@ public interface RouteConfigService {
      * @return
      */
     RouteConfigDTO findRouteConfig(String serviceId);
+
+    /** 根据routeId 删除配置（逻辑删除）
+     * @param id
+     * @return
+     */
+    boolean deleteRouteConfigByRouteId(String id);
 }
