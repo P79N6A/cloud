@@ -135,7 +135,9 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
     public Mono<ResponseEntity<Void>> save(@PathVariable String id, @RequestBody Mono<RouteDefinition> route) {
         return this.routeDefinitionWriter.save(route.map(r -> {
             r.setId(id);
-            log.debug("Saving route: " + route);
+            if (log.isDebugEnabled()) {
+                log.debug("Saving route: " + route);
+            }
             return r;
         })).then(Mono.defer(() ->
                 Mono.just(ResponseEntity.created(URI.create("/routes/" + id)).build())

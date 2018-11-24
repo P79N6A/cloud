@@ -130,7 +130,9 @@ public class RouteConfigServiceImpl implements RouteConfigService {
      */
     private List<FilterDefinition> getFilterList(RouteConfigDTO routeConfig) {
         if (StringUtils.isNotBlank(routeConfig.getFilters())) {
-            log.debug("路由参数{}", routeConfig.getFilters());
+            if (log.isDebugEnabled()) {
+                log.debug("路由参数{}", routeConfig.getFilters());
+            }
             return JsonUtils.readJsonToObjectList(FilterDefinition.class, routeConfig.getFilters());
         }
         return null;
@@ -141,7 +143,9 @@ public class RouteConfigServiceImpl implements RouteConfigService {
      */
     private List<PredicateDefinition> getPredicateList(RouteConfigDTO routeConfig) {
         if (StringUtils.isNotBlank(routeConfig.getPredicates())) {
-            log.debug("路由参数{}", routeConfig.getPredicates());
+            if (log.isDebugEnabled()) {
+                log.debug("路由参数{}", routeConfig.getPredicates());
+            }
             return JsonUtils.readJsonToObjectList(PredicateDefinition.class, routeConfig.getPredicates());
         }
         return null;

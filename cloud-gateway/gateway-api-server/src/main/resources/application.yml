@@ -20,7 +20,7 @@ spring:
         predicates:
         - Path=/cloud-admin
         filters:
-        - RewritePath=/cloud-admin/(?<segment>.*), /$\{segment}
+        - RewritePath=/cloud-admin/(?<segment>.*), /$\{segment} # 移除serviceID
       - id: eureka-swagger
         uri: lb://EUREKA-SWAGGER
         order: 0
