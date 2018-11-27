@@ -117,9 +117,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
 
         return Flux.fromIterable(discoveryClient.getServices())
                 .map(discoveryClient::getInstances)
-                .filter(instances -> {
-                    return !instances.isEmpty();
-                })
+                .filter(instances -> !instances.isEmpty())
                 .map(instances -> instances.get(0))
                 .filter(instance -> {
                     Boolean include = includeExpr.getValue(evalCtxt, instance, Boolean.class);

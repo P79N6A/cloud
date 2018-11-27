@@ -41,6 +41,10 @@
                     <artifactId>framework-logger</artifactId>
                     <groupId>com.springframework</groupId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-redis</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
