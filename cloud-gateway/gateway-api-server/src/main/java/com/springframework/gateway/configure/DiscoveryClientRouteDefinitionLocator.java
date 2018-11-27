@@ -130,11 +130,11 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                     String serviceId = instance.getServiceId();
                     RouteDefinition routeDefinition = new RouteDefinition();
                     RouteConfigDTO routeConfig = routes.get(serviceId);
-                    if (Objects.isNull(routeConfig) || !routeConfig.getStatus()) {
+                    if (Objects.isNull(routeConfig) || routeConfig.getStatus()!=1) {
                         routeConfig = routeConfigService.findRouteConfig(serviceId);
                     }
                     //状态有效
-                    if (Objects.nonNull(routeConfig) && routeConfig.getStatus()) {
+                    if (Objects.nonNull(routeConfig) && routeConfig.getStatus()==1) {
                         routeDefinition.setId(routeConfig.getRouteId());
                         routeDefinition.setOrder(routeConfig.getOrder());
                         routeDefinition.setUri(URI.create(routeConfig.getUri()));
@@ -180,7 +180,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
         routeConfig.setRouteId(routeDefinition.getId());
         routeConfig.setFilters(JsonUtils.writeObjectToJson(routeDefinition.getFilters()));
         routeConfig.setPredicates(JsonUtils.writeObjectToJson(routeDefinition.getPredicates()));
-        routeConfig.setStatus(true);
+        routeConfig.setStatus(1);
         routeConfig.setOrder(routeDefinition.getOrder());
         routeConfig.setServiceId(serviceId);
         routeConfig.setServiceName(serviceId);
@@ -282,7 +282,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
         routeConfigDTO.setFilters(JsonUtils.writeObjectToJson(routeDefinition.getFilters()));
         routeConfigDTO.setRouteId(routeDefinition.getId());
         routeConfigDTO.setOrder(routeDefinition.getOrder());
-        routeConfigDTO.setStatus(true);
+        routeConfigDTO.setStatus(1);
         routeConfigDTO.setUri(routeDefinition.getUri().toString());
         return routeConfigDTO;
     }

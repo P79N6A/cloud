@@ -58,7 +58,7 @@ public class RouteConfig extends Model<RouteConfig> {
      * 是否有效（0无效，1有效）
      */
     @TableField("status")
-    private Boolean status;
+    private int status;
     /**
      * uri
      */

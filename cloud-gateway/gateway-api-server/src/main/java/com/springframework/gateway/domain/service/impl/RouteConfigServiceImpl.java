@@ -82,9 +82,9 @@ public class RouteConfigServiceImpl implements RouteConfigService {
 
     @Override
     public RouteConfigDTO findRouteConfig(String serviceId) {
-        RouteConfig routeConfig = (RouteConfig) redisTemplate.opsForValue().get(serviceId);
+//        RouteConfig routeConfig = (RouteConfig) redisTemplate.opsForValue().get(serviceId);
 //        if (routeConfig == null) {
-            routeConfig = routeConfigDao.findRouteConfig(serviceId);
+        RouteConfig  routeConfig = routeConfigDao.findRouteConfig(serviceId);
             redisTemplate.opsForValue().set(serviceId, routeConfig);
 
 //        }

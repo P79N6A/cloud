@@ -53,7 +53,7 @@ public class DynamicRouteDefinitionLocator implements RouteDefinitionRepository 
         routeConfig.setRouteId(route.block().getId());
         routeConfig.setFilters(filtersSts.toString());
         routeConfig.setPredicates(predicateListStr.toString());
-        routeConfig.setStatus(true);
+        routeConfig.setStatus(1);
         return route.flatMap(r -> {
             redis.opsForHash().put(CommonConstant.ROUTE_KEY, r.getId(), routeConfig);
             return Mono.empty();

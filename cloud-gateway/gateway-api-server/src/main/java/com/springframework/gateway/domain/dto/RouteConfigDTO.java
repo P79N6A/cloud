@@ -44,7 +44,7 @@ public class RouteConfigDTO {
     /**
      * 是否有效（0无效，1有效）
      */
-    private Boolean status;
+    private Integer status;
     /**
      * uri
      */

@@ -79,7 +79,7 @@ public class RouteConfigDaoImpl extends ServiceImpl<RouteConfigMapper, RouteConf
         UpdateWrapper<RouteConfig> wrapper = new UpdateWrapper<>();
         wrapper.eq(RouteConfig.ROUTE_ID, routeId);
         RouteConfig entity = new RouteConfig();
-        entity.setStatus(false);
+        entity.setStatus(0);
         if (!update(entity, wrapper)) {
             throw new RuntimeException("根据 routeId删除配置失败（逻辑删除）");
         }
