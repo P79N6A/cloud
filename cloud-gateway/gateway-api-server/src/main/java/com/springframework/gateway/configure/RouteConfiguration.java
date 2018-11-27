@@ -45,11 +45,10 @@ public class RouteConfiguration {
 
     @Bean
     public WebFilter corsFilter() {
-        return (ServerWebExchange ctx, WebFilterChain chain) -> {
+        return (ctx, chain) -> {
             ServerHttpRequest request = ctx.getRequest();
             if (CorsUtils.isCorsRequest(request)) {
-                ServerHttpResponse response = ctx.getResponse();
-                HttpHeaders headers = response.getHeaders();
+                HttpHeaders headers = ctx.getResponse().getHeaders();
                 headers.add("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
                 headers.add("Access-Control-Allow-Methods", ALLOWED_METHODS);
                 headers.add("Access-Control-Max-Age", MAX_AGE);
@@ -57,7 +56,7 @@ public class RouteConfiguration {
                 headers.add("Access-Control-Expose-Headers", ALLOWED_EXPOSE);
                 headers.add("Access-Control-Allow-Credentials", "true");
                 if (request.getMethod() == HttpMethod.OPTIONS) {
-                    response.setStatusCode(HttpStatus.OK);
+                    ctx.getResponse().setStatusCode(HttpStatus.OK);
                     return Mono.empty();
                 }
             }

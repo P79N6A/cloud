@@ -1,19 +1,24 @@
 package com.springframework.gateway.configure;
 
+import com.google.common.collect.Sets;
+import com.springframework.gateway.common.thread.CloudGatewayThreadFactory;
 import com.springframework.gateway.domain.dto.RouteConfigDTO;
 import com.springframework.gateway.domain.entity.RouteConfig;
 import com.springframework.gateway.domain.service.RouteConfigService;
 import com.springframework.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.gateway.discovery.DiscoveryLocatorProperties;
+import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.cloud.gateway.support.NotFoundException;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -22,12 +27,10 @@ import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.PostConstruct;
 import java.net.URI;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-
-import static java.util.Collections.synchronizedMap;
+import java.util.*;
+import java.util.concurrent.*;
 
 /**
  * 仅限同一服务注册发现治理中心下服务调用网关路由（针对跨中心请参考其他动态路由实现）
@@ -37,19 +40,30 @@ import static java.util.Collections.synchronizedMap;
  */
 @Slf4j
 public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRepository {
+
+    private TimeUnit rebuildIntervalTimeUnit = TimeUnit.SECONDS;
+    private TimeUnit scanIntervalTimeUnit = TimeUnit.SECONDS;
+    private ScheduledExecutorService scheduledExecutorService;
+    private ExecutorService executorService;
+    private ApplicationEventPublisher publisher;
     private DiscoveryClient discoveryClient;
     private DiscoveryLocatorProperties properties;
     private String routeIdPrefix;
     private RouteConfigService routeConfigService;
+
+    @Value("${scan.interval:10}")
+    private int scanInterval;
     /**
      * 本地缓存->redis->mysql
      */
-    private final Map<String, RouteConfigDTO> routes = synchronizedMap(new LinkedHashMap<String, RouteConfigDTO>());
+    private final Map<String, RouteConfigDTO> routes = Collections.synchronizedMap(new LinkedHashMap<>());
+    private Set<String> cacheServiceIds = Collections.synchronizedSet(new HashSet<>());
 
-    public DiscoveryClientRouteDefinitionLocator(DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties, RouteConfigService routeConfigService) {
+    public DiscoveryClientRouteDefinitionLocator(ApplicationEventPublisher publisher,DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties, RouteConfigService routeConfigService) {
         this.discoveryClient = discoveryClient;
         this.properties = properties;
         this.routeConfigService = routeConfigService;
+        this.publisher = publisher;
         init(properties);
     }
 
@@ -59,9 +73,37 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
         } else {
             this.routeIdPrefix = this.discoveryClient.getClass().getSimpleName() + "_";
         }
+        this.scheduledExecutorService = new ScheduledThreadPoolExecutor(1, CloudGatewayThreadFactory
+                .create("discoveryClientScanService", true));
+        this.executorService = Executors.newSingleThreadExecutor(CloudGatewayThreadFactory.create("CachingRouteLocatorRefreshService", true));
+    }
+    @PostConstruct
+    public void afterPropertiesSet() throws Exception {
+        scheduledExecutorService.scheduleWithFixedDelay(this::scan,scanInterval,
+                scanInterval, scanIntervalTimeUnit);
     }
 
-
+    /**
+     * RoutePredicateHandlerMapping 使用 CachingRouteLocator 来获取 Route 信息。
+     * 在 Spring Cloud Gateway 启动后，如果有新加入的服务，则需要刷新 CachingRouteLocator 缓存。
+     * 这里有一点需要注意下 ：新加入的服务，指的是新的 serviceId ，而不是原有服务新增的实例。
+     *  DiscoveryClient 获取服务列表，若发现变化，刷新 CachingRouteLocator 缓存。
+     */
+    private void scan(){
+        executorService.submit(() -> {
+            try {
+                final List<String> discoveryClientServiceIds = discoveryClient.getServices();
+                final Sets.SetView<String> difference = Sets.difference(cacheServiceIds, new HashSet<>(discoveryClientServiceIds));
+                if(!difference.isEmpty()){
+                    cacheServiceIds.clear();
+                    cacheServiceIds = new HashSet<>(discoveryClientServiceIds);
+                    this.publisher.publishEvent(new RefreshRoutesEvent(this));
+                }
+            } catch (Throwable e) {
+                //ignore
+            }
+        });
+    }
     @Override
     public Flux<RouteDefinition> getRouteDefinitions() {
         SimpleEvaluationContext evalCtxt = SimpleEvaluationContext
