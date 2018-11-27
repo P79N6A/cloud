@@ -130,7 +130,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                     String serviceId = instance.getServiceId();
                     RouteDefinition routeDefinition = new RouteDefinition();
                     RouteConfigDTO routeConfig = routes.get(serviceId);
-                    if (Objects.nonNull(routeConfig) && routeConfig.getStatus()) {
+                    if (Objects.isNull(routeConfig) || !routeConfig.getStatus()) {
                         routeConfig = routeConfigService.findRouteConfig(serviceId);
                     }
                     //状态有效
@@ -181,11 +181,12 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
         routeConfig.setFilters(JsonUtils.writeObjectToJson(routeDefinition.getFilters()));
         routeConfig.setPredicates(JsonUtils.writeObjectToJson(routeDefinition.getPredicates()));
         routeConfig.setStatus(true);
+        routeConfig.setOrder(routeDefinition.getOrder());
         routeConfig.setServiceId(serviceId);
         routeConfig.setServiceName(serviceId);
         routeConfig.setUri(routeDefinition.getUri() + "");
         routeConfig.setOperator(DiscoveryClientRouteDefinitionLocator.class.getSimpleName());
-        routes.put(serviceId, covertToRouteConfigDTO(routeConfig));
+        routes.put(serviceId, routeConfigService.covertToRouteConfigDTO(routeConfig));
         routeConfigService.saveRouteConfig(routeConfig);
         return routeConfig;
     }
@@ -273,15 +274,6 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                     .toString();
         }
     }
-
-    private RouteConfigDTO covertToRouteConfigDTO(RouteConfig routeConfig) {
-        ModelMapper mapper = new ModelMapper();
-        final RouteConfigDTO routeConfigDTO = mapper.map(routeConfig, RouteConfigDTO.class);
-        routeConfigDTO.setPredicateList(JsonUtils.readJsonToObjectList(PredicateDefinition.class,routeConfig.getPredicates()));
-        routeConfigDTO.setFilterList(JsonUtils.readJsonToObjectList(FilterDefinition.class,routeConfig.getFilters()));
-        return routeConfigDTO;
-    }
-
     private RouteConfigDTO covertToRouteConfig(RouteDefinition routeDefinition) {
         RouteConfigDTO routeConfigDTO = new RouteConfigDTO();
         routeConfigDTO.setFilterList(routeDefinition.getFilters());

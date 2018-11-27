@@ -83,11 +83,11 @@ public class RouteConfigServiceImpl implements RouteConfigService {
     @Override
     public RouteConfigDTO findRouteConfig(String serviceId) {
         RouteConfig routeConfig = (RouteConfig) redisTemplate.opsForValue().get(serviceId);
-        if (routeConfig == null) {
+//        if (routeConfig == null) {
             routeConfig = routeConfigDao.findRouteConfig(serviceId);
             redisTemplate.opsForValue().set(serviceId, routeConfig);
 
-        }
+//        }
         return covertToRouteConfigDTO(routeConfig);
     }
 
@@ -113,6 +113,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
         routeConfig.setId(null);
         routeConfig.setOperator(routeConfigDTO.getOperator());
         routeConfig.setServiceId(routeConfigDTO.getServiceId());
+        routeConfig.setOrder(routeConfigDTO.getOrder());
         routeConfig.setServiceName(routeConfigDTO.getServiceName());
         routeConfig.setUri(routeConfigDTO.getUri());
         routeConfig.setCreatedBy(routeConfigDTO.getCreatedBy());
@@ -120,9 +121,13 @@ public class RouteConfigServiceImpl implements RouteConfigService {
         return routeConfig;
     }
 
-    private RouteConfigDTO covertToRouteConfigDTO(RouteConfig routeConfig) {
+    @Override
+    public RouteConfigDTO covertToRouteConfigDTO(RouteConfig routeConfig) {
         ModelMapper mapper = new ModelMapper();
-        return mapper.map(routeConfig, RouteConfigDTO.class);
+        RouteConfigDTO routeConfigDTO = mapper.map(routeConfig, RouteConfigDTO.class);
+        routeConfigDTO.setPredicateList(JsonUtils.readJsonToObjectList(PredicateDefinition.class,routeConfig.getPredicates()));
+        routeConfigDTO.setFilterList(JsonUtils.readJsonToObjectList(FilterDefinition.class,routeConfig.getFilters()));
+        return routeConfigDTO;
     }
 
     /**

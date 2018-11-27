@@ -28,7 +28,7 @@
         <framework-feign.version>0.0.1-SNAPSHOT</framework-feign.version>
         <gateway-api.version>0.0.1-SNAPSHOT</gateway-api.version>
 
-        <mybatis-plus-boot-starter.version>3.0.5</mybatis-plus-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.0.6</mybatis-plus-boot-starter.version>
         <druid-spring-boot-starter.version>1.1.10</druid-spring-boot-starter.version>
 
         <fastjson.version>1.2.29</fastjson.version>

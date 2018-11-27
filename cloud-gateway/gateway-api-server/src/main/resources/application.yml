@@ -123,6 +123,7 @@ mybatis-plus:
 #    configuration-factory: com.xxx.SampleConfigurationFactory
     multipleResultSetsEnabled: true
     useColumnLabel: true
+    useGeneratedKeys: true
     cacheEnabled: true
 
   global-config:

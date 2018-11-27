@@ -2,8 +2,10 @@ package com.springframework.gateway.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.reflection.MetaObject;
 
@@ -14,11 +16,12 @@ import java.util.Date;
  * @author summer
  * 2018/7/2
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("route_config")
-public class RouteConfig implements Serializable {
+public class RouteConfig extends Model<RouteConfig> {
     @TableId(value = "id", type = IdType.AUTO)
     protected Long id;
     /**
@@ -54,14 +57,17 @@ public class RouteConfig implements Serializable {
     /**
      * 是否有效（0无效，1有效）
      */
+    @TableField("status")
     private Boolean status;
     /**
      * uri
      */
+    @TableField("uri")
     private String uri;
     /**
      * 匹配路由优先级
      */
+    @TableField("order")
     private Integer order;
 
     /**
@@ -72,19 +78,21 @@ public class RouteConfig implements Serializable {
      * *  eq:route001=http://127.0.0.1,Host=**.addrequestparameter.org,Path=/get
      * *  ps:单个 PredicateDefinition 的 args[i] 存在逗号( , ) ，会被错误的分隔，例如说，"Query=foo,bz"
      */
+    @TableField("predicates")
     private String predicates;
     /**
      * 多个用 - 分隔
      * ${name}=${args[0]},${args[1]}...${args[n]}
      */
+    @TableField("filters")
     private String filters;
 
 
     /**
      * 操作人
      */
+    @TableField("operator")
     private String operator;
-
     public static final String PATH = "Path=/";
     public static final String SERVICE_ID = "service_id";
     public static final String ROUTE_ID = "route_id";

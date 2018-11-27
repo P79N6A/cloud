@@ -43,4 +43,10 @@ public interface RouteConfigService {
      * @return
      */
     boolean deleteRouteConfigByRouteId(String id);
+
+  /**
+   * @param routeConfig
+   * @return
+   */
+  public RouteConfigDTO covertToRouteConfigDTO(RouteConfig routeConfig);
 }
