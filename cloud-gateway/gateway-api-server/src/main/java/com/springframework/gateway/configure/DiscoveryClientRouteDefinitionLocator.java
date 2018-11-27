@@ -276,7 +276,10 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
 
     private RouteConfigDTO covertToRouteConfigDTO(RouteConfig routeConfig) {
         ModelMapper mapper = new ModelMapper();
-        return mapper.map(routeConfig, RouteConfigDTO.class);
+        final RouteConfigDTO routeConfigDTO = mapper.map(routeConfig, RouteConfigDTO.class);
+        routeConfigDTO.setPredicateList(JsonUtils.readJsonToObjectList(PredicateDefinition.class,routeConfig.getPredicates()));
+        routeConfigDTO.setFilterList(JsonUtils.readJsonToObjectList(FilterDefinition.class,routeConfig.getFilters()));
+        return routeConfigDTO;
     }
 
     private RouteConfigDTO covertToRouteConfig(RouteDefinition routeDefinition) {

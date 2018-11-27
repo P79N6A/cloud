@@ -139,11 +139,11 @@ mybatis-plus:
       column-like: false #是否开启 LIKE 查询，即根据 entity 自动生成的 where 条件中 String 类型字段 是否使用 LIKE，默认不开启。
       db-type: mysql #数据库类型,默认值为未知的数据库类型 如果值为OTHER,启动时会根据数据库连接 url 获取数据库类型;如果不是OTHER则不会自动获取数据库类型
       id-type: AUTO #主键策略
+      field-strategy: not_empty
       logic-delete-value: 1 #逻辑删除
       logic-not-delete-value: 0 #逻辑未删除
       table-prefix: t_ #表前缀
       table-underline: true   #表名、是否使用下划线命名，默认数据库表使用下划线命名
-
 eureka:
   client:
     service-url:

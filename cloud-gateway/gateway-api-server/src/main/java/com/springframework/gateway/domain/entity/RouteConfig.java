@@ -1,9 +1,11 @@
 package com.springframework.gateway.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.ibatis.reflection.MetaObject;
 
 import java.io.Serializable;
 import java.util.Date;
