@@ -57,7 +57,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
      * 本地缓存->redis->mysql
      */
     private final Map<String, RouteConfigDTO> routes = Collections.synchronizedMap(new LinkedHashMap<>());
-    private Set<String> cacheServiceIds = Collections.synchronizedSet(new HashSet<>());
+    private Set<String> oldServiceIds = Collections.synchronizedSet(new HashSet<>());
 
     public DiscoveryClientRouteDefinitionLocator(ApplicationEventPublisher publisher,DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties, RouteConfigService routeConfigService) {
         this.discoveryClient = discoveryClient;
@@ -93,10 +93,10 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
         executorService.submit(() -> {
             try {
                 final List<String> discoveryClientServiceIds = discoveryClient.getServices();
-                final Sets.SetView<String> difference = Sets.difference(cacheServiceIds, new HashSet<>(discoveryClientServiceIds));
+                final Sets.SetView<String> difference = Sets.difference(oldServiceIds, new HashSet<>(discoveryClientServiceIds));
                 if(!difference.isEmpty()){
-                    cacheServiceIds.clear();
-                    cacheServiceIds = new HashSet<>(discoveryClientServiceIds);
+                    oldServiceIds.clear();
+                    oldServiceIds = new HashSet<>(discoveryClientServiceIds);
                     this.publisher.publishEvent(new RefreshRoutesEvent(this));
                 }
             } catch (Throwable e) {
