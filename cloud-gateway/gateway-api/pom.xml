@@ -16,6 +16,19 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-enum</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-constants</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-domain</artifactId><exclusions>
+        </exclusions>
+        </dependency>
+        <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
         </dependency>

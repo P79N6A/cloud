@@ -28,13 +28,13 @@ public class RouteConfig extends Model<RouteConfig> {
     @TableLogic("0")
     protected Integer isDeleted = 0;
 
-    @TableField(value = "created_by",  fill = FieldFill.INSERT)
+    @TableField(value = "created_by", strategy = FieldStrategy.NOT_NULL, fill = FieldFill.INSERT)
     protected String createdBy;
-    @TableField(value = "created_time", update = "now()",  fill = FieldFill.INSERT)
+    @TableField(value = "created_time", update = "now()", strategy = FieldStrategy.NOT_NULL, fill = FieldFill.INSERT)
     protected Date createdTime;
-    @TableField(value = "last_modified_by",  fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "last_modified_by", strategy = FieldStrategy.NOT_NULL, fill = FieldFill.INSERT_UPDATE)
     protected String lastModifiedBy;
-    @TableField(value = "last_modified_time", update = "now()",  fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "last_modified_time", update = "now()", strategy = FieldStrategy.NOT_NULL, fill = FieldFill.INSERT_UPDATE)
     protected Date lastModifiedTime;
 
     @TableField("route_id")

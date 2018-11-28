@@ -28,9 +28,9 @@ public abstract class BaseEntity<T extends Model> extends Model<T> {
     protected String createdBy;
     @TableField(value = "created_time", update = "now()", strategy = FieldStrategy.NOT_NULL, fill = FieldFill.INSERT)
     protected Date createdTime;
-    @TableField(value = "last_modified_by", strategy = FieldStrategy.NOT_NULL, fill = FieldFill.UPDATE)
+    @TableField(value = "last_modified_by", strategy = FieldStrategy.NOT_NULL, fill = FieldFill.INSERT_UPDATE)
     protected String lastModifiedBy;
-    @TableField(value = "last_modified_time", update = "now()", strategy = FieldStrategy.NOT_NULL, fill = FieldFill.UPDATE)
+    @TableField(value = "last_modified_time", update = "now()", strategy = FieldStrategy.NOT_NULL, fill = FieldFill.INSERT_UPDATE)
     protected Date lastModifiedTime;
 
 

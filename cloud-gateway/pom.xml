@@ -40,6 +40,11 @@
             <!--内部框架-->
             <dependency>
                 <groupId>com.springframework</groupId>
+                <artifactId>framework-enum</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
                 <artifactId>framework-domain</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>

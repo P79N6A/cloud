@@ -13,6 +13,11 @@ spring:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   cloud:
     gateway:
+      httpclient:
+        ssl:
+          handshake-timeout-millis: 10000
+          close-notify-flush-timeout-millis: 3000
+          close-notify-read-timeout-millis: 0
 #      routes:
 #      - id: cloud-admin
 #        uri: lb://CLOUD-ADMIN
@@ -35,7 +40,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/cloud?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://127.0.0.1:3306/cloud?useSSL=false&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123
     # 使用druid数据源
