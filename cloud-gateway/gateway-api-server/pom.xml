@@ -22,16 +22,7 @@
         <!--内部框架-->
         <dependency>
             <groupId>com.springframework</groupId>
-            <artifactId>framework-hystrix</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.springframework</groupId>
-            <artifactId>framework-constants</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.springframework</groupId>
-            <artifactId>framework-domain</artifactId><exclusions>
-        </exclusions>
+            <artifactId>framework-feign</artifactId>
         </dependency>
         <dependency>
             <groupId>com.springframework</groupId>
@@ -41,25 +32,12 @@
                     <artifactId>framework-logger</artifactId>
                     <groupId>com.springframework</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>com.springframework</groupId>-->
-        <!--<artifactId>framework-common</artifactId>-->
-        <!--<version>0.0.1-SNAPSHOT</version>-->
-        <!--<exclusions>-->
-        <!--<exclusion>-->
-        <!--<artifactId>spring-boot-starter-web</artifactId>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--</exclusion>-->
-        <!--</exclusions>-->
-        <!--</dependency>-->
-        <dependency>
-        <groupId>com.springframework</groupId>
-        <artifactId>framework-feign</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>

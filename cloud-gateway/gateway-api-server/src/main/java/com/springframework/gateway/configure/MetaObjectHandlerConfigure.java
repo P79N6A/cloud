@@ -16,11 +16,14 @@ public class MetaObjectHandlerConfigure implements MetaObjectHandler {
    */
   @Override
   public void insertFill(MetaObject metaObject) {
-    Object creater = getFieldValByName("created_by", metaObject);
+    Object creater = getFieldValByName("createdBy", metaObject);
+    setFieldValByName("lastModifiedBy", creater, metaObject);
+    setFieldValByName("createdTime", new Date(), metaObject);
+    setFieldValByName("lastModifiedTime", new Date(), metaObject);
     if (creater == null) {
-      setFieldValByName("created_by", "auto", metaObject);
+      setFieldValByName("createdBy", "auto", metaObject);
+      setFieldValByName("lastModifiedBy", "auto", metaObject);
     }
-    setFieldValByName("created_time", new Date(), metaObject);
   }
 
   /**
@@ -30,10 +33,10 @@ public class MetaObjectHandlerConfigure implements MetaObjectHandler {
    */
   @Override
   public void updateFill(MetaObject metaObject) {
-    Object updater = getFieldValByName("last_modified_by", metaObject);
+    Object updater = getFieldValByName("lastModifiedBy", metaObject);
     if (updater == null) {
-      setFieldValByName("last_modified_by", "auto", metaObject);
+      setFieldValByName("lastModifiedBy", "auto", metaObject);
     }
-    setFieldValByName("last_modified_time", new Date(), metaObject);
+    setFieldValByName("lastModifiedTime", new Date(), metaObject);
   }
 }

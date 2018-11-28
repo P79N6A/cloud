@@ -5,9 +5,7 @@ import com.springframework.cache.GenericCacheManager;
 import com.springframework.enums.rediskey.CacheNamePrefixEnum;
 import com.springframework.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
@@ -21,13 +19,11 @@ import java.util.concurrent.TimeUnit;
  * 2018/7/12
  */
 @Slf4j
-@Service("defaultRedisCacheService")
 public class DefaultRedisCacheService implements GenericCacheManager {
     private static final String MD5 = "md5";
     private static final int SIZE = 128;
-    private RedisTemplate<String, Object> redisTemplate;
-    @Autowired
-    public DefaultRedisCacheService(RedisTemplate<String, Object> redisTemplate) {
+    private RedisTemplate redisTemplate;
+    public DefaultRedisCacheService(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

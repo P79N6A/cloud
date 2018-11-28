@@ -52,7 +52,7 @@ public class RouteConfigDTO {
     /**
      * 匹配路由优先级
      */
-    private Integer order;
+    private Integer orders;
 
     /**
      * ${name}=${args[0]},${args[1]}...${args[n]}

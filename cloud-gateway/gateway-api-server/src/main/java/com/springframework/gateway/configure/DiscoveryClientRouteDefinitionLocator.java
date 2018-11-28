@@ -7,7 +7,6 @@ import com.springframework.gateway.domain.entity.RouteConfig;
 import com.springframework.gateway.domain.service.RouteConfigService;
 import com.springframework.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -44,7 +43,6 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
     private TimeUnit rebuildIntervalTimeUnit = TimeUnit.SECONDS;
     private TimeUnit scanIntervalTimeUnit = TimeUnit.SECONDS;
     private ScheduledExecutorService scheduledExecutorService;
-    private ExecutorService executorService;
     private ApplicationEventPublisher publisher;
     private DiscoveryClient discoveryClient;
     private DiscoveryLocatorProperties properties;
@@ -59,7 +57,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
     private final Map<String, RouteConfigDTO> routes = Collections.synchronizedMap(new LinkedHashMap<>());
     private Set<String> oldServiceIds = Collections.synchronizedSet(new HashSet<>());
 
-    public DiscoveryClientRouteDefinitionLocator(ApplicationEventPublisher publisher,DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties, RouteConfigService routeConfigService) {
+    public DiscoveryClientRouteDefinitionLocator(ApplicationEventPublisher publisher, DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties, RouteConfigService routeConfigService) {
         this.discoveryClient = discoveryClient;
         this.properties = properties;
         this.routeConfigService = routeConfigService;
@@ -74,12 +72,12 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
             this.routeIdPrefix = this.discoveryClient.getClass().getSimpleName() + "_";
         }
         this.scheduledExecutorService = new ScheduledThreadPoolExecutor(1, CloudGatewayThreadFactory
-                .create("discoveryClientScanService", true));
-        this.executorService = Executors.newSingleThreadExecutor(CloudGatewayThreadFactory.create("CachingRouteLocatorRefreshService", true));
+                .create("CachingRouteLocatorRefreshService", true));
     }
+
     @PostConstruct
-    public void afterPropertiesSet() throws Exception {
-        scheduledExecutorService.scheduleWithFixedDelay(this::scan,scanInterval,
+    public void afterPropertiesSet() {
+        scheduledExecutorService.scheduleWithFixedDelay(this::scanRefresh, scanInterval,
                 scanInterval, scanIntervalTimeUnit);
     }
 
@@ -87,23 +85,22 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
      * RoutePredicateHandlerMapping 使用 CachingRouteLocator 来获取 Route 信息。
      * 在 Spring Cloud Gateway 启动后，如果有新加入的服务，则需要刷新 CachingRouteLocator 缓存。
      * 这里有一点需要注意下 ：新加入的服务，指的是新的 serviceId ，而不是原有服务新增的实例。
-     *  DiscoveryClient 获取服务列表，若发现变化，刷新 CachingRouteLocator 缓存。
+     * DiscoveryClient 获取服务列表，若发现变化，刷新 CachingRouteLocator 缓存。
      */
-    private void scan(){
-        executorService.submit(() -> {
-            try {
-                final List<String> discoveryClientServiceIds = discoveryClient.getServices();
-                final Sets.SetView<String> difference = Sets.difference(oldServiceIds, new HashSet<>(discoveryClientServiceIds));
-                if(!difference.isEmpty()){
-                    oldServiceIds.clear();
-                    oldServiceIds = new HashSet<>(discoveryClientServiceIds);
-                    this.publisher.publishEvent(new RefreshRoutesEvent(this));
-                }
-            } catch (Throwable e) {
-                //ignore
+    private void scanRefresh() {
+        try {
+            final List<String> discoveryClientServiceIds = discoveryClient.getServices();
+            final Sets.SetView<String> difference = Sets.difference(oldServiceIds, new HashSet<>(discoveryClientServiceIds));
+            if (!difference.isEmpty()) {
+                oldServiceIds.clear();
+                oldServiceIds = new HashSet<>(discoveryClientServiceIds);
+                this.publisher.publishEvent(new RefreshRoutesEvent(this));
             }
-        });
+        } catch (Throwable e) {
+            //ignore
+        }
     }
+
     @Override
     public Flux<RouteDefinition> getRouteDefinitions() {
         SimpleEvaluationContext evalCtxt = SimpleEvaluationContext
@@ -130,13 +127,13 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                     String serviceId = instance.getServiceId();
                     RouteDefinition routeDefinition = new RouteDefinition();
                     RouteConfigDTO routeConfig = routes.get(serviceId);
-                    if (Objects.isNull(routeConfig) || routeConfig.getStatus()!=1) {
+                    if (Objects.isNull(routeConfig) || routeConfig.getStatus() != 1) {
                         routeConfig = routeConfigService.findRouteConfig(serviceId);
                     }
                     //状态有效
-                    if (Objects.nonNull(routeConfig) && routeConfig.getStatus()==1) {
+                    if (Objects.nonNull(routeConfig) && routeConfig.getStatus() == 1) {
                         routeDefinition.setId(routeConfig.getRouteId());
-                        routeDefinition.setOrder(routeConfig.getOrder());
+                        routeDefinition.setOrder(routeConfig.getOrders());
                         routeDefinition.setUri(URI.create(routeConfig.getUri()));
                         routeDefinition.setPredicates(routeConfig.getPredicateList());
                         routeDefinition.setFilters(routeConfig.getFilterList());
@@ -168,7 +165,9 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                             routeDefinition.getFilters().add(filter);
                         }
                         final RouteConfig config = saveOrUpdateRouteConfig(routeDefinition, serviceId);
-                        log.info("保存路由配置数量为{},参数{}，服务id{}", config, routeDefinition, serviceId);
+                        if (log.isDebugEnabled()) {
+                            log.debug("保存路由配置数量为{},参数{}，服务id{}", config, routeDefinition, serviceId);
+                        }
                     }
                     return routeDefinition;
                 });
@@ -181,13 +180,14 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
         routeConfig.setFilters(JsonUtils.writeObjectToJson(routeDefinition.getFilters()));
         routeConfig.setPredicates(JsonUtils.writeObjectToJson(routeDefinition.getPredicates()));
         routeConfig.setStatus(1);
-        routeConfig.setOrder(routeDefinition.getOrder());
+        routeConfig.setOrders(routeDefinition.getOrder());
         routeConfig.setServiceId(serviceId);
         routeConfig.setServiceName(serviceId);
         routeConfig.setUri(routeDefinition.getUri() + "");
         routeConfig.setOperator(DiscoveryClientRouteDefinitionLocator.class.getSimpleName());
-        routes.put(serviceId, routeConfigService.covertToRouteConfigDTO(routeConfig));
         routeConfigService.saveRouteConfig(routeConfig);
+        //DB保存成功才插入缓存
+        routes.put(serviceId, routeConfigService.covertToRouteConfigDTO(routeConfig));
         return routeConfig;
     }
 
@@ -209,12 +209,15 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
     @Override
     public Mono<Void> delete(Mono<String> routeId) {
         return routeId.flatMap(id -> {
-            if (routes.containsKey(id)) {
-                routes.remove(id);
-                routeConfigService.deleteRouteConfigByRouteId(id);
+            routeConfigService.deleteRouteConfigByRouteId(id);
+            if (!routes.containsKey(id)) {
+                if (log.isDebugEnabled()) {
+                    log.debug("一级缓存未命中");
+                }
                 return Mono.empty();
             }
-            return Mono.defer(() -> Mono.error(new NotFoundException("RouteDefinition not found: " + routeId)));
+            routes.remove(id);
+            return Mono.empty();
         });
     }
 
@@ -274,6 +277,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                     .toString();
         }
     }
+
     private RouteConfigDTO covertToRouteConfig(RouteDefinition routeDefinition) {
         RouteConfigDTO routeConfigDTO = new RouteConfigDTO();
         routeConfigDTO.setFilterList(routeDefinition.getFilters());
@@ -281,7 +285,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
         routeConfigDTO.setPredicates(JsonUtils.writeObjectToJson(routeDefinition.getPredicates()));
         routeConfigDTO.setFilters(JsonUtils.writeObjectToJson(routeDefinition.getFilters()));
         routeConfigDTO.setRouteId(routeDefinition.getId());
-        routeConfigDTO.setOrder(routeDefinition.getOrder());
+        routeConfigDTO.setOrders(routeDefinition.getOrder());
         routeConfigDTO.setStatus(1);
         routeConfigDTO.setUri(routeDefinition.getUri().toString());
         return routeConfigDTO;

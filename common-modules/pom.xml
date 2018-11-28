@@ -70,8 +70,8 @@
 
         <!--sharding-->
         <sharding-jdbc.version>2.0.0.M1</sharding-jdbc.version>
-        <mybatis-plus.version>3.0.5</mybatis-plus.version>
-        <mybatis-plus-support.version>3.0.5</mybatis-plus-support.version>
+        <mybatis-plus.version>3.0.6</mybatis-plus.version>
+        <mybatis-plus-support.version>3.0.6</mybatis-plus-support.version>
 
         <!--spring-framework-->
         <spring-jdbc.version>5.0.7.RELEASE</spring-jdbc.version>

@@ -13,21 +13,26 @@ spring:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   cloud:
     gateway:
-      routes:
-      - id: cloud-admin
-        uri: lb://CLOUD-ADMIN
-        order: 0
-        predicates:
-        - Path=/cloud-admin
-        filters:
-        - RewritePath=/cloud-admin/(?<segment>.*), /$\{segment} # 移除serviceID
-      - id: eureka-swagger
-        uri: lb://EUREKA-SWAGGER
-        order: 0
-        predicates:
-        - Path=/eureka-swagger
-        filters:
-        - RewritePath=/eureka-swagger/(?<segment>.*), /$\{segment}
+      httpclient:
+        ssl:
+          handshake-timeout-millis: 10000
+          close-notify-flush-timeout-millis: 3000
+          close-notify-read-timeout-millis: 0
+#      routes:
+#      - id: cloud-admin
+#        uri: lb://CLOUD-ADMIN
+#        order: 0
+#        predicates:
+#        - Path=/cloud-admin
+#        filters:
+#        - RewritePath=/cloud-admin/(?<segment>.*), /$\{segment} # 移除serviceID
+#      - id: eureka-swagger
+#        uri: lb://EUREKA-SWAGGER
+#        order: 0
+#        predicates:
+#        - Path=/eureka-swagger
+#        filters:
+#        - RewritePath=/eureka-swagger/(?<segment>.*), /$\{segment}
       discovery:
         locator:
           lower-case-service-id: true
@@ -35,7 +40,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/cloud?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://127.0.0.1:3306/cloud?useSSL=false&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123
     # 使用druid数据源
@@ -171,21 +176,21 @@ logging:
 #      routes:
 #      - id: admin-server
 #        uri: lb://ADMIN-SERVER
-#        order: 0
+#        orders: 0
 #        predicates:
 #        - Path=/admin-server
 #        filters:
 #          - RewritePath=/admin-server/(?<segment>.*), /$\{segment}
 #      - id: doc-server
 #        uri: lb://DOC-SERVER
-#        order: 0
+#        orders: 0
 #        predicates:
 #          - Path=/doc-server
 #        filters:
 #          - RewritePath=/doc-server/(?<segment>.*), /$\{segment}
 #      - id: demo-server
 #        uri: lb://DEMO-SERVER
-#        order: 0
+#        orders: 0
 #        predicates:
 #          - Path=/demo-server/**
 #        filters:

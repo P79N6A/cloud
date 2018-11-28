@@ -33,6 +33,10 @@
         <!-- 项目内部依赖 -->
         <dependency>
             <groupId>com.springframework</groupId>
+            <artifactId>framework-exception</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
             <artifactId>framework-trace</artifactId>
         </dependency>
         <dependency>
@@ -72,10 +76,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-ext</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.springframework</groupId>
-            <artifactId>framework-exception</artifactId>
-        </dependency>
+
 
     </dependencies>
     <repositories>

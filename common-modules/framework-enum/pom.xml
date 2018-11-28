@@ -13,8 +13,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.springframework</groupId>
-            <artifactId>framework-logger</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
