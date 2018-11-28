@@ -79,7 +79,7 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
         if (o instanceof Ordered) {
             order = ((Ordered) o).getOrder();
         }
-        //filters.put(o.getClass().getName(), order);
+        //filters.put(o.getClass().getName(), orders);
         map.put(o.toString(), order);
         return map;
     }
@@ -98,7 +98,7 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
             routeList.forEach(route -> {
                 HashMap<String, Object> r = new HashMap<>();
                 r.put("route_id", route.getId());
-                r.put("order", route.getOrder());
+                r.put("orders", route.getOrder());
 
                 if (defs.containsKey(route.getId())) {
                     r.put("route_definition", defs.get(route.getId()));

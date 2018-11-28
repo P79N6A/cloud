@@ -82,7 +82,7 @@ public class DynamicRouteDefinitionLocator implements RouteDefinitionRepository 
 //            routeDefinition.setId(v.getRouteId());
 //            routeDefinition.setUri(URI.create(v.getUri()));
 //            routeDefinition.setFilters(v.getFilterList());
-//            routeDefinition.setOrder(v.getOrder());
+//            routeDefinition.setOrders(v.getOrders());
 //            routeDefinition.setPredicates(v.getPredicateList());
 //        });
         return Flux.fromIterable(routeDefinitionList);

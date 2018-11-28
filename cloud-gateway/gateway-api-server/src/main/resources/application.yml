@@ -13,21 +13,21 @@ spring:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   cloud:
     gateway:
-      routes:
-      - id: cloud-admin
-        uri: lb://CLOUD-ADMIN
-        order: 0
-        predicates:
-        - Path=/cloud-admin
-        filters:
-        - RewritePath=/cloud-admin/(?<segment>.*), /$\{segment} # 移除serviceID
-      - id: eureka-swagger
-        uri: lb://EUREKA-SWAGGER
-        order: 0
-        predicates:
-        - Path=/eureka-swagger
-        filters:
-        - RewritePath=/eureka-swagger/(?<segment>.*), /$\{segment}
+#      routes:
+#      - id: cloud-admin
+#        uri: lb://CLOUD-ADMIN
+#        order: 0
+#        predicates:
+#        - Path=/cloud-admin
+#        filters:
+#        - RewritePath=/cloud-admin/(?<segment>.*), /$\{segment} # 移除serviceID
+#      - id: eureka-swagger
+#        uri: lb://EUREKA-SWAGGER
+#        order: 0
+#        predicates:
+#        - Path=/eureka-swagger
+#        filters:
+#        - RewritePath=/eureka-swagger/(?<segment>.*), /$\{segment}
       discovery:
         locator:
           lower-case-service-id: true
@@ -171,21 +171,21 @@ logging:
 #      routes:
 #      - id: admin-server
 #        uri: lb://ADMIN-SERVER
-#        order: 0
+#        orders: 0
 #        predicates:
 #        - Path=/admin-server
 #        filters:
 #          - RewritePath=/admin-server/(?<segment>.*), /$\{segment}
 #      - id: doc-server
 #        uri: lb://DOC-SERVER
-#        order: 0
+#        orders: 0
 #        predicates:
 #          - Path=/doc-server
 #        filters:
 #          - RewritePath=/doc-server/(?<segment>.*), /$\{segment}
 #      - id: demo-server
 #        uri: lb://DEMO-SERVER
-#        order: 0
+#        orders: 0
 #        predicates:
 #          - Path=/demo-server/**
 #        filters:

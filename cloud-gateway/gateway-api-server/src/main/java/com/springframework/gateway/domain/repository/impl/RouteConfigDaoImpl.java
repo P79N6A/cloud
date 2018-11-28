@@ -36,7 +36,7 @@ public class RouteConfigDaoImpl extends ServiceImpl<RouteConfigMapper, RouteConf
 
     @Override
     public boolean saveRouteConfig(RouteConfig routeConfig) {
-        if (this.save(routeConfig)) {
+        if (routeConfig.insert()) {
             return true;
         }
         throw new RuntimeException("保存失败");
@@ -64,8 +64,8 @@ public class RouteConfigDaoImpl extends ServiceImpl<RouteConfigMapper, RouteConf
         QueryWrapper<RouteConfig> wrapper = new QueryWrapper<>();
         wrapper.eq(RouteConfig.SERVICE_ID, serviceId);
         wrapper.eq(RouteConfig.STATUS, status);
-        final RouteConfig routeConfig = this.getOne(wrapper, false);
-        return routeConfig;
+        RouteConfig routeConfig =new RouteConfig();
+        return routeConfig.selectOne(wrapper);
     }
 
     /**
@@ -80,7 +80,7 @@ public class RouteConfigDaoImpl extends ServiceImpl<RouteConfigMapper, RouteConf
         wrapper.eq(RouteConfig.ROUTE_ID, routeId);
         RouteConfig entity = new RouteConfig();
         entity.setStatus(0);
-        if (!update(entity, wrapper)) {
+        if (!entity.update(wrapper)) {
             throw new RuntimeException("根据 routeId删除配置失败（逻辑删除）");
         }
         return true;

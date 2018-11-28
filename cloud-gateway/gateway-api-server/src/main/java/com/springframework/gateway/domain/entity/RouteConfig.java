@@ -1,15 +1,12 @@
 package com.springframework.gateway.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.apache.ibatis.reflection.MetaObject;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -31,13 +28,13 @@ public class RouteConfig extends Model<RouteConfig> {
     @TableLogic("0")
     protected Integer isDeleted = 0;
 
-    @TableField(value = "created_by", strategy = FieldStrategy.NOT_NULL, fill = FieldFill.INSERT)
+    @TableField(value = "created_by",  fill = FieldFill.INSERT)
     protected String createdBy;
-    @TableField(value = "created_time", update = "now()", strategy = FieldStrategy.NOT_NULL, fill = FieldFill.INSERT)
+    @TableField(value = "created_time", update = "now()",  fill = FieldFill.INSERT)
     protected Date createdTime;
-    @TableField(value = "last_modified_by", strategy = FieldStrategy.NOT_NULL, fill = FieldFill.UPDATE)
+    @TableField(value = "last_modified_by",  fill = FieldFill.INSERT_UPDATE)
     protected String lastModifiedBy;
-    @TableField(value = "last_modified_time", update = "now()", strategy = FieldStrategy.NOT_NULL, fill = FieldFill.UPDATE)
+    @TableField(value = "last_modified_time", update = "now()",  fill = FieldFill.INSERT_UPDATE)
     protected Date lastModifiedTime;
 
     @TableField("route_id")
@@ -65,10 +62,10 @@ public class RouteConfig extends Model<RouteConfig> {
     @TableField("uri")
     private String uri;
     /**
-     * 匹配路由优先级
+     * 匹配路由优先级//避免关键字，用复数
      */
-    @TableField("order")
-    private Integer order;
+    @TableField("orders")
+    private Integer orders;
 
     /**
      * ${name}=${args[0]},${args[1]}...${args[n]}
@@ -99,7 +96,7 @@ public class RouteConfig extends Model<RouteConfig> {
     public static final String SERVICE_NAME = "service_name";
     public static final String STATUS = "status";
     public static final String URI = "uri";
-    public static final String ORDER = "order";
+    public static final String ORDER = "orders";
     public static final String PREDICATES = "predicates";
     public static final String OPERATOR = "operator";
 

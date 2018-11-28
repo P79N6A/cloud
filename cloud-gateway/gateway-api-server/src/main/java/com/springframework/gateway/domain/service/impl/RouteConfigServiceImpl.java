@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -70,7 +71,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
                     routeDefinitionList.add(routeDefinition);
                     routeDefinition.setUri(URI.create(routeConfig.getUri()));
                     routeDefinition.setId(routeConfig.getServiceId());
-                    routeDefinition.setOrder(routeConfig.getOrder());
+                    routeDefinition.setOrder(routeConfig.getOrders());
                     routeDefinition.setFilters(getFilterList(routeConfig));
                     routeDefinition.setPredicates(getPredicateList(routeConfig));
                 });
@@ -113,7 +114,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
         routeConfig.setId(null);
         routeConfig.setOperator(routeConfigDTO.getOperator());
         routeConfig.setServiceId(routeConfigDTO.getServiceId());
-        routeConfig.setOrder(routeConfigDTO.getOrder());
+        routeConfig.setOrders(routeConfigDTO.getOrders());
         routeConfig.setServiceName(routeConfigDTO.getServiceName());
         routeConfig.setUri(routeConfigDTO.getUri());
         routeConfig.setCreatedBy(routeConfigDTO.getCreatedBy());
@@ -123,6 +124,9 @@ public class RouteConfigServiceImpl implements RouteConfigService {
 
     @Override
     public RouteConfigDTO covertToRouteConfigDTO(RouteConfig routeConfig) {
+        if(routeConfig==null){
+            return null;
+        }
         ModelMapper mapper = new ModelMapper();
         RouteConfigDTO routeConfigDTO = mapper.map(routeConfig, RouteConfigDTO.class);
         routeConfigDTO.setPredicateList(JsonUtils.readJsonToObjectList(PredicateDefinition.class,routeConfig.getPredicates()));

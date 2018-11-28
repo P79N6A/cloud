@@ -7,7 +7,6 @@ import com.springframework.gateway.domain.entity.RouteConfig;
 import com.springframework.gateway.domain.service.RouteConfigService;
 import com.springframework.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -133,10 +132,11 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                     if (Objects.isNull(routeConfig) || routeConfig.getStatus()!=1) {
                         routeConfig = routeConfigService.findRouteConfig(serviceId);
                     }
+                    routeConfig=null;
                     //状态有效
                     if (Objects.nonNull(routeConfig) && routeConfig.getStatus()==1) {
                         routeDefinition.setId(routeConfig.getRouteId());
-                        routeDefinition.setOrder(routeConfig.getOrder());
+                        routeDefinition.setOrder(routeConfig.getOrders());
                         routeDefinition.setUri(URI.create(routeConfig.getUri()));
                         routeDefinition.setPredicates(routeConfig.getPredicateList());
                         routeDefinition.setFilters(routeConfig.getFilterList());
@@ -181,13 +181,14 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
         routeConfig.setFilters(JsonUtils.writeObjectToJson(routeDefinition.getFilters()));
         routeConfig.setPredicates(JsonUtils.writeObjectToJson(routeDefinition.getPredicates()));
         routeConfig.setStatus(1);
-        routeConfig.setOrder(routeDefinition.getOrder());
+        routeConfig.setOrders(routeDefinition.getOrder());
         routeConfig.setServiceId(serviceId);
         routeConfig.setServiceName(serviceId);
         routeConfig.setUri(routeDefinition.getUri() + "");
         routeConfig.setOperator(DiscoveryClientRouteDefinitionLocator.class.getSimpleName());
-        routes.put(serviceId, routeConfigService.covertToRouteConfigDTO(routeConfig));
         routeConfigService.saveRouteConfig(routeConfig);
+        //DB保存成功才插入缓存
+        routes.put(serviceId, routeConfigService.covertToRouteConfigDTO(routeConfig));
         return routeConfig;
     }
 
@@ -281,7 +282,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
         routeConfigDTO.setPredicates(JsonUtils.writeObjectToJson(routeDefinition.getPredicates()));
         routeConfigDTO.setFilters(JsonUtils.writeObjectToJson(routeDefinition.getFilters()));
         routeConfigDTO.setRouteId(routeDefinition.getId());
-        routeConfigDTO.setOrder(routeDefinition.getOrder());
+        routeConfigDTO.setOrders(routeDefinition.getOrder());
         routeConfigDTO.setStatus(1);
         routeConfigDTO.setUri(routeDefinition.getUri().toString());
         return routeConfigDTO;
