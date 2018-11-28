@@ -21,12 +21,10 @@ import java.util.concurrent.TimeUnit;
  * 2018/7/12
  */
 @Slf4j
-@Service("defaultRedisCacheService")
 public class DefaultRedisCacheService implements GenericCacheManager {
     private static final String MD5 = "md5";
     private static final int SIZE = 128;
     private RedisTemplate<String, Object> redisTemplate;
-    @Autowired
     public DefaultRedisCacheService(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }

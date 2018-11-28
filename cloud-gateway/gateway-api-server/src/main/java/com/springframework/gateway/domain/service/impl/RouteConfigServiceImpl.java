@@ -3,6 +3,7 @@ package com.springframework.gateway.domain.service.impl;
 import com.springframework.gateway.domain.dto.RouteConfigDTO;
 import com.springframework.gateway.domain.entity.RouteConfig;
 import com.springframework.gateway.domain.repository.impl.RouteConfigDaoImpl;
+import com.springframework.gateway.domain.service.RouteConfigCacheService;
 import com.springframework.gateway.domain.service.RouteConfigService;
 import com.springframework.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +16,13 @@ import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -27,22 +30,25 @@ import java.util.concurrent.TimeUnit;
  * 2018/7/2
  */
 @Service("routeConfigService")
+@Transactional(readOnly = true, rollbackFor = Exception.class)
 @Slf4j
 public class RouteConfigServiceImpl implements RouteConfigService {
-    private RedisTemplate redisTemplate;
     private RouteConfigDaoImpl routeConfigDao;
+    private RouteConfigCacheService configCacheService;
 
     @Autowired
-    public RouteConfigServiceImpl(RedisTemplate redisTemplate, RouteConfigDaoImpl routeConfigDao) {
-        this.redisTemplate = redisTemplate;
+    public RouteConfigServiceImpl(RouteConfigCacheService configCacheService, RouteConfigDaoImpl routeConfigDao) {
+        this.configCacheService = configCacheService;
         this.routeConfigDao = routeConfigDao;
     }
 
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public boolean saveRouteConfig(RouteConfig routeConfig) {
-        redisTemplate.opsForValue().set(routeConfig.getServiceId(), routeConfig);
-        return routeConfigDao.saveRouteConfig(routeConfig);
+        routeConfigDao.saveRouteConfig(routeConfig);
+        configCacheService.saveRouteConfigCache(routeConfig);
+        return true;
     }
 
     /**
@@ -83,12 +89,13 @@ public class RouteConfigServiceImpl implements RouteConfigService {
 
     @Override
     public RouteConfigDTO findRouteConfig(String serviceId) {
-//        RouteConfig routeConfig = (RouteConfig) redisTemplate.opsForValue().get(serviceId);
-//        if (routeConfig == null) {
-        RouteConfig  routeConfig = routeConfigDao.findRouteConfig(serviceId);
-            redisTemplate.opsForValue().set(serviceId, routeConfig);
-
-//        }
+        RouteConfig routeConfig = configCacheService.findRouteConfigCache(serviceId);
+        if (routeConfig == null) {
+            routeConfig = routeConfigDao.findRouteConfig(serviceId);
+            Optional.ofNullable(routeConfig).ifPresent(r -> {
+                configCacheService.saveRouteConfigCache(r);
+            });
+        }
         return covertToRouteConfigDTO(routeConfig);
     }
 
@@ -100,37 +107,20 @@ public class RouteConfigServiceImpl implements RouteConfigService {
      */
     @Override
     public boolean deleteRouteConfigByRouteId(String routeId) {
-        redisTemplate.opsForValue().set(routeId, "", 0L, TimeUnit.SECONDS);
-        return routeConfigDao.deleteRouteConfigByRouteId(routeId);
-    }
-
-
-    private RouteConfig covertByRouteConfigDTO(RouteConfigDTO routeConfigDTO) {
-        RouteConfig routeConfig = new RouteConfig();
-        routeConfig.setStatus(routeConfigDTO.getStatus());
-        routeConfig.setFilters(routeConfigDTO.getFilters());
-        routeConfig.setPredicates(routeConfigDTO.getPredicates());
-        routeConfig.setRouteId(routeConfigDTO.getRouteId());
-        routeConfig.setId(null);
-        routeConfig.setOperator(routeConfigDTO.getOperator());
-        routeConfig.setServiceId(routeConfigDTO.getServiceId());
-        routeConfig.setOrders(routeConfigDTO.getOrders());
-        routeConfig.setServiceName(routeConfigDTO.getServiceName());
-        routeConfig.setUri(routeConfigDTO.getUri());
-        routeConfig.setCreatedBy(routeConfigDTO.getCreatedBy());
-        routeConfig.setLastModifiedBy(routeConfigDTO.getOperator());
-        return routeConfig;
+        routeConfigDao.deleteRouteConfigByRouteId(routeId);
+        configCacheService.expireRouteConfigCache(routeId);
+        return true;
     }
 
     @Override
     public RouteConfigDTO covertToRouteConfigDTO(RouteConfig routeConfig) {
-        if(routeConfig==null){
+        if (routeConfig == null) {
             return null;
         }
         ModelMapper mapper = new ModelMapper();
         RouteConfigDTO routeConfigDTO = mapper.map(routeConfig, RouteConfigDTO.class);
-        routeConfigDTO.setPredicateList(JsonUtils.readJsonToObjectList(PredicateDefinition.class,routeConfig.getPredicates()));
-        routeConfigDTO.setFilterList(JsonUtils.readJsonToObjectList(FilterDefinition.class,routeConfig.getFilters()));
+        routeConfigDTO.setPredicateList(JsonUtils.readJsonToObjectList(PredicateDefinition.class, routeConfig.getPredicates()));
+        routeConfigDTO.setFilterList(JsonUtils.readJsonToObjectList(FilterDefinition.class, routeConfig.getFilters()));
         return routeConfigDTO;
     }
 
@@ -158,5 +148,22 @@ public class RouteConfigServiceImpl implements RouteConfigService {
             return JsonUtils.readJsonToObjectList(PredicateDefinition.class, routeConfig.getPredicates());
         }
         return null;
+    }
+
+    private RouteConfig covertByRouteConfigDTO(RouteConfigDTO routeConfigDTO) {
+        RouteConfig routeConfig = new RouteConfig();
+        routeConfig.setStatus(routeConfigDTO.getStatus());
+        routeConfig.setFilters(routeConfigDTO.getFilters());
+        routeConfig.setPredicates(routeConfigDTO.getPredicates());
+        routeConfig.setRouteId(routeConfigDTO.getRouteId());
+        routeConfig.setId(null);
+        routeConfig.setOperator(routeConfigDTO.getOperator());
+        routeConfig.setServiceId(routeConfigDTO.getServiceId());
+        routeConfig.setOrders(routeConfigDTO.getOrders());
+        routeConfig.setServiceName(routeConfigDTO.getServiceName());
+        routeConfig.setUri(routeConfigDTO.getUri());
+        routeConfig.setCreatedBy(routeConfigDTO.getCreatedBy());
+        routeConfig.setLastModifiedBy(routeConfigDTO.getOperator());
+        return routeConfig;
     }
 }
