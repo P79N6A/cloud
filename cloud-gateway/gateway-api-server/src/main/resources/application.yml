@@ -39,6 +39,8 @@ spring:
           enabled: true
 
   datasource:
+      dynamic:
+        p6sy: true # 默认false,建议线上关闭。
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/cloud?useSSL=false&useUnicode=true&characterEncoding=utf-8
     username: root

@@ -1,0 +1,4 @@
+spring:
+  datasource:
+    dynamic:
+      p6sy: true # 默认false,建议线上关闭。
