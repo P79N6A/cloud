@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 public class RouteConfigCacheServiceImpl extends DefaultRedisCacheService implements RouteConfigCacheService {
     private static final String CACHE_PREFIX = CacheNamePrefixEnum.GATEWAY.getValue();
     private ApplicationEventPublisher publisher;
-    private RedisTemplate redisTemplate;
 
     @Autowired
     public RouteConfigCacheServiceImpl(RedisTemplate redisTemplate, ApplicationEventPublisher publisher) {

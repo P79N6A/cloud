@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Import;
  */
 @SpringCloudApplication
 @Configuration
-@Import(DefaultRedisCacheConfiguration.class)
 @Slf4j
 public class Bootstrap {
 
