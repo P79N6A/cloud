@@ -24,10 +24,10 @@
             <groupId>com.springframework</groupId>
             <artifactId>framework-constants</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.springframework</groupId>
-            <artifactId>framework-swgger</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.springframework</groupId>-->
+            <!--<artifactId>framework-swgger</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.springframework</groupId>
             <artifactId>framework-domain</artifactId>
