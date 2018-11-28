@@ -84,7 +84,11 @@
                 <artifactId>gateway-api</artifactId>
                 <version>${gateway-api.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-swgger</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
 
 
             <dependency>

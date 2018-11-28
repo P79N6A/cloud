@@ -15,6 +15,7 @@
 
 
     <dependencies>
+        <!--内部框架-->
         <dependency>
             <groupId>com.springframework</groupId>
             <artifactId>framework-enum</artifactId>
@@ -25,9 +26,13 @@
         </dependency>
         <dependency>
             <groupId>com.springframework</groupId>
-            <artifactId>framework-domain</artifactId><exclusions>
-        </exclusions>
+            <artifactId>framework-swgger</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-domain</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
