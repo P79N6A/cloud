@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class CacheListener {
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     /**
      * @param event CacheExpireFailEvent
