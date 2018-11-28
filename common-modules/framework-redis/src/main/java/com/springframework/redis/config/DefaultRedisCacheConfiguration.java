@@ -16,8 +16,8 @@ public class DefaultRedisCacheConfiguration {
     public DefaultRedisCacheConfiguration(RedisTemplate redisTemplate){
         this.redisTemplate = redisTemplate;
     }
-    @Bean
-    GenericCacheManager defaultRedisCacheService() {
-        return new DefaultRedisCacheService(redisTemplate);
-    }
+//    @Bean
+//    GenericCacheManager defaultRedisCacheService() {
+//        return new DefaultRedisCacheService(redisTemplate);
+//    }
 }
