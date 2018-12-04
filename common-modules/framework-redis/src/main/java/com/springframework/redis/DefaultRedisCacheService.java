@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class DefaultRedisCacheService implements GenericCacheManager {
     private static final String MD5 = "md5";
     private static final int SIZE = 128;
-    private RedisTemplate redisTemplate;
+    protected RedisTemplate redisTemplate;
     public DefaultRedisCacheService(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
