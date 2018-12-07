@@ -1,18 +1,15 @@
-package com.springframework.redis.config;
+package com.springframework.redis;
 
-import com.springframework.redis.DefaultRedisCacheService;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 
 /**
  * @author summer 防重复锁
  * 2018/12/4
  */
-@Component
-public class DuplicateProtectCacheManager extends DefaultRedisCacheService {
+public class DuplicateProtectCacheManager extends GenericCacheRedisManager {
 
-    private static final String CACHE_PREFIX = "site:inventory:update:duplicate:protect:";
+    private static final String CACHE_PREFIX = "duplicate:protect:cache:manager:";
     // 防重锁过期时间(ms), 通常设置得稍微长一点
     private static final long LOCK_EXPIRE = 8 * 60 * 60 * 1000;
 

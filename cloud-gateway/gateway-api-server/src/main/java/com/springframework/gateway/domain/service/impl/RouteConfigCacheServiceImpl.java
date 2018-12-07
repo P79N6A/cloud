@@ -4,7 +4,7 @@ import com.springframework.enums.rediskey.CacheNamePrefixEnum;
 import com.springframework.gateway.domain.entity.RouteConfig;
 import com.springframework.gateway.domain.service.RouteConfigCacheService;
 import com.springframework.gateway.event.CacheExpireFailEvent;
-import com.springframework.redis.DefaultRedisCacheService;
+import com.springframework.redis.GenericCacheRedisManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * 2018/11/28
  */
 @Service("routeConfigCacheService")
-public class RouteConfigCacheServiceImpl extends DefaultRedisCacheService implements RouteConfigCacheService {
+public class RouteConfigCacheServiceImpl extends GenericCacheRedisManager implements RouteConfigCacheService {
     private static final String CACHE_PREFIX = CacheNamePrefixEnum.GATEWAY.getValue();
     private ApplicationEventPublisher publisher;
 
