@@ -21,7 +21,7 @@
         <java.version>1.8</java.version>
         <!--cloud-->
         <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
-        <spring-cloud-openfeign.version>2.0.0.RELEASE</spring-cloud-openfeign.version>
+        <spring-cloud-openfeign.version>2.0.1.RELEASE</spring-cloud-openfeign.version>
         <spring-sleuth.version>2.0.1.RELEASE</spring-sleuth.version>
         <spring-cloud-hystrix.version>2.0.0.RELEASE</spring-cloud-hystrix.version>
         <!--boot-->
