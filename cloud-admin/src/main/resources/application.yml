@@ -43,7 +43,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: "*" ## 用于服务下线可以调用/service-registry端点 //当服务流量没了再停止服务
 
 
 ---
