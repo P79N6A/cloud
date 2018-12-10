@@ -16,6 +16,7 @@
 
 package com.springframework.cloud.stream.binder.rocket;
 
+import com.springframework.cloud.stream.binder.rocket.consuming.Acknowledgement;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.MessageConst;
 import org.apache.rocketmq.common.message.MessageExt;

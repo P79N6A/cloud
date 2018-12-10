@@ -21,8 +21,6 @@ import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import org.springframework.cloud.stream.binder.rocketmq.RocketMQBinderConstants.Metrics.Producer;
 
-import static com.codahale.metrics.MetricRegistry.name;
-
 /**
  * @author juven.xuxb
  * @author <a href="mailto:fangjian0423@gmail.com">Jim</a>

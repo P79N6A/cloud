@@ -1,5 +1,2 @@
-org.springframework.boot.env.EnvironmentPostProcessor=\
-  org.springframework.cloud.stream.binder.kafka.KafkaBinderEnvironmentPostProcessor
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  org.springframework.cloud.stream.binder.kafka.config.ExtendedBindingHandlerMappingsProviderConfiguration,\
-  org.springframework.cloud.stream.binder.rocketmq.RocketMQBinderEnvironmentPostProcessor
+com.springframework.cloud.stream.binder.rocket.config.RocketMQBinderEndpointAutoConfiguration\

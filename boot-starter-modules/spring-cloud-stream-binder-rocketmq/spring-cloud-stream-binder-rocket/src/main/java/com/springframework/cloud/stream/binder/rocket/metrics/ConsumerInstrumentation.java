@@ -19,9 +19,7 @@ package com.springframework.cloud.stream.binder.rocket.metrics;
 import com.codahale.metrics.Counter;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
-import com.springframework.cloud.stream.binder.rocket.RocketMQBinderConstants;
-
-import static com.codahale.metrics.MetricRegistry.name;
+import org.springframework.cloud.stream.binder.rocketmq.RocketMQBinderConstants.Metrics.Consumer;
 
 /**
  * @author juven.xuxb
@@ -38,13 +36,13 @@ public class ConsumerInstrumentation extends Instrumentation {
 		super(baseMetricName);
 
 		this.totalConsumed = registry
-				.counter(name(baseMetricName, RocketMQBinderConstants.Metrics.Consumer.TOTAL_CONSUMED));
+				.counter(name(baseMetricName, Consumer.TOTAL_CONSUMED));
 		this.consumedPerSecond = registry
-				.meter(name(baseMetricName, RocketMQBinderConstants.Metrics.Consumer.CONSUMED_PER_SECOND));
+				.meter(name(baseMetricName, Consumer.CONSUMED_PER_SECOND));
 		this.totalConsumedFailures = registry
-				.counter(name(baseMetricName, RocketMQBinderConstants.Metrics.Consumer.TOTAL_CONSUMED_FAILURES));
+				.counter(name(baseMetricName, Consumer.TOTAL_CONSUMED_FAILURES));
 		this.consumedFailuresPerSecond = registry
-				.meter(name(baseMetricName, RocketMQBinderConstants.Metrics.Consumer.CONSUMED_FAILURES_PER_SECOND));
+				.meter(name(baseMetricName, Consumer.CONSUMED_FAILURES_PER_SECOND));
 	}
 
 	public void markConsumed() {
