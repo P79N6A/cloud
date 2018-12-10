@@ -17,15 +17,14 @@
 package com.springframework.cloud.stream.binder.rocket.metrics;
 
 import com.codahale.metrics.MetricRegistry;
-import org.springframework.cloud.stream.binder.rocketmq.RocketMQBinderConstants.Metrics.Consumer;
-import org.springframework.cloud.stream.binder.rocketmq.RocketMQBinderConstants.Metrics.Producer;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-
+import com.springframework.cloud.stream.binder.rocket.RocketMQBinderConstants.Metrics.Consumer;
+import com.springframework.cloud.stream.binder.rocket.RocketMQBinderConstants.Metrics.Producer;
 /**
  * @author Timur Valiev
  * @author <a href="mailto:fangjian0423@gmail.com">Jim</a>

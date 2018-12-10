@@ -19,7 +19,9 @@ package com.springframework.cloud.stream.binder.rocket.metrics;
 import com.codahale.metrics.Counter;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
-import org.springframework.cloud.stream.binder.rocketmq.RocketMQBinderConstants.Metrics.Consumer;
+import com.springframework.cloud.stream.binder.rocket.RocketMQBinderConstants.Metrics.Consumer;
+
+import static com.codahale.metrics.MetricRegistry.name;
 
 /**
  * @author juven.xuxb
