@@ -39,15 +39,11 @@ spring:
           enabled: true
 
   datasource:
-      dynamic:
+   dynamic:
         p6sy: true # 默认false,建议线上关闭。
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/cloud?useSSL=false&useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: 123
-    # 使用druid数据源
-    type: com.alibaba.druid.pool.DruidDataSource
-    druid:
+     # 使用druid数据源
+     type: com.alibaba.druid.pool.DruidDataSource
+     druid:
       stat-view-servlet:
         loginUsername: admin
         loginPassword: 123456
@@ -67,26 +63,26 @@ spring:
       max-pool-prepared-statement-per-connection-size: 100
       filters: stat,wall
       share-prepared-statements: true
-#    dynamic:
-#      druid: #以下是全局默认值，可以全局更改
-#        initial-size: 0
-#        max-active: 8
-#        min-idle: 2
-#        max-wait: -1
-#        min-evictable-idle-time-millis: 30000
-#        max-evictable-idle-time-millis: 30000
-#        time-between-eviction-runs-millis: 0
-#        validation-query: select 1
-#        validation-query-timeout: -1
-#        test-on-borrow: false
-#        test-on-return: false
-#        test-while-idle: true
-#        pool-prepared-statements: true
-#        max-pool-prepared-statement-per-connection-size: 100
-#        filters: stat,wall
-#        share-prepared-statements: true
-#      datasource:
-#        master:
+    dynamic:
+      druid: #以下是全局默认值，可以全局更改
+        initial-size: 0
+        max-active: 8
+        min-idle: 2
+        max-wait: -1
+        min-evictable-idle-time-millis: 30000
+        max-evictable-idle-time-millis: 30000
+        time-between-eviction-runs-millis: 0
+        validation-query: select 1
+        validation-query-timeout: -1
+        test-on-borrow: false
+        test-on-return: false
+        test-while-idle: true
+        pool-prepared-statements: true
+        max-pool-prepared-statement-per-connection-size: 100
+        filters: stat,wall
+        share-prepared-statements: true
+      datasource:
+        master:
 #          username: root
 #          password: 123
 #          url: jdbc:mysql://127.0.0.1:3306/cloud?useUnicode=true&characterEncoding=utf-8

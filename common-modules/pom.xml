@@ -73,6 +73,10 @@
         <mybatis-plus.version>3.0.6</mybatis-plus.version>
         <mybatis-plus-support.version>3.0.6</mybatis-plus-support.version>
 
+        <mybatis-plus-boot-starter.version>3.0.6</mybatis-plus-boot-starter.version>
+        <dynamic-datasource-spring-boot-starter.version>2.4.2</dynamic-datasource-spring-boot-starter.version>
+        <p6spy.version>3.8.0</p6spy.version>
+        <druid-spring-boot-starter.version>1.1.10</druid-spring-boot-starter.version>
         <!--spring-framework-->
         <spring-jdbc.version>5.0.7.RELEASE</spring-jdbc.version>
         <spring.version>5.0.7.RELEASE</spring.version>
@@ -161,6 +165,12 @@
                 <version>${spring-cloud-hystrix.version}</version>
             </dependency>
 
+            <!--监控-->
+            <dependency>
+                <groupId>com.dianping.cat</groupId>
+                <artifactId>cat-client</artifactId>
+                <version>2.0.0</version>
+            </dependency>
             <!--framework-all-->
             <dependency>
                 <groupId>com.springframework</groupId>
@@ -290,6 +300,27 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic-datasource-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>${p6spy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-spring-boot-starter.version}</version>
             </dependency>
             <!--mybatis-->
             <dependency>
