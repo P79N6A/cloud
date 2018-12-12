@@ -156,9 +156,10 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.9</version>
                     <configuration>
-                        <includes>
-                            <include>**/AllTests.java</include>
-                        </includes>
+                        <!--<includes>-->
+                            <!--<include>**/AllTests.java</include>-->
+                        <!--</includes>-->
+                        <skipTests>true</skipTests>
                         <!-- <debugForkedProcess>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -Xnoagent -Djava.compiler=NONE</debugForkedProcess> -->
                     </configuration>
                     <dependencies>
@@ -259,6 +260,13 @@ encoding/<project>=UTF-8
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <repositories>
@@ -267,21 +275,21 @@ encoding/<project>=UTF-8
             <layout>default</layout>
             <url>http://unidal.org/nexus/content/repositories/releases/</url>
         </repository>
-        <repository>
-            <id>central</id>
-            <name>aliyun Central Repository</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-        </repository>
+        <!--<repository>-->
+            <!--<id>central</id>-->
+            <!--<name>aliyun Central Repository</name>-->
+            <!--<url>http://maven.aliyun.com/nexus/content/groups/public</url>-->
+        <!--</repository>-->
     </repositories>
     <pluginRepositories>
         <pluginRepository>
             <id>unidal.releases</id>
             <url>http://unidal.org/nexus/content/repositories/releases/</url>
         </pluginRepository>
-        <pluginRepository>
-            <id>central</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-        </pluginRepository>
+        <!--<pluginRepository>-->
+            <!--<id>central</id>-->
+            <!--<url>http://maven.aliyun.com/nexus/content/groups/public</url>-->
+        <!--</pluginRepository>-->
     </pluginRepositories>
     <distributionManagement>
         <repository>
@@ -298,7 +306,7 @@ encoding/<project>=UTF-8
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 
         <framework.version>4.0.0</framework.version>
-        <jetty.version>9.2.9.v20150224</jetty.version>
+        <!--<jetty.version>9.2.9.v20150224</jetty.version>-->
         <servlet-api.version>3.1.0</servlet-api.version>
     </properties>
 </project>
