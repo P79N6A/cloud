@@ -1,4 +1,5 @@
 info.version: @project.version@
+
 server:
   port: 20000
   tomcat:
@@ -22,6 +23,7 @@ spring:
   profiles:
     active:
     - secure
+
   #  boot:
   #    admin:
   #      turbine:
@@ -35,6 +37,7 @@ spring:
         title: 服务治理监控平台
       probed-endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream,activiti
 
+
 # boot 监控
 management:
   endpoint:
@@ -45,7 +48,8 @@ management:
       exposure:
         include: "*" ## 用于服务下线可以调用/service-registry端点 //当服务流量没了再停止服务
 
-
+logging:
+  config: classpath:logback.xml
 ---
 spring:
   profiles: insecure
