@@ -14,7 +14,7 @@ public class RocketMQProperties {
     /**
      * name server for rocketMQ, formats: `host:port;host:port`
      */
-    private String nameServer;
+    private String nameServer="127.0.0.1:9876";
 
     private Producer producer;
 

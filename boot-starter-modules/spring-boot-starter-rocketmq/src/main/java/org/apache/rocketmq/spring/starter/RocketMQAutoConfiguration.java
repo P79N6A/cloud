@@ -1,6 +1,7 @@
 package org.apache.rocketmq.spring.starter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.rocketmq.spring.starter.actuate.RocketHealthIndicator;
 import org.apache.rocketmq.spring.starter.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.starter.core.DefaultRocketMQListenerContainer;
 import org.apache.rocketmq.spring.starter.core.RocketMQListener;
@@ -47,6 +48,12 @@ import static org.apache.rocketmq.spring.starter.core.DefaultRocketMQListenerCon
 @Order
 @Slf4j
 public class RocketMQAutoConfiguration {
+
+    @Bean
+    @ConditionalOnClass(RocketMQTemplate.class)
+    public RocketHealthIndicator rocketHealthIndicator(RocketMQTemplate rocketMQTemplate) {
+        return new RocketHealthIndicator(rocketMQTemplate);
+    }
 
     @Bean
     @ConditionalOnClass(DefaultMQProducer.class)
