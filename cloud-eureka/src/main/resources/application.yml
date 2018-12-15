@@ -1,6 +1,4 @@
 info.version: @project.version@
-server:
-  port: 8080
 spring:
   security:
     user:
@@ -19,6 +17,22 @@ spring:
         instance:
           prefer-ip: true
           name: cloud-eureka
+  # boot 监控
+management:
+    endpoint:
+      health:
+        show-details: always
+    endpoints:
+      web:
+        exposure:
+          include: "*"
+logging:
+  config: classpath:logback.xml
+---
+spring:
+  profiles: peer1
+server:
+    port: 8761
 eureka:
   server:
     batch-replication: true
@@ -28,23 +42,66 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://127.0.0.1:8080/eureka/
+      defaultZone: http://admin:admin@peer2:8762/eureka/,http://admin:admin@peer3:8763/eureka/
   instance:
+    hostname: peer1
     health-check-url-path: /actuator/health
     home-page-url: /actuator/info
     prefer-ip-address: true
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 20
-    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@_version@
-logging:
-  config: classpath:logback.xml
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
 
-# boot 监控
-management:
-  endpoint:
-    health:
-      show-details: always
-  endpoints:
-    web:
-      exposure:
-        include: "*"
+---
+spring:
+  profiles: peer2
+  application:
+    name: cloud-eureka
+server:
+  port: 8762
+eureka:
+  server:
+    batch-replication: true
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 5000
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://admin:admin@peer1:8761/eureka/,http://admin:admin@peer3:8763/eureka/
+  instance:
+    hostname: peer2
+    health-check-url-path: /actuator/health
+    home-page-url: /actuator/info
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 20
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
+
+---
+spring:
+  profiles: peer3
+  application:
+    name: cloud-eureka
+server:
+  port: 8763
+eureka:
+  server:
+    batch-replication: true
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 5000
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://admin:admin@peer2:8762/eureka/,http://admin:admin@peer1:8761/eureka/
+  instance:
+    hostname: peer3
+    health-check-url-path: /actuator/health
+    home-page-url: /actuator/info
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 20
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
+
+
