@@ -15,10 +15,10 @@
     <description>framework-datasource</description>
     <dependencies>
         <!--监控-->
-        <dependency>
-            <groupId>com.dianping.cat</groupId>
-            <artifactId>cat-client</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.dianping.cat</groupId>-->
+            <!--<artifactId>cat-client</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
