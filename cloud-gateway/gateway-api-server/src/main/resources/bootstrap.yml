@@ -1,4 +1,65 @@
-spring:
-  datasource:
-    dynamic:
-      p6sy: true # 默认false,建议线上关闭。
+#spring:
+#  autoconfigure:
+#    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+#  datasource:
+#    druid:
+#      stat-view-servlet:
+#        loginUsername: admin
+#        loginPassword: 123456
+#    dynamic:
+#      p6sy: true
+#      primary: mysql
+#      druid:
+#        min-idle: 2
+#        max-pool-prepared-statement-per-connection-size: 100
+#        validation-query-timeout: -1
+#        test-while-idle: true
+#        time-between-eviction-runs-millis: 0
+#        max-active: 20
+#        share-prepared-statements: true
+#        validation-query: select 1
+#        filters: stat,wall
+#        max-wait: -1
+#        test-on-borrow: false
+#        pool-prepared-statements: true
+#        initial-size: 0
+#        test-on-return: false
+#      datasource:
+#        mysql:
+#          username: root
+#          password: 123
+#          type: com.alibaba.druid.pool.DruidDataSource
+#          driver-class-name: com.mysql.jdbc.Driver
+#          url: jdbc:mysql://127.0.0.1:3306/cloud?autoReconnect=true&amp;characterEncoding=UTF-8&allowMultiQueries=true
+#mybatis-plus:
+#  executor-type: REUSE
+#  configuration:
+#    aggressive-lazy-loading: true
+#    cacheEnabled: true
+#    defaultStatementTimeout: 25000
+#    multipleResultSetsEnabled: true
+#    useColumnLabel: true
+#    auto-mapping-behavior: full
+#    auto-mapping-unknown-column-behavior: WARNING
+#    map-underscore-to-camel-case: true
+#    defaultExecutorType: REUSE
+#    useGeneratedKeys: true
+#    lazyLoadingEnabled: true
+#    call-setters-on-nulls: false
+#  type-aliases-super-type: java.lang.Object
+#  mapper-locations: classpath:mapper/*.xml
+#  global-config:
+#    refresh: true
+#    sql-parser-cache: false
+#    db-config:
+#      logic-not-delete-value: 0
+#      table-underline: true
+#      field-strategy: not_empty
+#      capital-mode: false
+#      db-type: mysql
+#      logic-delete-value: 1
+#      column-like: false
+#      table-prefix: t_
+#      id-type: AUTO
+#  type-aliases-package: com.**.domain.entity
+#  check-config-location: false

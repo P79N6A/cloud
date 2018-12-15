@@ -22,7 +22,21 @@
         <!--内部框架-->
         <dependency>
             <groupId>com.springframework</groupId>
+            <artifactId>framework-datasource</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
             <artifactId>framework-feign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-hystrix</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.springframework</groupId>
@@ -37,18 +51,6 @@
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>p6spy</groupId>
-            <artifactId>p6spy</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -75,6 +77,7 @@
             <artifactId>spring-boot-admin-starter-client</artifactId>
         </dependency>
 
+        <!--契约测试-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-contract-stub-runner</artifactId>

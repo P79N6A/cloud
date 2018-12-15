@@ -9,8 +9,6 @@ spring:
     user:
       name: admin
       password: admin
-  autoconfigure:
-    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   cloud:
     gateway:
       httpclient:
@@ -37,121 +35,75 @@ spring:
         locator:
           lower-case-service-id: true
           enabled: true
-
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   datasource:
-   dynamic:
-        p6sy: true # 默认false,建议线上关闭。
-     # 使用druid数据源
-     type: com.alibaba.druid.pool.DruidDataSource
-     druid:
+    druid:
       stat-view-servlet:
         loginUsername: admin
         loginPassword: 123456
-      initial-size: 0
-      max-active: 8
-      min-idle: 2
-      max-wait: -1
-      min-evictable-idle-time-millis: 30000
-      max-evictable-idle-time-millis: 30000
-      time-between-eviction-runs-millis: 0
-      validation-query: select 1
-      validation-query-timeout: -1
-      test-on-borrow: false
-      test-on-return: false
-      test-while-idle: true
-      pool-prepared-statements: true
-      max-pool-prepared-statement-per-connection-size: 100
-      filters: stat,wall
-      share-prepared-statements: true
     dynamic:
-      druid: #以下是全局默认值，可以全局更改
-        initial-size: 0
-        max-active: 8
+      p6sy: true
+      primary: mysql
+      druid:
         min-idle: 2
-        max-wait: -1
-        min-evictable-idle-time-millis: 30000
-        max-evictable-idle-time-millis: 30000
-        time-between-eviction-runs-millis: 0
-        validation-query: select 1
-        validation-query-timeout: -1
-        test-on-borrow: false
-        test-on-return: false
-        test-while-idle: true
-        pool-prepared-statements: true
         max-pool-prepared-statement-per-connection-size: 100
-        filters: stat,wall
+        validation-query-timeout: -1
+        test-while-idle: true
+        time-between-eviction-runs-millis: 0
+        max-active: 20
         share-prepared-statements: true
+        validation-query: select 1
+        filters: stat,wall
+        max-wait: -1
+        test-on-borrow: false
+        pool-prepared-statements: true
+        initial-size: 0
+        test-on-return: false
       datasource:
-        master:
-#          username: root
-#          password: 123
-#          url: jdbc:mysql://127.0.0.1:3306/cloud?useUnicode=true&characterEncoding=utf-8
-#          driver-class-name: com.mysql.jdbc.Driver
-#          druid: #这里可以重写默认值
-#            initial-size: 5
-#            validation-query: select 1 FROM DUAL
-#        slave_1:
-#          username: root
-#          password: 123
-#          url: jdbc:mysql://127.0.0.1:3306/cloud?useUnicode=true&characterEncoding=utf-8
-#          driver-class-name: com.mysql.jdbc.Driver
-#          druid:
-#            initial-size: 6
-#            validation-query: select 1 FROM DUAL
-#
-#
+        mysql:
+          username: root
+          password: 123
+          type: com.alibaba.druid.pool.DruidDataSource
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/cloud?autoReconnect=true&amp;characterEncoding=UTF-8&allowMultiQueries=true
 mybatis-plus:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.springframework.gateway.domain.entity
-  type-aliases-super-type: java.lang.Object
-  check-config-location: false
   executor-type: REUSE
-
-#  指定外部配置
-#  configuration-properties: classpath:mybatis/config.properties
   configuration:
-    map-underscore-to-camel-case: true  #使用驼峰法映射属性
-    defaultStatementTimeout: 25000
-    defaultExecutorType: REUSE
-#    懒加载
-    lazyLoadingEnabled: true
     aggressive-lazy-loading: true
-
-    #    MyBatis 自动映射策略
-    auto-mapping-behavior: full
-    auto-mapping-unknown-column-behavior: WARNING
-    #映射不到字段设null
-    call-setters-on-nulls: false
-#    指定一个提供 Configuration 实例的工厂类
-#    configuration-factory: com.xxx.SampleConfigurationFactory
+    cacheEnabled: true
+    defaultStatementTimeout: 25000
     multipleResultSetsEnabled: true
     useColumnLabel: true
+    auto-mapping-behavior: full
+    auto-mapping-unknown-column-behavior: WARNING
+    map-underscore-to-camel-case: true
+    defaultExecutorType: REUSE
     useGeneratedKeys: true
-    cacheEnabled: true
-
+    lazyLoadingEnabled: true
+    call-setters-on-nulls: false
+  type-aliases-super-type: java.lang.Object
+  mapper-locations: classpath:mapper/*.xml
   global-config:
-    #刷新mapper 调试神器
     refresh: true
-#    是否缓存 Sql 解析，默认不缓存。
     sql-parser-cache: false
-#    单例重用 SqlSession。
-#    sql-session: com.xxx.SqlSession
-#    缓存当前 Configuration 的 SqlSessionFactory
-#    sql-session-factory: com.xxx.SqlSessionFactory
     db-config:
-      capital-mode: false # 开启大写命名
-      column-like: false #是否开启 LIKE 查询，即根据 entity 自动生成的 where 条件中 String 类型字段 是否使用 LIKE，默认不开启。
-      db-type: mysql #数据库类型,默认值为未知的数据库类型 如果值为OTHER,启动时会根据数据库连接 url 获取数据库类型;如果不是OTHER则不会自动获取数据库类型
-      id-type: AUTO #主键策略
+      logic-not-delete-value: 0
+      table-underline: true
       field-strategy: not_empty
-      logic-delete-value: 1 #逻辑删除
-      logic-not-delete-value: 0 #逻辑未删除
-      table-prefix: t_ #表前缀
-      table-underline: true   #表名、是否使用下划线命名，默认数据库表使用下划线命名
+      capital-mode: false
+      db-type: mysql
+      logic-delete-value: 1
+      column-like: false
+      table-prefix: t_
+      id-type: AUTO
+  type-aliases-package: com.**.domain.entity
+  check-config-location: false
+
 eureka:
   client:
     service-url:
-      defaultZone: http://admin:admin@127.0.0.1:8080/eureka/
+      defaultZone: http://admin:admin@127.0.0.1:9000/eureka/
   instance:
     prefer-ip-address: true
     lease-renewal-interval-in-seconds: 5
