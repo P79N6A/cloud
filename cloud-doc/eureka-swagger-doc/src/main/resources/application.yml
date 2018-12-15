@@ -22,6 +22,19 @@ spring:
       password: admin
       name: admin
   # admin
+  cloud:
+    stream:
+      rocketmq:
+        binder:
+          namesrvAddr: 127.0.0.1:9876
+      bindings:
+        output:
+          destination: test-topic
+          content-type: application/json
+        input:
+          destination: test-topic
+          content-type: application/json
+          group: test-group
   boot:
     admin:
       client:
