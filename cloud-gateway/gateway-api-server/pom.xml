@@ -26,6 +26,16 @@
         </dependency>
         <dependency>
             <groupId>com.springframework</groupId>
+            <artifactId>framework-stream</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-stream-binder-rabbit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
             <artifactId>framework-feign</artifactId>
         </dependency>
         <dependency>

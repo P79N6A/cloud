@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.3.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-build</artifactId>
+        <version>2.0.4.RELEASE</version>
+        <relativePath/>
     </parent>
     <groupId>com.springframework</groupId>
     <artifactId>cloud</artifactId>
@@ -31,10 +31,17 @@
         <spring-cloud-starter-oauth2.version>1.2.2.RELEASE</spring-cloud-starter-oauth2.version>
         <spring-cloud-gateway.version>2.0.2.RELEASE</spring-cloud-gateway.version>
         <spring-cloud-netflix-dependencies.version>2.0.2.RELEASE</spring-cloud-netflix-dependencies.version>
-
+        <cloud-dependencies.version>0.0.1-SNAPSHOT</cloud-dependencies.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>cloud-dependencies</artifactId>
+                <version>${cloud-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -63,29 +70,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--cloud组件-->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-netflix-turbine</artifactId>
-                <version>${spring-cloud-starter-netflix-turbine.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
-                <version>${spring-cloud-starter-stream-rabbit.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-oauth2</artifactId>
-                <version>${spring-cloud-starter-oauth2.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
     <modules>
+        <module>cloud-dependencies</module>
         <module>cloud-admin</module>
         <module>cloud-eureka</module>
         <module>cloud-doc</module>
-        <module>cloud-demo</module>
         <module>cloud-config</module>
         <module>service-modules</module>
         <module>cloud-visual</module>
