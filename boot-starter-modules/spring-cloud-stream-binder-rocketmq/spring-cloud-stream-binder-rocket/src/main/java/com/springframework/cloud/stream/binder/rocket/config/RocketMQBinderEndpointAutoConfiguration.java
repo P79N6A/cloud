@@ -40,8 +40,8 @@ public class RocketMQBinderEndpointAutoConfiguration {
 	}
 
 	@Bean
-	public RocketMQBinderHealthIndicator rocketBinderHealthIndicator() {
-		return new RocketMQBinderHealthIndicator();
+	public RocketMQBinderHealthIndicator rocketBinderHealthIndicator(InstrumentationManager instrumentationManager) {
+		return new RocketMQBinderHealthIndicator(instrumentationManager);
 	}
 
 	@Bean

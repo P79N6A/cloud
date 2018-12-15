@@ -18,7 +18,6 @@ package com.springframework.cloud.stream.binder.rocket.actuator;
 
 import com.springframework.cloud.stream.binder.rocket.metrics.Instrumentation;
 import com.springframework.cloud.stream.binder.rocket.metrics.InstrumentationManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.AbstractHealthIndicator;
 import org.springframework.boot.actuate.health.Health;
 
@@ -28,33 +27,35 @@ import org.springframework.boot.actuate.health.Health;
  */
 public class RocketMQBinderHealthIndicator extends AbstractHealthIndicator {
 
-	@Autowired(required = false)
-	private InstrumentationManager instrumentationManager;
+    private final InstrumentationManager instrumentationManager;
 
-	@Override
-	protected void doHealthCheck(Health.Builder builder) throws Exception {
-		if (instrumentationManager != null) {
-			if (instrumentationManager.getHealthInstrumentations().stream()
-					.allMatch(Instrumentation::isUp)) {
-				builder.up();
-				return;
-			}
-			if (instrumentationManager.getHealthInstrumentations().stream()
-					.allMatch(Instrumentation::isOutOfService)) {
-				builder.outOfService();
-				return;
-			}
-			builder.down();
-			instrumentationManager.getHealthInstrumentations().stream()
-					.filter(instrumentation -> !instrumentation.isStarted())
-					.forEach(instrumentation1 -> builder
-							.withException(instrumentation1.getStartException()));
-		}
-		else {
-			builder.down();
-			builder.withDetail("warning",
-					"please add metrics-core dependency, we use it for metrics");
-		}
+    public RocketMQBinderHealthIndicator(InstrumentationManager instrumentationManager) {
+        this.instrumentationManager = instrumentationManager;
+    }
 
-	}
+    @Override
+    protected void doHealthCheck(Health.Builder builder) throws Exception {
+        if (instrumentationManager != null) {
+            if (instrumentationManager.getHealthInstrumentations()
+                    .stream()
+                    .allMatch(Instrumentation::isUp)) {
+                    builder.up();
+                return;
+            }
+            if (instrumentationManager.getHealthInstrumentations().stream()
+                    .allMatch(Instrumentation::isOutOfService)) {
+                builder.outOfService();
+                return;
+            }
+            builder.down();
+            instrumentationManager.getHealthInstrumentations().stream()
+                    .filter(instrumentation -> !instrumentation.isStarted())
+                    .forEach(instrumentation1 -> builder
+                            .withException(instrumentation1.getStartException()));
+        } else {
+            builder.down();
+            builder.withDetail("warning",
+                    "please add metrics-core dependency, we use it for metrics");
+        }
+    }
 }
