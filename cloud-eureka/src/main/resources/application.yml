@@ -8,8 +8,10 @@ spring:
       name: admin
   application:
     name: cloud-eureka
-
   boot:
+    swgger:
+      config:
+        version: 1.0.0
     admin:
       client:
         auto-deregistration: true
@@ -17,23 +19,6 @@ spring:
         instance:
           prefer-ip: true
           name: cloud-eureka
-  cloud:
-    stream:
-      rocketmq:
-        binder:
-          namesrvAddr: 127.0.0.1:9876
-        bindings:
-          consumer:
-            tags: *
-          producer:
-            enabled: true
-            maxMessageSize: 100
-
-
-
-
-
-#        url: http://localhost:20000
 eureka:
   server:
     batch-replication: true
