@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 @Configuration
 @EnableAsync
-public class CouponSentMessagePoolConfiguration {
+public class ThreadPoolTaskExecutorConfiguration {
     @Bean
     public ThreadPoolTaskExecutor couponSentMessageTaskExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
