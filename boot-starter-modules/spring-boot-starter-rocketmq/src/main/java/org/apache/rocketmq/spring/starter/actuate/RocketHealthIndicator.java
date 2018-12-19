@@ -5,6 +5,9 @@ import org.springframework.boot.actuate.health.AbstractHealthIndicator;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.util.Assert;
 
+/**
+ * @author summer
+ */
 public class RocketHealthIndicator extends AbstractHealthIndicator {
 
     private final RocketMQTemplate rocketMQTemplate;
