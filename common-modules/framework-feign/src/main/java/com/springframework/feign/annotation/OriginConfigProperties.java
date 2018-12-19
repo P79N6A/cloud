@@ -8,7 +8,7 @@ import java.util.Set;
  */
 public class OriginConfigProperties {
 
-    private static final Set<String> originProperties = new HashSet<>();
+    private static volatile Set<String> originProperties = new HashSet<>();
 
     public static final Set<String> getOriginProperties() {
         return originProperties;

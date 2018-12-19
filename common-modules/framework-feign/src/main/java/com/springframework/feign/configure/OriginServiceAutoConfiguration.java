@@ -4,7 +4,6 @@ import com.springframework.feign.annotation.OriginConfigProperties;
 import com.springframework.feign.annotation.OriginService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.AnnotationAttributes;
@@ -15,9 +14,7 @@ import org.springframework.core.type.AnnotationMetadata;
  * @author summer
  */
 @Configuration
-@EnableConfigurationProperties({FeignConfiguration.class})
 public class OriginServiceAutoConfiguration implements ImportBeanDefinitionRegistrar, InitializingBean {
-
 
     @Override
     public void afterPropertiesSet() throws Exception {
