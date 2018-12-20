@@ -3,11 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>spring-cloud-stream-binder-rocket-parent</artifactId>
+    <artifactId>spring-cloud-stream-binder-rocketmq</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <groupId>com.springframework</groupId>
     <packaging>pom</packaging>
-    <name>spring-cloud-stream-binder-rocket-parent</name>
+    <name>spring-cloud-stream-binder-rocketmq</name>
     <description>spring-cloud-stream-binder-rocket project for Spring Boot</description>
     <parent>
         <groupId>org.springframework.cloud</groupId>
@@ -40,7 +40,7 @@
             </dependency>
             <dependency>
                 <groupId>com.springframework</groupId>
-                <artifactId>spring-cloud-stream-binder-rocketmq-core</artifactId>
+                <artifactId>spring-cloud-stream-binder-rocket-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

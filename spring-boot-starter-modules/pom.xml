@@ -9,13 +9,13 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <artifactId>spring-boot-starter-parent</artifactId>
+    <artifactId>spring-boot-starter-modules</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
 
     <packaging>pom</packaging>
-    <name>boot-starter-modules</name>
-    <description>boot-starter-modules</description>
+    <name>spring-boot-starter-modules</name>
+    <description>spring-boot-starter-modules</description>
     <modules>
         <module>spring-boot-starter-rocketmq</module>
         <module>spring-cloud-stream-binder-rocketmq</module>

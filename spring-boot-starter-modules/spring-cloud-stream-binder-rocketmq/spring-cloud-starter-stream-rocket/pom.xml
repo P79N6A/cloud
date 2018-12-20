@@ -5,7 +5,7 @@
     <artifactId>spring-cloud-starter-stream-rocket</artifactId>
     <parent>
         <groupId>com.springframework</groupId>
-        <artifactId>spring-cloud-stream-binder-rocket-parent</artifactId>
+        <artifactId>spring-cloud-stream-binder-rocketmq</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 

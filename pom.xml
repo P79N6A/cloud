@@ -83,7 +83,7 @@
         <module>common-modules</module>
         <module>cloud-auth</module>
         <module>cloud-gateway</module>
-        <module>boot-starter-modules</module>
+        <module>spring-boot-starter-modules</module>
     </modules>
     <build>
         <pluginManagement>
