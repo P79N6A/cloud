@@ -2,8 +2,6 @@ package javax.com.springframework.common.exception.log;
 
 import com.springframework.log.log.JsonUtils;
 import com.springframework.log.util.HostUtils;
-import com.springframework.trace.Span;
-import com.springframework.trace.agent.Tracer;
 import org.slf4j.Logger;
 
 import java.text.SimpleDateFormat;

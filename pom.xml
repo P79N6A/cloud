@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.springframework</groupId>
     <artifactId>cloud</artifactId>
-    <version>${_version}</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
