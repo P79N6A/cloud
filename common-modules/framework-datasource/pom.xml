@@ -14,11 +14,12 @@
     <packaging>jar</packaging>
     <description>framework-datasource</description>
     <dependencies>
+        <!--项目内部框架-->
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-trace</artifactId>
+        </dependency>
         <!--监控-->
-        <!--<dependency>-->
-            <!--<groupId>com.dianping.cat</groupId>-->
-            <!--<artifactId>cat-client</artifactId>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>

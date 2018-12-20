@@ -6,13 +6,13 @@
     <packaging>jar</packaging>
     <parent>
         <groupId>com.springframework</groupId>
-        <artifactId>spring-cloud-stream-binder-rocket-parent</artifactId>
+        <artifactId>spring-cloud-stream-binder-rocketmq</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <dependencies>
         <dependency>
             <groupId>com.springframework</groupId>
-            <artifactId>spring-cloud-stream-binder-rocketmq-core</artifactId>
+            <artifactId>spring-cloud-stream-binder-rocket-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

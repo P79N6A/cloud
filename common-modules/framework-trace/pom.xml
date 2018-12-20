@@ -25,10 +25,9 @@
     </build>
 
     <dependencies>
-        <!--项目内部依赖-->
         <dependency>
-            <groupId>com.springframework</groupId>
-            <artifactId>framework-utils</artifactId>
+            <groupId>com.dianping.cat</groupId>
+            <artifactId>cat-client</artifactId>
         </dependency>
     </dependencies>
 </project>
