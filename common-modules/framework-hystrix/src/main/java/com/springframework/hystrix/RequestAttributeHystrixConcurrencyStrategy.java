@@ -131,12 +131,9 @@ public class RequestAttributeHystrixConcurrencyStrategy extends HystrixConcurren
             try {
                 RequestContextHolder.setRequestAttributes(this.attributes);
                 return this.callable.call();
-            } catch (Throwable e) {
-                //ignore
-            } finally {
+            }finally {
                 RequestContextHolder.resetRequestAttributes();
             }
-            return this.callable.call();
         }
     }
 }
