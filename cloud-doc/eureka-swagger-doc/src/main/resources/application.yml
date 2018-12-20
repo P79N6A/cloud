@@ -24,14 +24,21 @@ spring:
   # admin
   cloud:
     stream:
+      defaultBinder: rocket
       rocketmq:
         binder:
           namesrvAddr: 127.0.0.1:9876
+        bindings:
+          input:
+            consumer:
+              orderly: false
       bindings:
         output:
+          binder: rocket
           destination: test-topic
           content-type: application/json
         input:
+          binder: rocket
           destination: test-topic
           content-type: application/json
           group: test-group

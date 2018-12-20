@@ -15,6 +15,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>./framework-datasource</module>
+        <module>./framework-lock</module>
         <module>./framework-logger</module>
         <module>./framework-redis</module>
         <module>./framework-cache</module>
