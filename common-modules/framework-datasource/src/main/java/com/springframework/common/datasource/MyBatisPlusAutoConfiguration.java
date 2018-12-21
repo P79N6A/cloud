@@ -25,7 +25,7 @@ public class MyBatisPlusAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(CatMybatisPlugin.class)
     public CatMybatisPlugin catMybatisPlugin() {
-        log.info(" CatMybatisPlugin  Init ");
+        log.info(" CatMybatisPlugin  initialized ");
         return new CatMybatisPlugin();
     }
 

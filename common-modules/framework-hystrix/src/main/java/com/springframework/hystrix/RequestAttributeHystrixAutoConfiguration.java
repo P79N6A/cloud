@@ -19,7 +19,7 @@ public class RequestAttributeHystrixAutoConfiguration {
 
     @Bean
     RequestAttributeHystrixConcurrencyStrategy requestAttributeHystrixConcurrencyStrategy() {
-        log.info("自定义 Request Attribute Hystrix ConcurrencyStrategy  Init  ");
+        log.info("自定义 Request Attribute Hystrix ConcurrencyStrategy  initialized  ");
         return new RequestAttributeHystrixConcurrencyStrategy();
     }
 }
