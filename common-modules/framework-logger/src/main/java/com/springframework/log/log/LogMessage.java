@@ -1,4 +1,8 @@
 package com.springframework.log.log;
+import com.google.gson.Gson;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.logging.log4j.core.util.JsonUtils;
+
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,6 +13,7 @@ import java.util.Map;
 public class LogMessage implements Serializable{
 	private static final long serialVersionUID = -1449397931879372657L;
 	private Map data = new LinkedHashMap();
+	private Gson gson = new Gson();
 	public LogMessage(String type, String server, String systemId, Map paramsdata) {
 		init(type, server, systemId);
 		data.put("message", paramsdata);
@@ -21,7 +26,7 @@ public class LogMessage implements Serializable{
 		init(type, server, systemId);
 		data.put("message", message);
 		data.put("exception", t.getClass().getCanonicalName());
-		data.put("exceptionTrace", LoggerUtils.getExceptionTrace(t, 200));
+		data.put("exceptionTrace", ExceptionUtils.getStackTrace(t));
 	}
 	private void init(String type, String server, String systemId){
 		if(type!=null){
@@ -32,7 +37,7 @@ public class LogMessage implements Serializable{
 	}
 
 	public String getDataStr() {
-		return JsonUtils.writeObjectToJson(this.data);
+		return gson.toJson(this.data);
 	}
 	public Map getDataMap() {
 		return this.data;

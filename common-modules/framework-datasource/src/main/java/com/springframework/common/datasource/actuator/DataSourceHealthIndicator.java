@@ -60,6 +60,9 @@ public class DataSourceHealthIndicator extends AbstractHealthIndicator {
     }
 
     private DataSource getDataSource() {
+        if(this.target==null){
+            return null;
+        }
         org.apache.ibatis.transaction.Transaction transaction = this.target.getTransaction();
         if (transaction == null) {
             logger.error(String.format("Could not find transaction on target [%s]", this.target));

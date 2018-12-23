@@ -64,7 +64,6 @@ public class ExceptionLogger {
         }
 
         if ((ex.getClass() == RuntimeException.class || ex.getClass() == ExecutionException.class
-                || (supportNestedServletException && ex.getClass() == org.springframework.web.util.NestedServletException.class)
                 || ex.getClass() == java.lang.reflect.InvocationTargetException.class) //如果通过反射执行的，需要特别处理
                 && ex.getCause() != null) {
             Throwable innerEx = ex.getCause();

@@ -6,6 +6,7 @@ package com.springframework.common.datasource;
 import com.springframework.common.datasource.actuator.DataSourceHealthIndicator;
 import com.springframework.common.datasource.configure.CatMybatisPlugin;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.executor.Executor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ import javax.sql.DataSource;
 @ConditionalOnBean(DataSource.class)
 public class MyBatisPlusAutoConfiguration {
 
+
     @Bean
     @ConditionalOnMissingBean(CatMybatisPlugin.class)
     public CatMybatisPlugin catMybatisPlugin() {
@@ -31,6 +33,7 @@ public class MyBatisPlusAutoConfiguration {
     }
 
     @Bean
+    @ConditionalOnBean(Executor.class)
     public DataSourceHealthIndicator dataSourceHealthIndicator(){
         return new DataSourceHealthIndicator();
     }
