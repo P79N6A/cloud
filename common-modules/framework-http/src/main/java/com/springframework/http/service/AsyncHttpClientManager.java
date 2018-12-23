@@ -4,7 +4,7 @@ import com.springframework.http.configure.async.MyAsyncRequestConfig;
 import com.springframework.http.configure.async.MyCredentialsProvider;
 import com.springframework.http.configure.async.MyIOReactorConfig;
 import com.springframework.http.configure.async.MySchemeIOSessionStrategy;
-import com.springframework.log.log.JsonUtils;
+import com.springframework.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Consts;
 import org.apache.http.HttpHost;

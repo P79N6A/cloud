@@ -1,7 +1,7 @@
 package com.springframework.http.service;
 
 import com.springframework.http.configure.*;
-import com.springframework.log.log.JsonUtils;
+import com.springframework.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;

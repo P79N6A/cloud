@@ -1,6 +1,7 @@
 package com.springframework.dfs.configure;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +20,13 @@ public class MultipartConfigElementConfig {
     private String maxFileSize;
 
     @Bean
+    @ConditionalOnMissingBean
     public MultipartConfigElement multipartConfigElement() {
         //设置文件上传的上限
         MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setMaxFileSize(maxFileSize);
-        factory.setMaxRequestSize(maxRequestSize);
-        //factory.setLocation("/tmp");
+//        factory.setMaxFileSize(maxFileSize);
+//        factory.setMaxRequestSize(maxRequestSize);
+        factory.setLocation("/tmp");
         return factory.createMultipartConfig();
     }
 }
