@@ -10,8 +10,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>visual</artifactId>
+    <artifactId>cloud-visual</artifactId>
     <packaging>pom</packaging>
+    <name>cloud-visual</name>
     <modules>
         <module>cat</module>
         <module>cache-cloud</module>
