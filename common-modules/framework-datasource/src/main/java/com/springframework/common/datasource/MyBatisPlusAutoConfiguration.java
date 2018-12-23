@@ -3,6 +3,7 @@
  */
 package com.springframework.common.datasource;
 
+import com.springframework.common.datasource.actuator.DataSourceHealthIndicator;
 import com.springframework.common.datasource.configure.CatMybatisPlugin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -29,4 +30,8 @@ public class MyBatisPlusAutoConfiguration {
         return new CatMybatisPlugin();
     }
 
+    @Bean
+    public DataSourceHealthIndicator dataSourceHealthIndicator(){
+        return new DataSourceHealthIndicator();
+    }
 }
