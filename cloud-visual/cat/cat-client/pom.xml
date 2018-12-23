@@ -10,7 +10,6 @@
 	<artifactId>cat-client</artifactId>
 	<name>cat-client</name>
 	<packaging>jar</packaging>
-	<version>2.0.1</version>
 	<dependencies>
 		<dependency>
 			<groupId>org.unidal.framework</groupId>
