@@ -2,14 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>admin</artifactId>
-    <version>${_version}</version>
-    <packaging>jar</packaging>
-
-    <name>admin</name>
-    <description>cloud-admin</description>
-
     <parent>
         <groupId>com.springframework</groupId>
         <artifactId>cloud</artifactId>
@@ -17,14 +9,26 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <artifactId>admin</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>admin</name>
+    <description>cloud-admin</description>
+
+
     <properties>
-        <_version>0.0.1-SNAPSHOT</_version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
+        <!--内部框架-->
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-trace</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.springframework</groupId>
             <artifactId>framework-common</artifactId>

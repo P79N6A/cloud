@@ -79,6 +79,7 @@
     </dependencyManagement>
     <modules>
         <module>cloud-dependencies</module>
+        <module>cloud-auth</module>
         <module>cloud-admin</module>
         <module>cloud-eureka</module>
         <module>cloud-doc</module>
@@ -86,7 +87,6 @@
         <module>service-modules</module>
         <module>cloud-visual</module>
         <module>common-modules</module>
-        <module>cloud-auth</module>
         <module>cloud-gateway</module>
         <module>spring-boot-starter-modules</module>
     </modules>

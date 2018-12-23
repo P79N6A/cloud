@@ -9,6 +9,7 @@
    <artifactId>cat-core</artifactId>
    <name>cat-core</name>
    <packaging>jar</packaging>
+   <version>2.0.1</version>
    <dependencies>
       <dependency>
          <groupId>com.dianping.cat</groupId>

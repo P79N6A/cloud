@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>auth</artifactId>
+    <artifactId>cloud-auth</artifactId>
     <packaging>pom</packaging>
     <name>cloud-auth</name>
     <description>资源服务-认证服务</description>

@@ -59,6 +59,7 @@
         <framework-security.version>0.0.1-SNAPSHOT</framework-security.version>
         <framework-trace.version>0.0.1-SNAPSHOT</framework-trace.version>
         <framework-config.version>0.0.1-SNAPSHOT</framework-config.version>
+        <framework-common.version>0.0.1-SNAPSHOT</framework-common.version>
         <framework-task-executor.version>0.0.1-SNAPSHOT</framework-task-executor.version>
 
         <swagger-butler-core.version>0.0.1-SNAPSHOT</swagger-butler-core.version>
@@ -71,6 +72,11 @@
                 <groupId>com.springframework</groupId>
                 <artifactId>framework-trace</artifactId>
                 <version>${framework-trace.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>framework-common</artifactId>
+                <version>${framework-common.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.springframework</groupId>
