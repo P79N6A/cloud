@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
@@ -78,14 +77,14 @@ public class ExceptionLogger {
 
     }
 
-    public static void logAndThrow(@NotNull BaseException ex) throws BaseException {
+    public static void logAndThrow( BaseException ex) throws BaseException {
         if (exLogger != null) {
             logBaseException(ex, null);
         }
         throw ex;
     }
 
-    public static void logAndThrow(@NotNull BaseException ex, HttpServletRequest request) throws BaseException {
+    public static void logAndThrow( BaseException ex, HttpServletRequest request) throws BaseException {
         if (exLogger != null) {
             logBaseException(ex, request);
         }

@@ -1,6 +1,6 @@
 package javax.com.springframework.common.exception.log;
 
-import com.springframework.log.log.JsonUtils;
+import com.google.gson.Gson;
 import com.springframework.log.util.HostUtils;
 import org.slf4j.Logger;
 
@@ -15,6 +15,7 @@ import java.util.UUID;
 public class ExceptionLogObject {
     private static final String FORMAT = "yyyy-MM-dd HH:mm:ss.SSS Z";
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z");
+    private static Gson gson = new Gson();
     private String url;
     private String logLevel;
     private String clientIp;
@@ -141,7 +142,7 @@ public class ExceptionLogObject {
     }
 
     public void log(Logger logger) {
-        logger.error(JsonUtils.writeObjectToJson(this));
+        logger.error(gson.toJson(this));
     }
 
     public String getRequest() {
@@ -299,14 +300,14 @@ public class ExceptionLogObject {
     }
 
     private void setTracer() {
-        Tracer tracer = Tracer.getTracer();
-        if (tracer != null) {
-            Span span = tracer.getParentSpan();
-            if (span != null) {
-                Long traceId = span.getTraceId();
-                this.traceid = traceId == null ? null : traceId.toString();
-            }
-        }
+//        Tracer tracer = Tracer.getTracer();
+//        if (tracer != null) {
+//            Span span = tracer.getParentSpan();
+//            if (span != null) {
+//                Long traceId = span.getTraceId();
+//                this.traceid = traceId == null ? null : traceId.toString();
+//            }
+//        }
     }
 
 
